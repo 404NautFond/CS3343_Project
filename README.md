@@ -7,4 +7,4 @@ If the "Excel-like" project is set, then please read the specifications in googl
 
 The criteria of the project is actually highly weight in **Project Management and Project Testing**, not implementation.
 
-Details will be delivered at *7 at 21th Sep*.
+Details will be delivered *at 7pm on 21th Sep*.
