@@ -5,6 +5,6 @@ CityU CS3343 Software Engineering Practice
 
 If the "Excel-like" project is set, then please read the specifications in google drive.
 
-The criteria of the project is actually highly weight in **Project Management and Project Testing**, not implementation.
+The criteria of the project is actually highly weighted in **Project Management and Project Testing**, not implementation.
 
 Details will be delivered *at 7pm on 21th Sep*.
