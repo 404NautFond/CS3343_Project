@@ -12,10 +12,15 @@ Also be reminded, in the final exam, usuaslly there will be the first question f
 Details will be delivered *at 7pm on 21th Sep*.
 
 ### Agenda
-[] Project Topic Lock
-[] Project Management: Job Division
-[] Project Management: Time Plan
-[] Project Basic Structure
+
+[ ] Project Topic Lock
+
+[ ] Project Management: Job Division
+
+[ ] Project Management: Time Plan
+
+[ ] Project Basic Structure
 
 ### Next Meeting
+
 In around week 6, after 7pm.
