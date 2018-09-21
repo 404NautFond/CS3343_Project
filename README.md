@@ -30,11 +30,29 @@ Details will be delivered *at 7pm on 21th Sep*.
 
 ### Agenda
 
-- [ ] Project Topic Lock
+- [x] Project Topic Lock
 
-- [ ] Project Management: Job Division
+- [x] Project Management: Job Division
 
-- [ ] Project Management: Time Plan
+  * Project Manager: Yuyang
+  
+  * Designer: Lanqing
+  
+  * Developer: Ruize, Danni, Zaixin
+  
+  * Tester: Zhilin
+  
+- [x] Project Management: Time Plan
+ 
+  * Week 3: Topic
+  
+  * Week 4-5：Requirement Specification
+  
+  * Week 6-8: Implementation (2-3 Stage)
+  
+  * Week 9: Report
+  
+  * Week 10-13: Loop
 
 - [ ] Project Basic Structure
 
