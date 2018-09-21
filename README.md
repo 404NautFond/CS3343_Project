@@ -1,7 +1,7 @@
 # C3343Project
 CityU CS3343 Software Engineering Practice
 
-# Version 0.0
+## Version 0.0
 
 If the "Excel-like" project is set, then please read the specifications in google drive.
 
