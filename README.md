@@ -13,13 +13,13 @@ Details will be delivered *at 7pm on 21th Sep*.
 
 ### Agenda
 
-[ ] Project Topic Lock
+-[ ] Project Topic Lock
 
-[ ] Project Management: Job Division
+-[ ] Project Management: Job Division
 
-[ ] Project Management: Time Plan
+-[ ] Project Management: Time Plan
 
-[ ] Project Basic Structure
+-[ ] Project Basic Structure
 
 ### Next Meeting
 
