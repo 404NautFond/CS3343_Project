@@ -134,5 +134,4 @@ public class GetRowsAndColumns {
             default: return null;
         }
     }
-    
 }

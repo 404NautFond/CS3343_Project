@@ -59,3 +59,4 @@ Details will be delivered *at 7pm on 21th Sep*.
 ### Next Meeting
 
 In around week 6, after 7pm.
+s
