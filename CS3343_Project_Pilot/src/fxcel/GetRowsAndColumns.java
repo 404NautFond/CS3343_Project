@@ -1,10 +1,10 @@
 package fxcel;
 
 public class GetRowsAndColumns {
-    //TODO: I think there still needs to implement a method to classify the input and the getters should be public
-    //TODO: by Richard, 2018-10-01
+    // I think there still needs to implement a method to classify the input and the getters should be public
+    // by Richard, 2018-10-01
 
-    // Get column number
+	// Get column number
     private int getColumn (String str) {
         return getNumberOfLetter(str);
     }
