@@ -66,13 +66,13 @@ public class Calculator {
 		case '+':
 			return num1+num2;
 		case '-':
-			return num2-num1;
+			return num1-num2;
 		case '*':
 			return num1*num2;
 		case '/':
-			return (double)num2/num1;
+			return (double)num1/num2;
 		case '^':
-			return Math.pow(num2, num1);
+			return Math.pow(num1, num2);
 		default:
 			return -1;
 		}
