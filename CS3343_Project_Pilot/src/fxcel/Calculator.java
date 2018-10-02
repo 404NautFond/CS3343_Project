@@ -78,7 +78,7 @@ public class Calculator {
 		}
 	}
 
-	//To be valified
+	//To be verified
 	private boolean isDigits(String str) {
 		return str.charAt(0) <= '9' && str.charAt(0) >= '0';
 	}
