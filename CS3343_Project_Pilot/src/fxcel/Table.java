@@ -127,21 +127,17 @@ class BasicTableModel extends AbstractTableModel {
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
 		 	
-		 	// write the column names
 		 	writeStrings(out, names);
 		 	
-		 	// write all the data
 		 	for (int i=0; i<data.size(); i++) {
 		 		writeStrings(out, (ArrayList) data.get(i));
 		 	}
-		 	
 		 	out.close();
 		 }
 		 catch (IOException e) {
 		 	e.printStackTrace();
 		 }
-	}
-	 	
+	}	 	
 }
 
 
