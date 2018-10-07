@@ -30,7 +30,7 @@ public class GetRowsAndColumns {
     }
 
     // Get enhanced row number
-    private int getRowEnhanced(String str) { // Consider to be useless?
+    private int getRowEnhanced(String str) { // Need update
         return getRow(str);
     }
 
