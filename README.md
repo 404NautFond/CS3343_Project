@@ -1,7 +1,22 @@
-# C3343Project
+# CS3343Project
 CityU CS3343 Software Engineering Practice
 
-## Version 0.0
+## Version 1.0, Week 6 Friday
+
+### Features
+The project now is constructed a little bit. With console I/O, it can compute the basic +-*/!^ without more exceptions handling.
+
+### Meeting Agenda
+The meeting is going to last for around 1 hour. Main items to be discussed are:
+* The functions to embed
+* The paperwork to be done (diagrams, introductions, bug report ...)
+* The time period for the version 1.1
+
+The work to be done for everyone may change a little bit after that.
+
+Thank you for your participation.
+
+## Version 0.0, Week 2 Friday
 
 If the "Excel-like" project is set, then please read the specifications in google drive.
 
@@ -54,7 +69,7 @@ Details will be delivered *at 7pm on 21th Sep*.
   
   * Week 10-13: Loop
 
-- [ ] Project Basic Structure
+- [x] Project Basic Structure
 
 ### Next Meeting
 
