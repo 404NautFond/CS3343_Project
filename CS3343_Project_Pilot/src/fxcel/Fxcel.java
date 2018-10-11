@@ -2,6 +2,7 @@ package fxcel;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Fxcel implements Serializable{
 	
@@ -15,19 +16,40 @@ public class Fxcel implements Serializable{
 	private Cell[][] mycell;
 	private int row;
 	private int col;
+	
+	private Observer obs;
 
 	private static Fxcel instance = new Fxcel();
 	
 	/** 
 	 * Default Constructor
 	 */
-	private Fxcel() {}
+	private Fxcel() {
+		this.row = 10;
+		this.col = 10;
+		this.mycell = new Cell[row][col];
+		this.obs = new Observer();
+	}
 	/**
 	 * Singleton of Fxcel
 	 * @return the instance of Fxcel
 	 */
 	public static Fxcel getInstance() {
 		return instance;
+	}
+	
+	//Testing
+	public static void main(String[] args) {
+		try {
+			Fxcel.getInstance().writeCell(1, 2, "=1+2");
+			String out = Fxcel.getInstance().readCellContent(1, 2);
+			double val = Fxcel.getInstance().readCellVal(1, 2);
+			System.out.println(val);
+			//out = Fxcel.getInstance().readCellContent(1, 3);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -56,14 +78,56 @@ public class Fxcel implements Serializable{
 	 * @param col the intended column number
 	 * @param content the intended String input
 	 */
-	public void writeCell(int row, int col, String content) {}
+	public void writeCell(int row, int col, String content) throws Exception{
+		if(row <= this.row && col <= this.col) {
+			if(mycell[row][col] != null) {
+				mycell[row][col].writeCell(content);
+			} else {
+				mycell[row][col] = new Cell(row, col, content);
+				obs.updateAll();
+			}
+		} else {
+			throw new Exception();
+		}
+	}
 	/**
 	 * Return the content in a cell with the format of String
 	 * @param row the intended row number of the cell
 	 * @param col the intended column number of the cell
-	 * @return the content int the cell
+	 * @return the content in the cell
 	 */
-	public String readCell(int row, int col) {return null;/*automation*/}
+	public String readCellContent(int row, int col) {
+		return mycell[row][col].readContent();
+	}
 	
-	public Cell getCell(int row, int col) {return mycell[row][col];}
+	public double readCellVal(int row, int col) {
+		return mycell[row][col].readVal();
+	}
+	
+	public Cell getCell(int row, int col) {
+		return mycell[row][col];
+	}
+	
+	class Observer{
+		private ArrayList<Cell> subscriber = new ArrayList<Cell>();
+		public Observer() {}
+		public boolean subscribe(Cell c) {
+			try {
+				subscriber.add(c);
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		public boolean updateAll() {
+			try {
+				for(Cell c:subscriber) {
+					c.computeVal();
+				}
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+	};
 }

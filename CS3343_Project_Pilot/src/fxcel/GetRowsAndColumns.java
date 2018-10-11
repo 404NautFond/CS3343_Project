@@ -5,12 +5,12 @@ public class GetRowsAndColumns {
     // by Richard, 2018-10-01
 
 	// Get column number
-    private int getColumn (String str) {
+    public int getColumn (String str) {
         return getNumberOfLetter(str);
     }
 
     // Get row number
-    private int getRow(String str) {
+    public int getRow(String str) {
         int input = Integer.parseInt(str);
         if (input <= 0) {
             return -1;
@@ -20,7 +20,7 @@ public class GetRowsAndColumns {
     }
 
     // Get enhanced column number
-    private int getColumnEnhanced(String str) {
+    public int getColumnEnhanced(String str) {
        int column = calculate26Radix(str);
        if (column > 0) {
            return column;
@@ -30,17 +30,17 @@ public class GetRowsAndColumns {
     }
 
     // Get enhanced row number
-    private int getRowEnhanced(String str) { // Consider to be useless?
+    public int getRowEnhanced(String str) { // Consider to be useless?
         return getRow(str);
     }
 
     // Get column text
-    private String getColumnText(Cell cell) {
+    public String getColumnText(Cell cell) {
         return getLetterOfNumber(cell.getColumn());
     }
 
     // Get enhanced column text
-    private String getColumnEnhancedText(Cell cell){
+    public String getColumnEnhancedText(Cell cell){
         int columnNumber = cell.getColumn();
         return calculateColumnText(columnNumber);
     }
@@ -71,7 +71,7 @@ public class GetRowsAndColumns {
 
     // Transfer letter to number
     private int getNumberOfLetter(String str) {
-        int finalValue = str.charAt(0) - "A";
+        int finalValue = str.charAt(0) - 'A';
         if (finalValue < 1 || finalValue > 26) {
             return -1;
         } else {
@@ -81,7 +81,7 @@ public class GetRowsAndColumns {
 
     // Transfer letter to number
     private String getLetterOfNumber(int num) {
-        char finalValue = "A" + num - 1;
+        char finalValue = (char)('A' + num - 1);
         if (num < 1 || num > 26) {
             return null;
         } else {
