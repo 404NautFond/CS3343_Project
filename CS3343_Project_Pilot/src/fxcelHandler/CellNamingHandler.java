@@ -91,8 +91,7 @@ public class CellNamingHandler extends ExpHandler {
         }
     }
 	@Override
-	double handle(String expression) {
-		// TODO Auto-generated method stub
+	public double handle(String expression) {
 		return 0;
 	}
 
