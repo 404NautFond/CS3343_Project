@@ -1,4 +1,4 @@
-package fxcel;
+package fxcelHandler;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -90,7 +90,6 @@ public class Calculator {
 		for(int i = 1; i <= num; i++) {
 			res *= i;
 		}
-		//System.out.println("Yeah");
 		return res;
 	}
 	

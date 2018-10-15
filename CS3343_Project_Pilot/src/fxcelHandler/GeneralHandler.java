@@ -1,5 +1,6 @@
 package fxcelHandler;
 
+import java.util.Stack;
 import java.util.StringTokenizer;
 //
 //import fxcel.Calculator;
@@ -7,7 +8,7 @@ import java.util.StringTokenizer;
 //import fxcelException.NonParsableException;
 
 public class GeneralHandler extends ExpHandler{
-
+	public Stack<String> buffer;
 	@Override
 	public double handle(String expression) {
 		boolean flag = false;
