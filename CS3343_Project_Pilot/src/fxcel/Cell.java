@@ -13,7 +13,7 @@ public class Cell extends Subject implements Observer {
      * For serialization
      */
     private static final long serialVersionUID = 1088607801192340601L;
-    private StringTokenizer myToken;
+    private StringTokenizer myToken1,myToken2;
     private String expression;
     private double value;	//default is 0 when computing, but not display
     private List<Cell> dependent;
@@ -39,16 +39,16 @@ public class Cell extends Subject implements Observer {
             String tmp = "";
             ArrayList<String> list = new ArrayList<String>();
 
-            StringTokenizer st1 = new StringTokenizer(expression);
+            myToken1 = new StringTokenizer(expression);
 
-            while (st1.hasMoreElements()) {
-                tmp += st1.nextToken();
+            while (myToken1.hasMoreElements()) {
+                tmp += myToken1.nextToken();
             }
 
-            StringTokenizer st2 = new StringTokenizer(tmp, "+-*/%^:=()", true);
+            myToken2 = new StringTokenizer(tmp, "+-*/%^:=()", true);
 
-            while (st2.hasMoreElements()) {
-                list.add(st2.nextToken());
+            while (myToken2.hasMoreElements()) {
+                list.add(myToken2.nextToken());
             }
 
             String[] expressionArray = new String[list.size()];
@@ -160,13 +160,15 @@ public class Cell extends Subject implements Observer {
 
     @Override
     public void notifyObservers() {
-
+        for (Cell c : list) {
+            c.update();
+        }
     }
 
     @Override
     public void update() {
         // TODO Auto-generated method stub
-
+//        this.value = cal.calculate(expressionArray);
     }
 
 }
