@@ -52,11 +52,6 @@ public class Cell extends Subject implements Observer {
 		return null;
 	}
 
-	/**
-	 * Constructor with String input
-	 *
-	 * @param input the intended content
-	 */
 	protected void writeCell(String input) {
 		this.expression = input;
 	}
