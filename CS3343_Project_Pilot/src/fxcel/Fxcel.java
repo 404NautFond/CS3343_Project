@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import fxcelHandler.CellNamingHandler;
+
 public class Fxcel implements Serializable {
 
 	/**
@@ -26,19 +28,15 @@ public class Fxcel implements Serializable {
 	 * Default Constructor
 	 */
 	private Fxcel() {
-
 		this.row_max = 30;
 		this.col_max = 30;
 		this.table = new ArrayList<List<Cell>>();
 
 		for (int i = 0; i < 30; i++) {
-
 			List<Cell> li = new ArrayList<Cell>();
-
 			for (int j = 0; j < 30; j++) {
 				li.add(new Cell());
 			}
-
 			table.add(li);
 		}
 	}
@@ -47,13 +45,10 @@ public class Fxcel implements Serializable {
 		//TODO: Check overflow
 		if (col > col_max) {
 			for (int i = col_max; i < col_max * 2; i++) {
-
 				List<Cell> li = new ArrayList<Cell>();
-
 				for (int j = 0; j < row_max; j++) {
 					li.add(new Cell());
 				}
-
 				table.add(li);
 			}
 			col_max *= 2;
@@ -61,26 +56,20 @@ public class Fxcel implements Serializable {
 
 		if (row > row_max) {
 			for (int i = 0; i < col_max; i++) {
-
 				List<Cell> li = table.get(i);
-
 				for (int j = row_max; j < row_max * 2; j++) {
 					li.add(new Cell());
 				}
-
 			}
 			row_max *= 2;
 		}
-
 	}
 
 	public void addCol(int col) {
 		List<Cell> li = new ArrayList<Cell>();
-
 		for (int i = 0; i < row_max; i++) {
 			li.add(new Cell());
 		}
-
 		table.add(col - 1, li);
 	}
 
@@ -92,21 +81,35 @@ public class Fxcel implements Serializable {
 	}
 
 	public void clear() {
-
 		for (List<Cell> l : table) {
 			for (Cell c : l) {
 				c.clear();
 			}
 		}
-
 		this.row_max = 30;
 		this.col_max = 30;
 	}
 	
-	public Cell getCell(String str) {
-		return null;
+	public Cell getCell(String name) {
+		int row = CellNamingHandler.getRowEnhanced(name);
+		int col = CellNamingHandler.getColumnEnhanced(name);
+		return getCell(row,col);
+		
+	}
+	
+	public void writeCell(int row, int col, String expression) {
+		getCell(row, col).assign(expression);
+	}
+	
+	public Cell getCell(int row, int col) {
+		return (table.get(row)).get(col);
+	}
+	
+	public String getCellExpression(int row, int col) {
+		return getCell(row,col).getExpression();
 	}
 
+	
 	@Override
 	public String toString() {
 		return null;
@@ -145,41 +148,5 @@ public class Fxcel implements Serializable {
 	//	 * @param path the path to be stored in
 	//	 */
 	//	public void saveFxcel(String path) {}
-	//	
-	//	/**
-	//	 * Write the cell and store in the Fxcel Object
-	//	 * @param row the intended row number
-	//	 * @param col the intended column number
-	//	 * @param content the intended String input
-	//	 */
-	//	
-	//	public void writeCell(int row, int col, String content) throws Exception{
-	//		if(row <= this.row && col <= this.col) {
-	//			if(mycell[row][col] != null) {
-	//				mycell[row][col].writeCell(content);
-	//			} else {
-	//				mycell[row][col] = new Cell(row, col, content);
-	//				obs.updateAll();
-	//			}
-	//		} else {
-	//			throw new Exception();
-	//		}
-	//	}
-	//	/**
-	//	 * Return the content in a cell with the format of String
-	//	 * @param row the intended row number of the cell
-	//	 * @param col the intended column number of the cell
-	//	 * @return the content in the cell
-	//	 */
-	//	public String readCellContent(int row, int col) {
-	//		return mycell[row][col].readContent();
-	//	}
-	//	
-	//	public double readCellVal(int row, int col) {
-	//		return mycell[row][col].readVal();
-	//	}
-	//	
-	//	public Cell getCell(int row, int col) {
-	//		return mycell[row][col];
-	//	}
+
 }
