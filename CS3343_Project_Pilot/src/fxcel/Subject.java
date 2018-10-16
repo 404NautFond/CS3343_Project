@@ -3,7 +3,7 @@ package fxcel;
 import java.io.Serializable;
 import java.util.*;
 
-abstract class Subject implements Serializable{
+public abstract class Subject implements Serializable{
     
     public List<Cell> list;
     public abstract void attach(Cell c);
