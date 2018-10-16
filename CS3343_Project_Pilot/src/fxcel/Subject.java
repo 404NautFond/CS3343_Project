@@ -1,25 +1,21 @@
 package fxcel;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
-public class Subject implements Serializable{
+public abstract class Subject implements Serializable{
 
-	private static final long serialVersionUID = -2487001394519029398L;
-	
-	private List<Cell> list;
-	
-	public void attach() {
-		
-	}
-	
-	public void detach() {
-		
-	}
-	
-	public void notify_subject() {
-		for(Cell auto: list) {
-			auto.update();
-		}
-	}
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2013543366613221398L;
+	public List<Cell> list;
+    public abstract void attach(Cell c);
+    public abstract void detach(Cell c);
+    public abstract void notifyObservers();
+    
+    public Subject(){
+        list = new ArrayList<Cell>();
+    }
+
 }

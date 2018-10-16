@@ -2,7 +2,7 @@ package fxcelException;
 
 import fxcel.Cell;
 
-public class InfiniteReferenceException extends Exception {
+public class InfiniteReferenceException extends FxcelException {
 
     private static final String TAG = "InvalidExpressionExcept";
     private static final String message = "Refer to an object that has already referred to the caller!";

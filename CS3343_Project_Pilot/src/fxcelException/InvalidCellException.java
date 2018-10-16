@@ -2,7 +2,7 @@ package fxcelException;
 
 import fxcel.Cell;
 
-public class InvalidCellException extends Exception {
+public class InvalidCellException extends FxcelException {
 
     private static final String TAG = "InvalidCellException";
     private static final String messageNullValue  = "Try to access a null value cell";
