@@ -94,7 +94,6 @@ public class Fxcel implements Serializable {
 		int row = CellNamingHandler.getRowEnhanced(name);
 		int col = CellNamingHandler.getColumnEnhanced(name);
 		return getCell(row,col);
-		
 	}
 	
 	public void writeCell(int row, int col, String expression) {
