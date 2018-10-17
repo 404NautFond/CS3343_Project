@@ -57,7 +57,7 @@ public class Cell extends Subject implements Observer {
 		return this.value;
 	}
 
-	protected boolean checkDep(Cell c) {
+	public boolean checkDep(Cell c) {
 		for (Cell dep : dependent) {
 			if (dep == c) {
 				if (this != c) {
@@ -122,6 +122,10 @@ public class Cell extends Subject implements Observer {
 	public void update() {
 		// TODO Auto-generated method stub
 		//        this.value = cal.calculate(expressionArray);
+	}
+
+	public void addDependent(Cell cell) {
+		dependent.add(cell);
 	}
 
 }
