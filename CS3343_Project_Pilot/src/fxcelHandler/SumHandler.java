@@ -17,7 +17,7 @@ public class SumHandler extends FuncHandler {
         resultCell = getResultCell();
         for (char character : inputExpression) {
             if (character == ':') {
-                result = calculateForInputType1();
+                result = calculateForInputType1(expression);
                 break;
             }
             if (character == ',') {
@@ -38,9 +38,31 @@ public class SumHandler extends FuncHandler {
         return Fxcel.getInstance().getCell(nameOfResultCell);
     }
 
-    private double calculateForInputType1() { // 'cell : cell' input type
+    private double calculateForInputType1(String input) { // 'cell : cell' input type
         double result = 0;
-        // TODO: get cells and calculate values
+        int startRow;
+        int startColumn;
+        int endRow;
+        int endColumn;
+        String[] temp;
+
+        temp = input.split(":|=");
+        startRow = CellNamingHandler.getRowEnhanced(temp[0]);
+        startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);
+        endRow = CellNamingHandler.getRowEnhanced(temp[1]);
+        endColumn = CellNamingHandler.getColumnEnhanced(temp[1]);
+
+        for (int i = startRow; i<=endRow; i++) {
+            for (int j = startColumn; j < endColumn; j++) {
+                Cell tempCell = Fxcel.getInstance().getCell(i, j);
+                try {
+                    result += calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
+                } catch (InfiniteReferenceException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         return result;
     }
 
@@ -53,6 +75,7 @@ public class SumHandler extends FuncHandler {
             } else {
                 try {
                     result += calculateValueForSingleCell(Fxcel.getInstance().getCell(cellName));
+                    cellName = "";
                 } catch (InfiniteReferenceException e) {
                     e.printStackTrace();
                 }

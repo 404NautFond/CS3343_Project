@@ -5,12 +5,13 @@ package fxcelHandler;
 public class CellNamingHandler extends ExpHandler {
 
 	// Get column number
-    public int getColumn (String str) {
-        return getNumberOfLetter(str); // Consider to be useless as well
-    }
+    // Consider to be useless as well
+//    public int getColumn (String str) {
+//        return getNumberOfLetter(str);
+//    }
 
     // Get row number
-    public static int getRow(String str) {
+    public static int getRowEnhanced(String str) {
     		int pos = 0;
     		for(int i = 0; i < str.length(); i++) {
     			char temp = str.charAt(i);
@@ -38,9 +39,10 @@ public class CellNamingHandler extends ExpHandler {
     }
 
     // Get enhanced row number
-    public static int getRowEnhanced(String str) { // Consider to be useless?
-        return getRow(str);
-    }
+    // Consider to be useless?
+//    public static int getRowEnhanced(String str) {
+//        return getRow(str);
+//    }
 
     // Transfer string to a 26-radix number
     private static int getNumberOfLetter(String input) {
