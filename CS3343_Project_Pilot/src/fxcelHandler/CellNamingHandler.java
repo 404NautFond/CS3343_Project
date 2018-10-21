@@ -3,9 +3,6 @@ package fxcelHandler;
 import fxcel.Cell;
 
 public class CellNamingHandler extends ExpHandler {
-    // I think there still needs to implement a method to classify the input and the getters should be public
-    // by Richard, 2018-10-01
-
 	// Get column number
     public int getColumn (String str) {
         return getNumberOfLetter(str);
