@@ -54,7 +54,7 @@ public class Cell extends Subject implements Observer {
 			for(Cell dep: dependent) {
 //				System.out.println(dep);
 				if(dep.equals(this)) continue;
-				if(dep.isReferenced(this)) {
+				if(dep.checkDep(this)) {
 					//infinite reference
 					throw new InfiniteReferenceException(dep, this);
 				}
@@ -69,12 +69,12 @@ public class Cell extends Subject implements Observer {
 		dependent.add(cell);
 	}
 	
-	public boolean isReferenced(Cell cell) {
+	public boolean checkDep(Cell cell) {
 		if(dependent.contains(cell)) return true;
 		System.out.println(this);
 		System.out.println(this.dependent);
 		for(Cell dep: dependent) {
-			if (dep.isReferenced(cell)) return true;
+			if (dep.checkDep(cell)) return true;
 		}
 		return false;
 	}
