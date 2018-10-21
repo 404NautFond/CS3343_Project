@@ -36,7 +36,7 @@ public class GeneralHandler extends ExpHandler{
 		try {
 			GeneralHandler tempHandler = new GeneralHandler();
 			res = tempHandler.handle(temp);
-//			System.out.println("The recursion output is: " + res);
+			//			System.out.println("The recursion output is: " + res);
 		} catch (NoSuchElementException e) {
 			throw new InvalidExpressionException();
 		} catch (EmptyStackException e) {
@@ -52,46 +52,46 @@ public class GeneralHandler extends ExpHandler{
 		String tempToken, sym, number1, number2;
 		try {
 			while(tokens.size() != 0) {
-				tempToken = tokens.remove(0);
-//				System.out.println(tempToken + "::Buffer::" + buffer.toString() + "::Tokens::" + tokens.toString());
-				switch(tempToken) {
-				case "=":
-					continue;
-				case "*":
-				case "/":
-				case "^":
-					number2 = tokens.remove(0);
-					if(number2.equals("(")) {
-						number2 = (""+recursion());
+				try {
+					tempToken = tokens.remove(0);
+					//				System.out.println(tempToken + "::Buffer::" + buffer.toString() + "::Tokens::" + tokens.toString());
+					switch(tempToken) {
+					case "=":
+						continue;
+					case "*":
+					case "/":
+					case "^":
+						number2 = tokens.remove(0);
+						if(number2.equals("(")) {
+							number2 = (""+recursion());
+						}
+						sym = tempToken;
+						number1 = buffer.pop();
+						buffer.push(calcu(number1, sym, number2)+"");
+						break;
+					case "+":
+					case "-":
+						buffer.push(tempToken);
+						break;
+					case "(":
+						buffer.push(""+recursion());
+						break;
+					case ")":
+						throw new InvalidExpressionException();
+					default:
+						String temp = (expandOperand(tempToken));
+						if(temp != null) buffer.push(temp);
 					}
-					sym = tempToken;
-					number1 = buffer.pop();
-					buffer.push(calcu(number1, sym, number2)+"");
-					break;
-				case "+":
-				case "-":
-					buffer.push(tempToken);
-					break;
-				case "(":
-					buffer.push(""+recursion());
-					break;
-				case ")":
-					throw new InvalidExpressionException();
-				default:
-					if(isNumeric(tempToken)) buffer.push(tempToken);
-					else if(isCell(tempToken)) buffer.push(Fxcel.getInstance().getCell(tempToken).getValue()+"");
-					//else if(isFunc(tempToken)) buffer.push(null);
+				}catch(InvalidCellException e) {
+					buffer.push("0");
 				}
 			}
 		}catch(InvalidExpressionException e) {
 			e.printStackTrace();
 			return 0;
-		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
-//		System.out.println(buffer.toString() + "::" + tokens.toString());
+		//		System.out.println(buffer.toString() + "::" + tokens.toString());
 
 		while(buffer.size() > 1) {
 			number2 = buffer.pop();
@@ -100,8 +100,16 @@ public class GeneralHandler extends ExpHandler{
 			buffer.push(calcu(number1, sym, number2)+"");
 		}
 
-//		System.out.println(buffer.toString() + "::" + tokens.toString());
+		//		System.out.println(buffer.toString() + "::" + tokens.toString());
 		return Double.parseDouble(buffer.lastElement());
+	}
+
+	private static String expandOperand(String operand) throws InvalidCellException {
+		if(isNumeric(operand)) return operand;
+		else if(isCell(operand)) 
+			return (Fxcel.getInstance().getCell(operand).getValue()+"");
+		//else if(isFunc(tempToken)) buffer.push(null);
+		return null;
 	}
 
 	public static double calcu(String number1, String sym, String number2) {

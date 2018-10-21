@@ -10,7 +10,6 @@ public class CellNamingHandler extends ExpHandler {
     }
 
     // Get row number
-    // TODO Bug exists, please execute
     public static int getRow(String str) {
     		int pos = 0;
     		for(int i = 0; i < str.length(); i++) {

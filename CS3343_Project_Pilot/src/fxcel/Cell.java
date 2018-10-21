@@ -19,30 +19,40 @@ public class Cell extends Subject implements Observer {
 
 	private boolean valueNotDefine;
 	
+	//
+	private String mypos = null;
+	public void setPos(String str){this.mypos = str;}
+	
 	/**
 	 * Default Constructor
 	 */
-	protected Cell() {
+	public Cell() {
 		super();
 		this.expression = null;
+		this.value = 0;
 		this.valueNotDefine = true;
 	}
 
 	protected void assign(String expression) throws FxcelException {
 		// keep the original content anyway
 		this.expression = expression;
-		
+
 		char identifier = expression.charAt(0);
 		if (identifier == ':') {
 			return;
 		} else if (identifier == '=') {
-			String[] numberlike = expression.split("=:+-*/^()");
+			String[] numberlike = expression.split("=|:|\\+|-|\\*|/|^|\\(|\\)");
 			for(String num:numberlike) {
-				if(GeneralHandler.isCell(num)) dependent.add(Fxcel.getInstance().getCell(num));
+//				System.out.println(num);
+				if(GeneralHandler.isCell(num)) 
+					this.addDependent(Fxcel.getInstance().getCell(num));
 			}
 			
-			//TODO: Check the dependency
+//			System.out.println(this.dependent);
+			
+			System.out.println("I'm checking on "+this);
 			for(Cell dep: dependent) {
+//				System.out.println(dep);
 				if(dep.equals(this)) continue;
 				if(dep.isReferenced(this)) {
 					//infinite reference
@@ -54,29 +64,30 @@ public class Cell extends Subject implements Observer {
 			this.valueNotDefine = false;
 		}
 	}
-
+	
+	public void addDependent(Cell cell) {
+		dependent.add(cell);
+	}
+	
+	public boolean isReferenced(Cell cell) {
+		if(dependent.contains(cell)) return true;
+		System.out.println(this);
+		System.out.println(this.dependent);
+		for(Cell dep: dependent) {
+			if (dep.isReferenced(cell)) return true;
+		}
+		return false;
+	}
+	
 	public String getExpression() {
 		return this.expression;
 	}
 	
 	public double getValue() throws InvalidCellException{
-		if(valueNotDefine) 
+		if(valueNotDefine) {
 			throw new InvalidCellException(this);
-		return this.value;
-	}
-
-	public boolean checkDep(Cell c) {
-		for (Cell dep : dependent) {
-			if (dep == c) {
-				if (this != c) {
-					return false;
-				}
-			}
-			if (!dep.checkDep(c)) {
-				return false;
-			}
 		}
-		return true;
+		return this.value;
 	}
 
 	protected void clear() {
@@ -91,8 +102,8 @@ public class Cell extends Subject implements Observer {
 
 	@Override
 	public String toString() {
-		String temp = "The expression is \""+ this.expression + "\"";
-		if(!this.valueNotDefine) temp += "The value is \""+ this.value + "\"";
+		String temp = mypos+": The expression is \""+ this.expression + "\"";
+		if(!this.valueNotDefine) temp += ", The value is \""+ this.value + "\"";
 		return temp;
 	}
 
@@ -132,16 +143,8 @@ public class Cell extends Subject implements Observer {
 		this.value = new GeneralHandler().handle(this.expression);
 	}
 
-	public void addDependent(Cell cell) {
-		dependent.add(cell);
-	}
+
 	
-	public boolean isReferenced(Cell cell) {
-		if(dependent.contains(cell)) return true;
-		for(Cell dep: dependent) {
-			if (dep.isReferenced(cell)) return true;
-		}
-		return false;
-	}
+
 
 }

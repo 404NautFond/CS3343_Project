@@ -95,13 +95,14 @@ public class Fxcel implements Serializable {
 	public Cell getCell(String name) {
 		int row = CellNamingHandler.getRowEnhanced(name) - 1;
 		int col = CellNamingHandler.getColumnEnhanced(name) - 1;
-//		System.out.println(row + " " + col);
 		return getCell(row,col);
 	}
 	
 	public void writeCell(int row, int col, String expression) {
+		//
+		getCell(row, col).setPos((char)('A'+row)+""+(col+1));
 		try {
-			getCell(row, col).assign(expression);
+			getCell(row, col).assign(expression);		
 		} catch (FxcelException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -118,21 +119,25 @@ public class Fxcel implements Serializable {
 	
 	public static void main(String[] args) {
 		Fxcel istance = Fxcel.getInstance();
-		istance.writeCell(0, 0, "=2+3*6");
+		istance.writeCell(0, 0, "=A2+A2");
 		//TODO try A1*A1
-		istance.writeCell(0, 1, "=A1*5");
-		istance.writeCell(0, 2, ":=A1*5");
-		System.out.println(instance.getCellExpression(0, 0));
 		try {
 			System.out.println(instance.getCell(0, 0).getValue());
-			System.out.println(instance.getCell(0, 1).getValue());
-			System.out.println(instance.getCell(0, 2).getValue());
+//			System.out.println(instance.getCell(0, 1).getValue());
 		} catch (InvalidCellException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(instance.getCell(0, 2));
-		System.out.println(istance.getCell("A1"));
+		istance.writeCell(1, 0, "=A1");
+//		istance.writeCell(0, 2, "=A2");
+//		System.out.println(instance.getCellExpression(0, 0));
+		try {
+//			System.out.println(instance.getCell(0, 0).getValue());
+			System.out.println(instance.getCell(0, 1).getValue());
+		} catch (InvalidCellException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	
