@@ -64,7 +64,7 @@ public class SumHandler extends FuncHandler {
     }
 
     private double calculateValueForSingleCell(Cell thisCell) throws InfiniteReferenceException {
-        if (thisCell.checkDep(resultCell)) {
+        if (thisCell.isReferenced(resultCell)) {
             thisCell.addDependent(resultCell);
             resultCell.addDependent(thisCell);
         } else {
