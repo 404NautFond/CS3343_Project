@@ -4,7 +4,11 @@ import fxcel.Cell;
 
 public class InvalidCellException extends FxcelException {
 
-    private static final String TAG = "InvalidCellException";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6473126906512358115L;
+	private static final String TAG = "InvalidCellException";
     private static final String messageNullValue  = "Try to access a null value cell";
     private static final String messageTextValue = "Try to access a text value cell in the formula expression";
 

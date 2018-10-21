@@ -1,9 +1,9 @@
 package fxcel;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
+//import java.util.StringTokenizer;
 
 import fxcelException.*;
 import fxcelHandler.*;
@@ -15,7 +15,7 @@ public class Cell extends Subject implements Observer {
 	private static final long serialVersionUID = 1088607801192340601L;
 	private String expression;
 	private double value;	//default is 0 when computing, but not display
-	private List<Cell> dependent;
+	private List<Cell> dependent = new ArrayList<Cell>();
 
 	private boolean valueNotDefine;
 	
@@ -28,10 +28,13 @@ public class Cell extends Subject implements Observer {
 		this.valueNotDefine = true;
 	}
 
-	protected void assign(String expression) {
+	protected void assign(String expression) throws FxcelException {
+		// keep the original content anyway
+		this.expression = expression;
+		
 		char identifier = expression.charAt(0);
 		if (identifier == ':') {
-			this.expression = expression;
+			return;
 		} else if (identifier == '=') {
 			String[] numberlike = expression.split("=:+-*/^()");
 			for(String num:numberlike) {
@@ -39,11 +42,16 @@ public class Cell extends Subject implements Observer {
 			}
 			
 			//TODO: Check the dependency
+			for(Cell dep: dependent) {
+				if(dep.equals(this)) continue;
+				if(dep.isReferenced(this)) {
+					//infinite reference
+					throw new InfiniteReferenceException(dep, this);
+				}
+			}
 			
 			this.value = new GeneralHandler().handle(expression);
 			this.valueNotDefine = false;
-		} else {
-			this.expression = expression;
 		}
 	}
 
@@ -52,12 +60,12 @@ public class Cell extends Subject implements Observer {
 	}
 	
 	public double getValue() throws InvalidCellException{
-		if(!valueNotDefine) 
+		if(valueNotDefine) 
 			throw new InvalidCellException(this);
 		return this.value;
 	}
 
-	protected boolean checkDep(Cell c) {
+	public boolean checkDep(Cell c) {
 		for (Cell dep : dependent) {
 			if (dep == c) {
 				if (this != c) {
@@ -73,14 +81,19 @@ public class Cell extends Subject implements Observer {
 
 	protected void clear() {
 		this.expression = null;
+		this.value = 0;
+		this.valueNotDefine = true;
 		for (Cell d : dependent) {
-			d = null;
+			d.update();
 		}
+		this.dependent.clear();
 	}
 
 	@Override
 	public String toString() {
-		return null;
+		String temp = "The expression is \""+ this.expression + "\"";
+		if(!this.valueNotDefine) temp += "The value is \""+ this.value + "\"";
+		return temp;
 	}
 
 	/**
@@ -90,10 +103,6 @@ public class Cell extends Subject implements Observer {
 	 */
 	protected void writeCell(String input) {
 		this.expression = input;
-	}
-
-	protected String readContent() {
-		return this.expression;
 	}
 
 	@Override
@@ -120,8 +129,19 @@ public class Cell extends Subject implements Observer {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		//        this.value = cal.calculate(expressionArray);
+		this.value = new GeneralHandler().handle(this.expression);
+	}
+
+	public void addDependent(Cell cell) {
+		dependent.add(cell);
+	}
+	
+	public boolean isReferenced(Cell cell) {
+		if(dependent.contains(cell)) return true;
+		for(Cell dep: dependent) {
+			if (dep.isReferenced(cell)) return true;
+		}
+		return false;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+import fxcel.Fxcel;
 import fxcelException.*;
 
 public class GeneralHandler extends ExpHandler{
@@ -21,7 +22,7 @@ public class GeneralHandler extends ExpHandler{
 
 	public static void main(String[] args) {
 		GeneralHandler my = new GeneralHandler();
-		System.out.println(my.handle("=2^2"));
+		System.out.println(my.handle("=2+2/2"));
 	}
 
 	private double recursion() throws InvalidExpressionException{
@@ -45,6 +46,7 @@ public class GeneralHandler extends ExpHandler{
 	}
 
 	@Override
+	//TODO Any using of number 2 need to varify the type of the cell
 	public double handle(String expression){
 		feed(expression);
 		String tempToken, sym, number1, number2;
@@ -77,18 +79,21 @@ public class GeneralHandler extends ExpHandler{
 					throw new InvalidExpressionException();
 				default:
 					if(isNumeric(tempToken)) buffer.push(tempToken);
-					//else if(isCell(tempToken)) buffer.push(null);
+					else if(isCell(tempToken)) buffer.push(Fxcel.getInstance().getCell(tempToken).getValue()+"");
 					//else if(isFunc(tempToken)) buffer.push(null);
 				}
 			}
 		}catch(InvalidExpressionException e) {
 			e.printStackTrace();
 			return 0;
+		} catch (InvalidCellException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 //		System.out.println(buffer.toString() + "::" + tokens.toString());
 
-		while(buffer.size() != 1) {
+		while(buffer.size() > 1) {
 			number2 = buffer.pop();
 			sym = buffer.pop();
 			number1 = buffer.pop();

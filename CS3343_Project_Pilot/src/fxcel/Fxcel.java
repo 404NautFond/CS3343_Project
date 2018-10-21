@@ -1,10 +1,12 @@
 package fxcel;
 
-import java.io.File;
+//import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import fxcelException.FxcelException;
+import fxcelException.InvalidCellException;
 import fxcelHandler.CellNamingHandler;
 
 public class Fxcel implements Serializable {
@@ -20,7 +22,7 @@ public class Fxcel implements Serializable {
 	private int row_max;
 	private int col_max;
 
-	private Observer obs;
+//	private Observer obs;
 
 	private static Fxcel instance = new Fxcel();
 
@@ -91,14 +93,19 @@ public class Fxcel implements Serializable {
 	}
 	
 	public Cell getCell(String name) {
-		int row = CellNamingHandler.getRowEnhanced(name);
-		int col = CellNamingHandler.getColumnEnhanced(name);
+		int row = CellNamingHandler.getRowEnhanced(name) - 1;
+		int col = CellNamingHandler.getColumnEnhanced(name) - 1;
+//		System.out.println(row + " " + col);
 		return getCell(row,col);
-		
 	}
 	
 	public void writeCell(int row, int col, String expression) {
-		getCell(row, col).assign(expression);
+		try {
+			getCell(row, col).assign(expression);
+		} catch (FxcelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Cell getCell(int row, int col) {
@@ -107,6 +114,25 @@ public class Fxcel implements Serializable {
 	
 	public String getCellExpression(int row, int col) {
 		return getCell(row,col).getExpression();
+	}
+	
+	public static void main(String[] args) {
+		Fxcel istance = Fxcel.getInstance();
+		istance.writeCell(0, 0, "=2+3*6");
+		//TODO try A1*A1
+		istance.writeCell(0, 1, "=A1*5");
+		istance.writeCell(0, 2, ":=A1*5");
+		System.out.println(instance.getCellExpression(0, 0));
+		try {
+			System.out.println(instance.getCell(0, 0).getValue());
+			System.out.println(instance.getCell(0, 1).getValue());
+			System.out.println(instance.getCell(0, 2).getValue());
+		} catch (InvalidCellException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(instance.getCell(0, 2));
+		System.out.println(istance.getCell("A1"));
 	}
 
 	
@@ -123,30 +149,5 @@ public class Fxcel implements Serializable {
 	public static Fxcel getInstance() {
 		return instance;
 	}
-
-	//	//Testing
-	//	public static void main(String[] args) {
-	//		try {
-	//			Fxcel.getInstance().writeCell(1, 2, "=1+2");
-	//			String out = Fxcel.getInstance().readCellContent(1, 2);
-	//			double val = Fxcel.getInstance().readCellVal(1, 2);
-	//			System.out.println(val);
-	//			//out = Fxcel.getInstance().readCellContent(1, 3);
-	//		} catch (Exception e) {
-	//			// TODO Auto-generated catch block
-	//			e.printStackTrace();
-	//		}
-	//	}
-	//	
-	//	/**
-	//	 * Read the Fxcel Object from the file in the path, need the object serial
-	//	 * @param inFile
-	//	 */
-	//	public void readFxcel(File inFile) {}
-	//	/**
-	//	 * To save the Fxcel file in the path
-	//	 * @param path the path to be stored in
-	//	 */
-	//	public void saveFxcel(String path) {}
 
 }

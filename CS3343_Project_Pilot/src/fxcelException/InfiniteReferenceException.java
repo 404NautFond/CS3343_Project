@@ -4,7 +4,11 @@ import fxcel.Cell;
 
 public class InfiniteReferenceException extends FxcelException {
 
-    private static final String TAG = "InvalidExpressionExcept";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7138802300210985219L;
+	private static final String TAG = "InvalidExpressionExcept";
     private static final String message = "Refer to an object that has already referred to the caller!";
 
     private Cell cellA;

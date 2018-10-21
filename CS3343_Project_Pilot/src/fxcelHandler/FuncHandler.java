@@ -1,6 +1,6 @@
 package fxcelHandler;
 
-public class FuncHandler extends ExpHandler {
+public abstract class FuncHandler extends ExpHandler {
 
 	@Override
 	public double handle(String expression) {
