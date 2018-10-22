@@ -8,35 +8,25 @@ import fxcelException.InvalidCellException;
 public class SumHandler extends FuncHandler {
 
     private Cell resultCell;
-    private char[] inputExpression;
 
     @Override
-    public double handle(String expression) {
+    public double handle(String expression, Cell resultCell) {
 //    		return 2;
         double result = 0;
+        char[] inputExpression;
         inputExpression = expression.toCharArray();
-        resultCell = getResultCell();
+        this.resultCell = resultCell;
         for (char character : inputExpression) {
             if (character == ':') {
                 result = calculateForInputType1(expression);
                 break;
             }
             if (character == ',') {
-                result = calculateForInputType2();
+                result = calculateForInputType2(expression);
                 break;
             }
         }
         return result;
-    }
-
-    private Cell getResultCell() {
-        String nameOfResultCell = "";
-        for (int i = inputExpression.length - 1; i > 0; i--) {
-            if (inputExpression[i] != '=') {
-                nameOfResultCell = inputExpression[i] + nameOfResultCell;
-            }
-        }
-        return Fxcel.getInstance().getCell(nameOfResultCell);
     }
 
     private double calculateForInputType1(String input) { // 'cell : cell' input type
@@ -47,7 +37,7 @@ public class SumHandler extends FuncHandler {
         int endColumn;
         String[] temp;
 
-        temp = input.split(":|=");
+        temp = input.split(":");
         startRow = CellNamingHandler.getRowEnhanced(temp[0]);
         startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);
         endRow = CellNamingHandler.getRowEnhanced(temp[1]);
@@ -67,21 +57,16 @@ public class SumHandler extends FuncHandler {
         return result;
     }
 
-    private double calculateForInputType2() { // 'cell,cell' input type
+    private double calculateForInputType2(String input) { // 'cell,cell' input type
         double result = 0;
-        String cellName = "";
-        for (char character : inputExpression) {
-            if (character != ',' && character != '=') {
-                cellName += character;
-            } else {
-                try {
-                    result += calculateValueForSingleCell(Fxcel.getInstance().getCell(cellName));
-                    cellName = "";
-                } catch (InfiniteReferenceException e) {
-                    e.printStackTrace();
-                }
-                if (character == '=')
-                    break;
+        String[] cellName;
+
+        cellName = input.split(",");
+        for (String singleCell: cellName) {
+            try {
+                result += calculateValueForSingleCell(Fxcel.getInstance().getCell(singleCell));
+            } catch (InfiniteReferenceException e) {
+                e.printStackTrace();
             }
         }
         return result;

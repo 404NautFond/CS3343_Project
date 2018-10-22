@@ -1,5 +1,7 @@
 package fxcelHandler;
 
+import fxcel.Cell;
+
 import java.math.BigDecimal;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -8,6 +10,8 @@ import java.util.regex.Pattern;
 public abstract class ExpHandler {
 	Stack<String> buffer;
 	abstract double handle(String expression);
+
+	abstract double handle(String expression, Cell resultCell);
 
 	//Credit to Yutao from CSDN
 	public static boolean isNumeric(String str) {
