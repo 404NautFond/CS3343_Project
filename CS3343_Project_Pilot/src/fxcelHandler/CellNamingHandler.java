@@ -4,12 +4,6 @@ package fxcelHandler;
 
 public class CellNamingHandler extends ExpHandler {
 
-	// Get column number
-    // Consider to be useless as well
-//    public int getColumn (String str) {
-//        return getNumberOfLetter(str);
-//    }
-
     // Get row number
     public static int getRowEnhanced(String str) {
     		int pos = 0;

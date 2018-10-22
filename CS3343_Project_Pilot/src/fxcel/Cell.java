@@ -1,9 +1,7 @@
 package fxcel;
 
-//import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.StringTokenizer;
 
 import fxcelException.*;
 import fxcelHandler.*;
@@ -71,8 +69,13 @@ public class Cell extends Subject implements Observer {
 			String[] numberlike = expression.split("=|:|\\+|-|\\*|/|^|\\(|\\)");
 			// add all referenced cell into dep list
 			for(String num:numberlike) {
-				if(ExpHandler.isCell(num)) 
-					this.addDependent(Fxcel.getInstance().getCell(num));
+				if(ExpHandler.isCell(num)) {
+					Cell tempCell = Fxcel.getInstance().getCell(num);
+					if(!dependent.contains(tempCell)) {
+						this.addDependent(tempCell);
+						tempCell.attach(this);
+					}
+				}
 			}
 			
 			// recursively check dependent list
@@ -86,6 +89,7 @@ public class Cell extends Subject implements Observer {
 			// change the value otherwise
 			this.value = new GeneralHandler().handle(expression);
 			this.isValueNotDefine = false;
+			this.notifyObservers();
 		}
 	}
 
@@ -131,7 +135,7 @@ public class Cell extends Subject implements Observer {
 	/* From class Subject */
 	@Override
 	public void attach(Cell c) {
-		for (Cell cell: list) {
+		for (Cell cell:list) {
 			if (cell == c) {
 				return;
 			}
@@ -146,7 +150,7 @@ public class Cell extends Subject implements Observer {
 
 	@Override
 	public void notifyObservers() {
-		for (Cell c : list) {
+		for (Cell c :list) {
 			c.update();
 		}
 	}

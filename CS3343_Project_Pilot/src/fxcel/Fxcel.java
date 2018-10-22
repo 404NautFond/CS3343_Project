@@ -10,22 +10,19 @@ import fxcelException.InvalidCellException;
 import fxcelHandler.CellNamingHandler;
 
 public class Fxcel implements Serializable {
-
+	// Singleton
+	private static Fxcel instance = new Fxcel();
+	
 	/**
 	 * For serialization
 	 */
 	private static final long serialVersionUID = 7670923517384831952L;
-	/**
-	 * Array structure for cells
-	 */
-	private List<List<Cell>> table = null;
+	private List<List<Cell>> table = null; 	// Array structure for cells
 	private int row_max;
 	private int col_max;
-
-	private static Fxcel instance = new Fxcel();
-
+	
 	/**
-	 * Default Constructor
+	 * Default Constructor, will be called by the singleton
 	 */
 	private Fxcel() {
 		this.row_max = 30;
@@ -117,24 +114,19 @@ public class Fxcel implements Serializable {
 	
 	public static void main(String[] args) {
 		Fxcel istance = Fxcel.getInstance();
-		istance.writeCell(0, 0, "=1");
-		istance.writeCell(0, 1, "=(2+A1)^(1+A1)");
-		//TODO try A1*A1
+		//TODO =-1+5
+		istance.writeCell(0, 0, "=(-1)+5");
+		istance.writeCell(0, 1, "=A1*2");
 		try {
 			System.out.println(instance.getCell(0, 0).getValue());
-//			System.out.println(instance.getCell(0, 1).getValue());
-		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		istance.writeCell(1, 0, "=A1");
-//		istance.writeCell(0, 2, "=A2");
-//		System.out.println(instance.getCellExpression(0, 0));
-		try {
-//			System.out.println(instance.getCell(0, 0).getValue());
 			System.out.println(instance.getCell(0, 1).getValue());
 		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		istance.writeCell(0, 0, "=1");
+		try {
+			System.out.println(instance.getCell(0, 1).getValue());
+		} catch (InvalidCellException e) {
 			e.printStackTrace();
 		}
 	}

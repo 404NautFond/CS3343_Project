@@ -12,6 +12,7 @@ public class SumHandler extends FuncHandler {
 
     @Override
     public double handle(String expression) {
+//    		return 2;
         double result = 0;
         inputExpression = expression.toCharArray();
         resultCell = getResultCell();

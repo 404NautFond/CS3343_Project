@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.util.*;
 
 public abstract class Subject implements Serializable{
-
-    /**
-	 * 
+	/**
+	 * For serialization
 	 */
 	private static final long serialVersionUID = 2013543366613221398L;
 	public List<Cell> list;
