@@ -13,112 +13,125 @@ public class Cell extends Subject implements Observer {
 	 * For serialization
 	 */
 	private static final long serialVersionUID = 1088607801192340601L;
+	
 	private String expression;
 	private double value;	//default is 0 when computing, but not display
 	private List<Cell> dependent = new ArrayList<Cell>();
-
-	private boolean valueNotDefine;
+	private boolean isValueNotDefine;
 	
-	//
 	private String mypos = null;
 	public void setPos(String str){this.mypos = str;}
 	
 	/**
-	 * Default Constructor
+	 * Default constructor for cell, will be called by Fxcel
 	 */
 	public Cell() {
 		super();
 		this.expression = null;
 		this.value = 0;
-		this.valueNotDefine = true;
+		this.isValueNotDefine = true;
 	}
 
-	protected void assign(String expression) throws FxcelException {
+	/**
+	 * Getter of String field expression
+	 * @return expression
+	 */
+	public String getExpression() {
+		return this.expression;
+	}
+	
+	/**
+	 * Getter of double field value
+	 * @return value
+	 * @throws InvalidCellException
+	 */
+	public double getValue() throws InvalidCellException{
+		if(isValueNotDefine) {
+			throw new InvalidCellException(this);
+		}
+		return this.value;
+	}
+	
+	/**
+	 * Assign an expression to the Cell. Classifications and computations will be done.
+	 * @param expression The String fed into the cell
+	 * @throws InfiniteReferenceException 
+	 */
+	protected void assign(String expression) throws InfiniteReferenceException {
 		// keep the original content anyway
 		this.expression = expression;
 
+		// define expression by the first char
 		char identifier = expression.charAt(0);
-		if (identifier == ':') {
+		
+		if (identifier == ':') {					// pure text
 			return;
-		} else if (identifier == '=') {
+		} else if (identifier == '=') {			// expression
+			// use regular expression to split the expression
 			String[] numberlike = expression.split("=|:|\\+|-|\\*|/|^|\\(|\\)");
+			// add all referenced cell into dep list
 			for(String num:numberlike) {
-//				System.out.println(num);
-				if(GeneralHandler.isCell(num)) 
+				if(ExpHandler.isCell(num)) 
 					this.addDependent(Fxcel.getInstance().getCell(num));
 			}
 			
-//			System.out.println(this.dependent);
-			
-			System.out.println("I'm checking on "+this);
+			// recursively check dependent list
 			for(Cell dep: dependent) {
-//				System.out.println(dep);
-				if(dep.equals(this)) continue;
-				if(dep.checkDep(this)) {
+				if(!dep.equals(this) && dep.checkDep(this)) {
 					//infinite reference
 					throw new InfiniteReferenceException(dep, this);
 				}
 			}
 			
+			// change the value otherwise
 			this.value = new GeneralHandler().handle(expression);
-			this.valueNotDefine = false;
+			this.isValueNotDefine = false;
 		}
 	}
-	
+
+	/**
+	 * Auxiliary function for adding dependent list
+	 * @param cell The target cell to be added into the list of the current cell 
+	 */
 	public void addDependent(Cell cell) {
-		dependent.add(cell);
+		if(!dependent.contains(cell))
+			dependent.add(cell);
 	}
 	
+	/**
+	 * Recursively check if the cell exists in the dependent list
+	 * @param cell The target cell
+	 * @return If the cell exists in the dependent list
+	 */
 	public boolean checkDep(Cell cell) {
-		if(dependent.contains(cell)) return true;
-		System.out.println(this);
-		System.out.println(this.dependent);
+		if(dependent.contains(cell)) 
+			return true;
 		for(Cell dep: dependent) {
-			if (dep.checkDep(cell)) return true;
+			if (dep.checkDep(cell)) {
+				return true;
+			}
 		}
 		return false;
 	}
 	
-	public String getExpression() {
-		return this.expression;
-	}
-	
-	public double getValue() throws InvalidCellException{
-		if(valueNotDefine) {
-			throw new InvalidCellException(this);
-		}
-		return this.value;
-	}
-
+	/**
+	 * Clear the current cell
+	 */
 	protected void clear() {
 		this.expression = null;
 		this.value = 0;
-		this.valueNotDefine = true;
-		for (Cell d : dependent) {
-			d.update();
+		this.isValueNotDefine = true;
+		for (Cell cell: dependent) {
+			cell.update();
+			detach(cell);
 		}
 		this.dependent.clear();
 	}
 
-	@Override
-	public String toString() {
-		String temp = mypos+": The expression is \""+ this.expression + "\"";
-		if(!this.valueNotDefine) temp += ", The value is \""+ this.value + "\"";
-		return temp;
-	}
-
-	/**
-	 * Constructor with String input
-	 *
-	 * @param input the intended content
-	 */
-	protected void writeCell(String input) {
-		this.expression = input;
-	}
-
+	/* From class Subject */
 	@Override
 	public void attach(Cell c) {
-		for (Cell cell : list) {
+		for (Cell cell: list) {
 			if (cell == c) {
 				return;
 			}
@@ -137,14 +150,19 @@ public class Cell extends Subject implements Observer {
 			c.update();
 		}
 	}
-
+	
 	@Override
 	public void update() {
 		this.value = new GeneralHandler().handle(this.expression);
 	}
+	/* End of override function from Subject */
 
-
-	
-
-
+	/* From class Object */
+	@Override
+	public String toString() {
+		String temp = mypos+": The expression is \""+ this.expression + "\"";
+		if(!this.isValueNotDefine) temp += ", The value is \""+ this.value + "\"";
+		return temp;
+	}
+	/* End of override function from Object*/
 }

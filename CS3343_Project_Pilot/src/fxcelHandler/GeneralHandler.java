@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.*;
 
@@ -20,6 +21,10 @@ public class GeneralHandler extends ExpHandler{
 		}
 	}
 
+	/**
+	 * Tester
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		GeneralHandler my = new GeneralHandler();
 		System.out.println(my.handle("=2+2/2"));
@@ -54,7 +59,7 @@ public class GeneralHandler extends ExpHandler{
 			while(tokens.size() != 0) {
 				try {
 					tempToken = tokens.remove(0);
-					//				System.out.println(tempToken + "::Buffer::" + buffer.toString() + "::Tokens::" + tokens.toString());
+//					System.out.println(tempToken + "::Buffer::" + buffer.toString() + "::Tokens::" + tokens.toString());
 					switch(tempToken) {
 					case "=":
 						continue;
@@ -79,8 +84,9 @@ public class GeneralHandler extends ExpHandler{
 					case ")":
 						throw new InvalidExpressionException();
 					default:
-						String temp = (expandOperand(tempToken));
-						if(temp != null) buffer.push(temp);
+						String tempOprand = (expandOperand(tempToken));
+						if(tempOprand != null) buffer.push(tempOprand);
+						
 					}
 				}catch(InvalidCellException e) {
 					buffer.push("0");
@@ -100,15 +106,16 @@ public class GeneralHandler extends ExpHandler{
 			buffer.push(calcu(number1, sym, number2)+"");
 		}
 
-		//		System.out.println(buffer.toString() + "::" + tokens.toString());
+//		System.out.println(buffer.toString() + "::" + tokens.toString());
 		return Double.parseDouble(buffer.lastElement());
 	}
 
 	private static String expandOperand(String operand) throws InvalidCellException {
 		if(isNumeric(operand)) return operand;
-		else if(isCell(operand)) 
-			return (Fxcel.getInstance().getCell(operand).getValue()+"");
-		//else if(isFunc(tempToken)) buffer.push(null);
+		else if(isCell(operand)) {
+			Cell targetCell = Fxcel.getInstance().getCell(operand);
+			return (targetCell.getValue()+"");
+		}
 		return null;
 	}
 

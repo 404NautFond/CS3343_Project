@@ -22,8 +22,6 @@ public class Fxcel implements Serializable {
 	private int row_max;
 	private int col_max;
 
-//	private Observer obs;
-
 	private static Fxcel instance = new Fxcel();
 
 	/**
@@ -119,7 +117,8 @@ public class Fxcel implements Serializable {
 	
 	public static void main(String[] args) {
 		Fxcel istance = Fxcel.getInstance();
-		istance.writeCell(0, 0, "=A2+A2");
+		istance.writeCell(0, 0, "=1");
+		istance.writeCell(0, 1, "=(2+A1)^(1+A1)");
 		//TODO try A1*A1
 		try {
 			System.out.println(instance.getCell(0, 0).getValue());
