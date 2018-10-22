@@ -32,12 +32,6 @@ public class CellNamingHandler extends ExpHandler {
        }
     }
 
-    // Get enhanced row number
-    // Consider to be useless?
-//    public static int getRowEnhanced(String str) {
-//        return getRow(str);
-//    }
-
     // Transfer string to a 26-radix number
     private static int getNumberOfLetter(String input) {
     		char temp;
