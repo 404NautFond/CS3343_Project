@@ -5,9 +5,9 @@ import fxcel.Cell;
 public class AverageHandler extends FuncHandler {
 
     @Override
-    double handle(String expression, Cell resultCell) {
+    double handleForDoubleReturn(String expression, Cell resultCell) {
         double result;
-        result = new SumHandler().handle(expression, resultCell);
+        result = this.handleForDoubleReturn(expression, resultCell);
         return result;
     }
 }

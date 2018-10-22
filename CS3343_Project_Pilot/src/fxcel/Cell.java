@@ -87,7 +87,7 @@ public class Cell extends Subject implements Observer {
 			}
 			
 			// change the value otherwise
-			this.value = new GeneralHandler().handle(expression);
+			this.value = new GeneralHandler().handleForDoubleReturn(expression);
 			this.isValueNotDefine = false;
 			this.notifyObservers();
 		}
@@ -157,7 +157,7 @@ public class Cell extends Subject implements Observer {
 	
 	@Override
 	public void update() {
-		this.value = new GeneralHandler().handle(this.expression);
+		this.value = new GeneralHandler().handleForDoubleReturn(this.expression);
 	}
 	/* End of override function from Subject */
 

@@ -9,9 +9,11 @@ import java.util.regex.Pattern;
 
 public abstract class ExpHandler {
 	Stack<String> buffer;
-	abstract double handle(String expression);
+	abstract double handleForDoubleReturn(String expression);
 
-	abstract double handle(String expression, Cell resultCell);
+	abstract double handleForDoubleReturn(String expression, Cell resultCell);
+
+	abstract int handleForIntegerReturn(String expression, Cell resultCell);
 
 	//Credit to Yutao from CSDN
 	public static boolean isNumeric(String str) {

@@ -47,7 +47,7 @@ public class CellNamingHandler extends ExpHandler {
     }
     
 	@Override
-	public double handle(String expression) {
+	public double handleForDoubleReturn(String expression) {
 		return 0;
 	}
 

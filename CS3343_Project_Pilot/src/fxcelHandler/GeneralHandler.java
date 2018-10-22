@@ -20,11 +20,11 @@ public class GeneralHandler extends ExpHandler{
 	 */
 	public static void main(String[] args) {
 		GeneralHandler my = new GeneralHandler();
-		System.out.println(my.handle("=SUM(1+1)"));
+		System.out.println(my.handleForDoubleReturn("=SUM(1+1)"));
 	}
 
 	@Override
-	public double handle(String expression){
+	public double handleForDoubleReturn(String expression){
 		feed(expression);
 		String tempToken, sym, number1, number2;
 		try {
@@ -132,7 +132,7 @@ public class GeneralHandler extends ExpHandler{
 		try {
 			// recursively call the handler
 			GeneralHandler tempHandler = new GeneralHandler();
-			res = tempHandler.handle(temp);
+			res = tempHandler.handleForDoubleReturn(temp);
 //		} catch (NoSuchElementException e) {
 //			throw new InvalidExpressionException();
 		} catch (EmptyStackException e) {
@@ -152,7 +152,7 @@ public class GeneralHandler extends ExpHandler{
 			sym = buffer.pop();
 			try {
 				number1 = buffer.pop();
-				// specially handle negative values
+				// specially handleForDoubleReturn negative values
 				// TODO =-1+5
 				if(sym.equals("-")) {
 					if(!ExpHandler.isNumeric(number1)) {
@@ -189,7 +189,7 @@ public class GeneralHandler extends ExpHandler{
 		// Choosing formula type
 		switch(formula) {
 		case "SUM":
-			return ""+new SumHandler().handle(tempExpr);
+			return ""+new SumHandler().handleForDoubleReturn(tempExpr);
 		}
 		// If not match anything
 		throw new InvalidExpressionException();
