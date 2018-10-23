@@ -180,6 +180,7 @@ public class GeneralHandler extends ExpHandler{
 		// Gathering parameters
 		String tempExpr = "";
 		try {
+			tokens.remove(0);
 			while(!tokens.get(0).equals(")")) {
 				tempExpr = tempExpr + tokens.remove(0);
 			}

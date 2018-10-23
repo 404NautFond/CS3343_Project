@@ -5,11 +5,27 @@ import fxcel.Fxcel;
 import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
 
-public class SumHandler extends FuncHandler {
+public class SumHandler_Li extends FuncHandler {
 
     @Override
+    public double handleForDoubleReturn(String expression) {
+        double result = 0;
+        char[] inputExpression;
+        inputExpression = expression.toCharArray();
+        for (char character : inputExpression) {
+            if (character == ':') {
+                result = calculateForInputType1(expression);
+                break;
+            }
+            if (character == ',') {
+                result = calculateForInputType2(expression);
+                break;
+            }
+        }
+        return result;
+    }
+    @Override
     public double handleForDoubleReturn(String expression, Cell resultCell) {
-//    		return 2;
         double result = 0;
         char[] inputExpression;
         inputExpression = expression.toCharArray();
@@ -23,6 +39,7 @@ public class SumHandler extends FuncHandler {
                 result = calculateForInputType2(expression);
                 break;
             }
+            System.out.println("Anything");
         }
         return result;
     }
@@ -34,25 +51,19 @@ public class SumHandler extends FuncHandler {
         int endRow;
         int endColumn;
         String[] temp;
-
-        temp = input.split(":");
+        temp = input.trim().split(":");
         startRow = CellNamingHandler.getRowEnhanced(temp[0]);
         startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);
         endRow = CellNamingHandler.getRowEnhanced(temp[1]);
         endColumn = CellNamingHandler.getColumnEnhanced(temp[1]);
 
-        for (int i = startRow; i<=endRow; i++) {
-            for (int j = startColumn; j < endColumn; j++) {
-                Cell tempCell = Fxcel.getInstance().getCell(i, j);
-                try {
-                    checkDependentForSingleCell(Fxcel.getInstance().getCell(i, j));
-                } catch (InfiniteReferenceException e) {
-                    e.printStackTrace();
-                }
+//        System.out.println(startRow+" "+startColumn+" "+endRow+" "+endColumn);
+        
+        for (int i = startRow-1; i<=endRow-1; i++) {
+            for (int j = startColumn-1; j <= endColumn-1; j++) {
                 result += calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
             }
         }
-
         return result;
     }
 
@@ -76,7 +87,7 @@ public class SumHandler extends FuncHandler {
         try {
             return thisCell.getValue();
         } catch (InvalidCellException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return 0;
         }
     }

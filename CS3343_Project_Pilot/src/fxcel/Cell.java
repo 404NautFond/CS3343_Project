@@ -1,6 +1,7 @@
 package fxcel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fxcelException.*;
@@ -66,17 +67,22 @@ public class Cell extends Subject implements Observer {
 			return;
 		} else if (identifier == '=') {			// expression
 			// use regular expression to split the expression
-			String[] numberlike = expression.split("=|:|\\+|-|\\*|/|^|\\(|\\)|,");
-			// add all referenced cell into dep list
-			for(String num:numberlike) {
+			String[] numberlike = expression.split("=|\\+|-|\\*|/|^|\\(|\\)|,");
+			ArrayList<String> numberlikelist = new ArrayList<String>(Arrays.asList(numberlike));
+			// add all referenced cell into dependent list
+			for(String num: numberlikelist) {
 				if(ExpHandler.isCell(num)) {
 					Cell tempCell = Fxcel.getInstance().getCell(num);
+					numberlikelist.remove(num);
 					if(!dependent.contains(tempCell)) {
 						this.addDependent(tempCell);
 						tempCell.attach(this);
 					}
 				}
 			}
+			
+			addDependent(numberlikelist);
+//			System.out.println(dependent);
 			
 			// recursively check dependent list
 			for(Cell dep: dependent) {
@@ -93,12 +99,29 @@ public class Cell extends Subject implements Observer {
 		}
 	}
 
+	public void addDependent(ArrayList<String> left) {
+		for(String range:left) {
+			String[] cells = range.split(" |:");
+//			System.out.println("Length:"+cells.length);
+			//Pre-conditions: The cells are sorted
+			if(cells.length == 2 && ExpHandler.isCell(cells[0]) && ExpHandler.isCell(cells[1])) {
+				for(int j = CellNamingHandler.getColumnEnhanced(cells[0]); j <= CellNamingHandler.getColumnEnhanced(cells[1]); j++) {
+					for(int i = CellNamingHandler.getRowEnhanced(cells[0]); i <= CellNamingHandler.getRowEnhanced(cells[1]); i++) {
+						addDependent(Fxcel.getInstance().getCell(i-1, j-1));
+//						System.out.println("i:"+i+";j:"+j);
+						Fxcel.getInstance().getCell(i,j).addDependent(this);
+					}
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Auxiliary function for adding dependent list
 	 * @param cell The target cell to be added into the list of the current cell 
 	 */
 	public void addDependent(Cell cell) {
-		if(!dependent.contains(cell))
+		if(!dependent.contains(cell) && cell != this)
 			dependent.add(cell);
 	}
 	
@@ -126,7 +149,7 @@ public class Cell extends Subject implements Observer {
 		this.value = 0;
 		this.isValueNotDefine = true;
 		for (Cell cell: dependent) {
-			cell.update();
+//			cell.update();
 			detach(cell);
 		}
 		this.dependent.clear();

@@ -42,4 +42,6 @@ public class FxcelTest {
 		fxcel.writeCell(0, 0, ":1");
 		assertEquals(":1",fxcel.getCell(0,0).getExpression());
 	}
+	
+
 }
