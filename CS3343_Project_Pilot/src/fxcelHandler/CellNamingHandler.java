@@ -1,6 +1,6 @@
 package fxcelHandler;
 
-//import fxcel.Cell;
+import fxcel.Cell;
 
 public class CellNamingHandler extends ExpHandler {
 
@@ -48,6 +48,18 @@ public class CellNamingHandler extends ExpHandler {
     
 	@Override
 	public double handleForDoubleReturn(String expression) {
+		return 0;
+	}
+
+	@Override
+	double handleForDoubleReturn(String expression, Cell resultCell) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	int handleForIntegerReturn(String expression, Cell resultCell) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 

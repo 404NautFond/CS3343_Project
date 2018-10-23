@@ -215,5 +215,17 @@ public class GeneralHandler extends ExpHandler{
 			return compute(operand, tokens);
 		}
 	}
+
+	@Override
+	double handleForDoubleReturn(String expression, Cell resultCell) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	int handleForIntegerReturn(String expression, Cell resultCell) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
