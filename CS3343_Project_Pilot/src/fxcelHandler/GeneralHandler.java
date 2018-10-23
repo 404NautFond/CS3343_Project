@@ -20,7 +20,6 @@ public class GeneralHandler extends ExpHandler{
 	 */
 	public static void main(String[] args) {
 		GeneralHandler my = new GeneralHandler();
-		System.out.println(my.handleForDoubleReturn("=SUM(1+1)"));
 	}
 
 	@Override
@@ -29,6 +28,7 @@ public class GeneralHandler extends ExpHandler{
 		String tempToken, sym, number1, number2;
 		try {
 			while(tokens.size() != 0) {
+//				System.out.println(tokens);
 				try {
 					tempToken = tokens.remove(0);
 					switch(tempToken) {
@@ -38,7 +38,7 @@ public class GeneralHandler extends ExpHandler{
 					/* level 2 operators */
 					case "*":
 					case "/":
-					case "^":
+//					case "^":
 						number2 = tokens.remove(0);
 						number2 = expand(number2);
 						sym = tempToken;
@@ -104,8 +104,8 @@ public class GeneralHandler extends ExpHandler{
 			return num1*num2;
 		case "/":
 			return (double)num1/num2;
-		case "^":
-			return Math.pow(num1, num2);
+//		case "^":
+//			return Math.pow(num1, num2);
 		default:
 			return -1;
 		}
@@ -122,8 +122,17 @@ public class GeneralHandler extends ExpHandler{
 		/* Syntax error detected */
 		if(tokens.size() == 0) throw new InvalidExpressionException();
 		
+		int parenthesis = 1;
+		
 		// add parameters back to string
-		while(!tokens.get(0).equals(")")) {
+		// TODO: Refactor
+		while(parenthesis != 0) {
+			if(tokens.get(0).equals(")")) {
+				parenthesis--;
+				if(parenthesis == 0)break;
+			} else if(tokens.get(0).equals("(")) {
+				parenthesis++;
+			}
 			temp = temp + tokens.remove(0);
 		}
 		tokens.remove(0);			// remove the ")"
@@ -134,8 +143,6 @@ public class GeneralHandler extends ExpHandler{
 			// recursively call the handler
 			GeneralHandler tempHandler = new GeneralHandler();
 			res = tempHandler.handleForDoubleReturn(temp);
-//		} catch (NoSuchElementException e) {
-//			throw new InvalidExpressionException();
 		} catch (EmptyStackException e) {
 			throw new InvalidExpressionException();
 		}
@@ -211,7 +218,6 @@ public class GeneralHandler extends ExpHandler{
 		}else if(isNumeric(operand)) {
 			return operand;
 		}else if(isCell(operand)) {
-			//Cell targetCell = Fxcel.getInstance().getCell(operand);
 			return (Fxcel.getInstance().getCellValue(operand)+"");
 		}else {
 			return compute(operand, tokens);
