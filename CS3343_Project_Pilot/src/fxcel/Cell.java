@@ -66,7 +66,7 @@ public class Cell extends Subject implements Observer {
 			return;
 		} else if (identifier == '=') {			// expression
 			// use regular expression to split the expression
-			String[] numberlike = expression.split("=|:|\\+|-|\\*|/|^|\\(|\\)");
+			String[] numberlike = expression.split("=|:|\\+|-|\\*|/|^|\\(|\\)|,");
 			// add all referenced cell into dep list
 			for(String num:numberlike) {
 				if(ExpHandler.isCell(num)) {
