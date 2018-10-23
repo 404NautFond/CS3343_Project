@@ -16,7 +16,7 @@ public class FxcelTest {
 	
 	@After
 	public void tearDown() {
-		
+		fxcel.clear();
 	}
 	
 	@Test
@@ -28,9 +28,9 @@ public class FxcelTest {
 	@Test
 	public void testGetterByName_02() {
 		fxcel.writeCell(0, 1, "=1");
-		assertEquals("=1",fxcel.getCell("A1").getExpression());
+		assertEquals("=1",fxcel.getCellExpression("B1"));
 		try {
-			assertEquals(1,fxcel.getCell("A1").getValue(),0.0001);
+			assertEquals(1,fxcel.getCellValue("B1"),0.0001);
 		} catch (InvalidCellException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
