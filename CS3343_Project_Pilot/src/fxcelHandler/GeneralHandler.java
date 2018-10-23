@@ -62,6 +62,7 @@ public class GeneralHandler extends ExpHandler{
 						buffer.push(expand(tempToken));
 					}
 				}catch(InvalidCellException e) {
+					// Default for uninitialized Cell
 					buffer.push("0");
 				}
 			}
@@ -209,8 +210,8 @@ public class GeneralHandler extends ExpHandler{
 		}else if(isNumeric(operand)) {
 			return operand;
 		}else if(isCell(operand)) {
-			Cell targetCell = Fxcel.getInstance().getCell(operand);
-			return (targetCell.getValue()+"");
+			//Cell targetCell = Fxcel.getInstance().getCell(operand);
+			return (Fxcel.getInstance().getCellValue(operand)+"");
 		}else {
 			return compute(operand, tokens);
 		}
