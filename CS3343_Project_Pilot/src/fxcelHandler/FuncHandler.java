@@ -2,7 +2,6 @@ package fxcelHandler;
 
 import fxcel.Cell;
 import fxcelException.InfiniteReferenceException;
-import fxcelException.InvalidCellException;
 
 public abstract class FuncHandler extends ExpHandler {
 
