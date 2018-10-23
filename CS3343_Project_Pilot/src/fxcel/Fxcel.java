@@ -38,6 +38,11 @@ public class Fxcel implements Serializable {
 		}
 	}
 
+	/**
+	 * Change the table size based on original content
+	 * @param col The new column number
+	 * @param row The new row number
+	 */
 	public void resize(int col, int row) {
 		//TODO: Check overflow
 		if (col > col_max) {
@@ -67,19 +72,26 @@ public class Fxcel implements Serializable {
 		for (int i = 0; i < row_max; i++) {
 			li.add(new Cell());
 		}
-		table.add(col - 1, li);
+		table.add(col-1, li);
 	}
 
+	/**
+	 * Add new row before a given row number
+	 * @param row The row position
+	 */
 	public void addRow(int row) {
 		for(int i = 0; i < col_max; i++) {
 			List<Cell> li = table.get(i);
-			li.add(row - 1, new Cell());
+			li.add(row-1, new Cell());
 		}
 	}
 
+	/**
+	 * Clear the table
+	 */
 	public void clear() {
-		for (List<Cell> l : table) {
-			for (Cell c : l) {
+		for (List<Cell> l: table) {
+			for (Cell c: l) {
 				c.clear();
 			}
 		}
