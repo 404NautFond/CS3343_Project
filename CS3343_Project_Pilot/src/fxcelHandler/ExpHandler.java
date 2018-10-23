@@ -9,14 +9,25 @@ import java.util.regex.Pattern;
 
 public abstract class ExpHandler {
 	Stack<String> buffer;
+	
+	/**
+	 * Compute the value for the expression
+	 * @param expression The String type expression
+	 * @return The double value
+	 */
 	abstract double handleForDoubleReturn(String expression);
-
+	
 	abstract double handleForDoubleReturn(String expression, Cell resultCell);
-
+	
 	abstract int handleForIntegerReturn(String expression, Cell resultCell);
 
-	//Credit to Yutao from CSDN
+	/**
+	 * To detect if a token is a numerical value (integer or float)
+	 * @param str The token
+	 * @return If the token is numerical
+	 */
 	public static boolean isNumeric(String str) {
+		//Credit to Yutao from CSDN
 		Pattern pattern = Pattern.compile("-?[0-9]+(\\.[0-9]+)?");
 		String bigStr;
 		try {
@@ -28,14 +39,25 @@ public abstract class ExpHandler {
 		return isNum.matches();
 	}
 
+	/**
+	 * To detect if a token is Cell-name-like
+	 * @param str The token
+	 * @return If the token is Cell name
+	 */
 	public static boolean isCell(String str) {
 		Pattern pattern = Pattern.compile("-?[A-Z]+[0-9]+");
 		Matcher isNum = pattern.matcher(str);
 		return isNum.matches();
 	}
 
+	/**
+	 * To detect if a token is a function name
+	 * @param str The token
+	 * @return If the token is a function name
+	 */
 	public static boolean isFunc(String str) {
 		switch(str) {
+		//TODO: Add all the function name or add a static ArrayList
 		case "SUM":
 		case "MAX":
 		case "AVG":
