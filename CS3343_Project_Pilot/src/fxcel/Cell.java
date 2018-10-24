@@ -58,6 +58,7 @@ public class Cell extends Subject implements Observer {
 	 */
 	protected void assign(String expression) throws InfiniteReferenceException {
 		// keep the original content anyway
+		this.clear();
 		this.expression = expression;
 
 		// define expression by the first char
@@ -70,10 +71,11 @@ public class Cell extends Subject implements Observer {
 			String[] numberlike = expression.split("=|\\+|-|\\*|/|^|\\(|\\)|,");
 			ArrayList<String> numberlikelist = new ArrayList<String>(Arrays.asList(numberlike));
 			// add all referenced cell into dependent list
-			for(String num: numberlikelist) {
+			for(int i = numberlikelist.size()-1; i > 0; i--) {
+				String num = numberlikelist.get(i);
 				if(ExpHandler.isCell(num)) {
 					Cell tempCell = Fxcel.getInstance().getCell(num);
-					numberlikelist.remove(num);
+					numberlikelist.remove(i);
 					if(!dependent.contains(tempCell)) {
 						this.addDependent(tempCell);
 						tempCell.attach(this);
@@ -82,7 +84,6 @@ public class Cell extends Subject implements Observer {
 			}
 			
 			addDependent(numberlikelist);
-//			System.out.println(dependent);
 			
 			// recursively check dependent list
 			for(Cell dep: dependent) {
@@ -96,6 +97,13 @@ public class Cell extends Subject implements Observer {
 			this.value = new GeneralHandler().handleForDoubleReturn(expression);
 			this.isValueNotDefine = false;
 			this.notifyObservers();
+		} else {
+			try {
+				this.value = Double.parseDouble(expression);
+				this.isValueNotDefine = false;
+			}catch(Exception e) {
+				//Not a good thing
+			}
 		}
 	}
 
