@@ -1,6 +1,6 @@
 package fxcelException;
 
-public class FxcelException extends Exception{
+public abstract class FxcelException extends Exception{
 
 	/**
 	 * 
