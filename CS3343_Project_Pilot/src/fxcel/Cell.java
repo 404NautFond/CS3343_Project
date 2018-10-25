@@ -68,14 +68,12 @@ public class Cell extends Subject implements Observer {
 			return;
 		} else if (identifier == '=') {			// expression
 			// use regular expression to split the expression
-			String[] numberlike = expression.split("=|\\+|-|\\*|/|^|\\(|\\)|,");
+			String[] numberlike = expression.split("=|\\+|-|\\*|/|^|\\(|\\)|,|\\s");
 			ArrayList<String> numberlikelist = new ArrayList<String>(Arrays.asList(numberlike));
 			// add all referenced cell into dependent list
-			for(int i = numberlikelist.size()-1; i > 0; i--) {
-				String num = numberlikelist.get(i);
+			for(String num: numberlikelist) {
 				if(ExpHandler.isCell(num)) {
 					Cell tempCell = Fxcel.getInstance().getCell(num);
-					numberlikelist.remove(i);
 					if(!dependent.contains(tempCell)) {
 						this.addDependent(tempCell);
 						tempCell.attach(this);
@@ -87,7 +85,7 @@ public class Cell extends Subject implements Observer {
 			
 			// recursively check dependent list
 			for(Cell dep: dependent) {
-				if(!dep.equals(this) && dep.checkDep(this)) {
+				if(dep.equals(this) || dep.checkDep(this)) {
 					//infinite reference
 					throw new InfiniteReferenceException(dep, this);
 				}
@@ -110,13 +108,11 @@ public class Cell extends Subject implements Observer {
 	public void addDependent(ArrayList<String> left) {
 		for(String range:left) {
 			String[] cells = range.split(" |:");
-//			System.out.println("Length:"+cells.length);
 			//Pre-conditions: The cells are sorted
 			if(cells.length == 2 && ExpHandler.isCell(cells[0]) && ExpHandler.isCell(cells[1])) {
 				for(int j = CellNamingHandler.getColumnEnhanced(cells[0]); j <= CellNamingHandler.getColumnEnhanced(cells[1]); j++) {
 					for(int i = CellNamingHandler.getRowEnhanced(cells[0]); i <= CellNamingHandler.getRowEnhanced(cells[1]); i++) {
 						addDependent(Fxcel.getInstance().getCell(i-1, j-1));
-//						System.out.println("i:"+i+";j:"+j);
 						Fxcel.getInstance().getCell(i,j).addDependent(this);
 					}
 				}
@@ -129,7 +125,7 @@ public class Cell extends Subject implements Observer {
 	 * @param cell The target cell to be added into the list of the current cell 
 	 */
 	public void addDependent(Cell cell) {
-		if(!dependent.contains(cell) && cell != this)
+		if(!dependent.contains(cell))
 			dependent.add(cell);
 	}
 	

@@ -2,7 +2,6 @@ package fxcelHandler;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-//import java.util.NoSuchElementException;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
@@ -34,6 +33,7 @@ public class GeneralHandler extends ExpHandler{
 					switch(tempToken) {
 					/* ignore first "=" sign */
 					case "=":
+					case " ":
 						continue;
 					/* level 2 operators */
 					case "*":
@@ -213,6 +213,7 @@ public class GeneralHandler extends ExpHandler{
 	 */
 	private String expand(String operand) 
 			throws InvalidCellException, InvalidExpressionException {
+		operand = operand.trim();
 		if(operand.equals("(")) {
 			return recursion();
 		}else if(isNumeric(operand)) {

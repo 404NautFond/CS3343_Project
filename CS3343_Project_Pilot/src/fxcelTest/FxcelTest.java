@@ -1,6 +1,7 @@
 package fxcelTest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.*;
 import fxcel.Fxcel;
@@ -27,14 +28,8 @@ public class FxcelTest {
 	
 	@Test
 	public void testGetterByName_02() {
-		fxcel.writeCell(0, 1, "=1");
-		assertEquals("=1",fxcel.getCellExpression("B1"));
-		try {
-			assertEquals(1,fxcel.getCellValue("B1"),0.0001);
-		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		fxcel.writeCell(0, 1, "= B1+1");
+		assertEquals(":???",fxcel.getCellExpression("B1"));
 	}
 	
 	@Test

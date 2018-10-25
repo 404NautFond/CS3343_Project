@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import fxcelException.FxcelException;
+//import fxcelException.FxcelException;
+import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
 import fxcelHandler.CellNamingHandler;
 
@@ -108,8 +109,15 @@ public class Fxcel implements Serializable {
 		getCell(row, col).setPos((char)('A'+row)+""+(col+1));
 		try {
 			getCell(row, col).assign(expression);		
-		} catch (FxcelException e) {
+		} catch (InfiniteReferenceException e) {
 			// TODO Auto-generated catch block
+//			System.out.println("An invalid thing happens");
+			try {
+				getCell(row, col).assign(":???");
+			} catch (InfiniteReferenceException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 	}

@@ -34,21 +34,26 @@ public class SumHandlerTest {
 		}
 	}
 	
-//	@Test
-//	public void testHandler_02() {
-//		fxcel.writeCell(0, 0, "=SUM(A1:A2)");
-//		try {
-//			assertEquals(0,fxcel.getCellValue("A1"),0.0001);
-//		} catch (InvalidCellException e) {
-//			// TODO Auto-generated catch block
-////			e.printStackTrace();
-//		}
+	@Test
+	public void testHandler_02() {
+		fxcel.writeCell(0, 0, "=1");
+		fxcel.writeCell(1, 0, "=1");
+		fxcel.writeCell(2, 0, "=1");
+		fxcel.writeCell(3, 0, "=SUM(A1,A2,A3)");
+		fxcel.writeCell(2, 0, "=2");
+//		System.out.println("Q1");
+		try {
+			assertEquals(4,fxcel.getCellValue("A4"),0.001);
+		} catch (InvalidCellException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
 //		fxcel.writeCell(1, 0, "1");
 //		try {
 //			assertEquals(1,fxcel.getCellValue("A1"),0.0001);
 //		} catch (InvalidCellException e) {
-//			// TODO Auto-generated catch block
-////			e.printStackTrace();
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
 //		}
-//	}
+	}
 }
