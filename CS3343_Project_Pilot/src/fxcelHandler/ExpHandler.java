@@ -1,6 +1,7 @@
 package fxcelHandler;
 
 import fxcel.Cell;
+import fxcelException.InvalidExpressionException;
 
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -14,12 +15,12 @@ public abstract class ExpHandler {
 	 * Compute the value for the expression
 	 * @param expression The String type expression
 	 * @return The double value
+	 * @throws InvalidExpressionException 
 	 */
-	abstract double handleForDoubleReturn(String expression);
+	abstract double handleForDoubleReturn(String expression) throws InvalidExpressionException;
 	
-	abstract double handleForDoubleReturn(String expression, Cell resultCell);
-	
-	abstract int handleForIntegerReturn(String expression, Cell resultCell);
+//	abstract double handleForDoubleReturn(String expression, Cell resultCell);
+//	abstract int handleForIntegerReturn(String expression, Cell resultCell);
 
 	/**
 	 * To detect if a token is a numerical value (integer or float)

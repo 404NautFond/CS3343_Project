@@ -4,6 +4,7 @@ import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
+import fxcelException.InvalidExpressionException;
 
 public class SumHandler extends FuncHandler {
 
@@ -14,38 +15,43 @@ public class SumHandler extends FuncHandler {
 		Fxcel ins = Fxcel.getInstance();
 		ins.writeCell(0, 0, "=1");
 		ins.writeCell(1, 0, "=2");
-		System.out.println(test.handleForDoubleReturn("A1:A2"));
+		try {
+			System.out.println(test.handleForDoubleReturn("A1:A2"));
+		} catch (InvalidExpressionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
     @Override
-    public double handleForDoubleReturn(String expression) {
+    public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
     		this.input = expression;
         if(expression.contains(":"))
         		return calculateForInputType1();
         else if(expression.contains(","))
         		return calculateForInputType2();
-        return 0;
+        throw new InvalidExpressionException();
     }
-    @Override
-    public double handleForDoubleReturn(String expression, Cell resultCell) {
-    		this.input = expression;
-        double result = 0;
-        char[] inputExpression;
-        inputExpression = expression.toCharArray();
-        this.resultCell = resultCell;
-        for (char character : inputExpression) {
-            if (character == ':') {
-                result = calculateForInputType1();
-                break;
-            }
-            if (character == ',') {
-                result = calculateForInputType2();
-                break;
-            }
-            System.out.println("Anything");
-        }
-        return result;
-    }
+//    @Override
+//    public double handleForDoubleReturn(String expression) {
+//    		this.input = expression;
+//        double result = 0;
+//        char[] inputExpression;
+//        inputExpression = expression.toCharArray();
+////        this.resultCell = resultCell;
+//        for (char character : inputExpression) {
+//            if (character == ':') {
+//                result = calculateForInputType1();
+//                break;
+//            }
+//            if (character == ',') {
+//                result = calculateForInputType2();
+//                break;
+//            }
+//            System.out.println("Anything");
+//        }
+//        return result;
+//    }
 
     private double calculateForInputType1() { // 'cell : cell' input type
         double result = 0;
@@ -53,11 +59,7 @@ public class SumHandler extends FuncHandler {
         int startColumn;
         int endRow;
         int endColumn;
-        String[] temp;
-        temp = input.trim().split(":");
-        
-        temp[0] = temp[0].trim();
-        temp[1] = temp[1].trim();
+        String[] temp = columnHandler(input);
         
         startRow = CellNamingHandler.getRowEnhanced(temp[0]);
         startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);

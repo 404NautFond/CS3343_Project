@@ -225,16 +225,16 @@ public class GeneralHandler extends ExpHandler{
 		}
 	}
 
-	@Override
-	double handleForDoubleReturn(String expression, Cell resultCell) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	int handleForIntegerReturn(String expression, Cell resultCell) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+//	@Override
+//	double handleForDoubleReturn(String expression, Cell resultCell) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	int handleForIntegerReturn(String expression, Cell resultCell) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 	
 }
