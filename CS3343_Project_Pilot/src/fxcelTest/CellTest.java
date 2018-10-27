@@ -8,6 +8,7 @@ import java.lang.reflect.*;
 import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.InvalidCellException;
+import fxcelException.InfiniteReferenceException;
 
 public class CellTest {
 	
@@ -126,5 +127,56 @@ public class CellTest {
 		assertEquals(-1.1,cell.getValue(),0.0001);
 		fxcel.clear();
 	}
- 
+	
+	//Assign Method Test Case: "=A1*B2"
+	@Test
+	public void testAssign_08() throws InvalidCellException{
+		Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0,0,"=1");
+			fxcel.writeCell(1,1,"=10");
+			method.invoke(cell, "=A1*B2");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals(10,cell.getValue(),0.0001);
+		fxcel.clear();
+	}
+	
+	//Assign Method Test Case: "=F10*(A1+B2)/C3"
+	@Test
+	public void testAssign_09() throws InvalidCellException{
+		Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(9,5,"=-2.5");
+			fxcel.writeCell(1,1,"=999");
+			fxcel.writeCell(0,0,"=-99");
+			fxcel.writeCell(2,2,"3");
+			method.invoke(cell, "=F10*(A1+B2)/C3");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals(-750,cell.getValue(),0.0001);
+		fxcel.clear();
+	}	
+	//Assign Method Test Case: "=F10*(A1+B2)/C3"
+	@Test
+	public void testAssign_10() throws InvalidCellException{
+		Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0,1,"=30");
+			fxcel.writeCell(1,1,"=2");
+			fxcel.writeCell(0,0,"=B2+B1");
+			method.invoke(cell, "=B1+A1");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals(62,cell.getValue(),0.0001);
+		fxcel.clear();
+	}
+	
+  /*
+   * TODO Figure out why Test08 & 10 will throw exception when testing  with other test cases 
+   * 	but will rum normally when separately testing
+   */
 }
