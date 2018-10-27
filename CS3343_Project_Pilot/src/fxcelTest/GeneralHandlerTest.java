@@ -71,7 +71,7 @@ public class GeneralHandlerTest {
 	}
 	
 	//Test Case "=((3))"
-	@Test(expected = IndexOutOfBoundsException.class) 
+	@Test
 	public void testHandleForDoubleReturn_08() {
 		double results = generalHandler.handleForDoubleReturn("=((3))"); 
 		assertEquals(3,results,0.0001);

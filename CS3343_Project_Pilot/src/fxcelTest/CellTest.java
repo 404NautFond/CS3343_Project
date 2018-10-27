@@ -62,31 +62,10 @@ public class CellTest {
 		}
 		assertEquals(0,cell.getValue(),0.0001);
 	}
-	
-//	//Test Case: "=((3))"
-//	@Test(expected = InvalidCellException.class)
-//	public void testAssign_04() throws InvalidCellException{
-//		try {
-//			method.invoke(cell, "=((3))");
-//		} catch (IllegalAccessException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IllegalArgumentException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (InvocationTargetException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IndexOutOfBoundsException e) {
-//			e.printStackTrace();
-//		}
-//		assertEquals(0,cell.getValue(),0.0001);
-//	}
-	
 
 	//Assign Method Test Case: "=A1+B1"
 	@Test
-	public void testAssign_05() throws InvalidCellException{
+	public void testAssign_04() throws InvalidCellException{
 		Fxcel fxcel = Fxcel.getInstance();
 		try {
 			fxcel.writeCell(0,0,"=1");
@@ -101,7 +80,7 @@ public class CellTest {
 	
 	//Assign Method Test Case: "=A1+B1*A1+B1"
 	@Test
-	public void testAssign_06() throws InvalidCellException{
+	public void testAssign_05() throws InvalidCellException{
 		Fxcel fxcel = Fxcel.getInstance();
 		try {
 			fxcel.writeCell(0,0,"=1");
@@ -116,7 +95,7 @@ public class CellTest {
 	
 	//Assign Method Test Case: "=A1+B1+A2+B2"
 	@Test
-	public void testAssign_07() throws InvalidCellException{
+	public void testAssign_06() throws InvalidCellException{
 		Fxcel fxcel = Fxcel.getInstance();
 		try {
 			fxcel.writeCell(0,0,"=1");
@@ -133,7 +112,7 @@ public class CellTest {
 	
 	//Assign Method Test Case: "=A1+B1-A2/B2"
 	@Test
-	public void testAssign_08() throws InvalidCellException{
+	public void testAssign_07() throws InvalidCellException{
 		Fxcel fxcel = Fxcel.getInstance();
 		try {
 			fxcel.writeCell(0,0,"=1");
