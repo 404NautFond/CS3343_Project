@@ -1,9 +1,10 @@
-package fxcelHandler;
+package commonHandler;
 
 import fxcel.Cell;
 import fxcelException.InvalidExpressionException;
+import fxcelHandler.FuncHandler;
 
-public class AverageHandler extends FuncHandler {
+public class AverageHandler extends CommonHandler {
 
 //    @Override
 //    double handleForDoubleReturn(String expression, Cell resultCell) {

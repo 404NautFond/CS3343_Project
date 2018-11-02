@@ -5,6 +5,7 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+import commonHandler.SumHandler;
 import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.*;

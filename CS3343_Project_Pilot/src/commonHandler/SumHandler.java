@@ -1,12 +1,14 @@
-package fxcelHandler;
+package commonHandler;
 
 import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
+import fxcelHandler.CellNamingHandler;
+import fxcelHandler.FuncHandler;
 
-public class SumHandler extends FuncHandler {
+public class SumHandler extends CommonHandler {
 
 	private String input;
 	

@@ -1,17 +1,19 @@
-package fxcelHandler;
+package commonHandler;
 
 import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
+import fxcelHandler.CellNamingHandler;
+import fxcelHandler.FuncHandler;
 
-public class MaxHandler extends FuncHandler {
+public class MinHandler extends FuncHandler {
 
 	private String input;
 
 	public static void main() {
-		MaxHandler test = new MaxHandler();
+		MinHandler test = new MinHandler();
 		Fxcel ins = Fxcel.getInstance();
 		ins.writeCell(0, 0, "=1");
 		ins.writeCell(1, 0, "=2");
@@ -73,7 +75,7 @@ public class MaxHandler extends FuncHandler {
 		for (int i = startRow-1; i<=endRow-1; i++) {
 			for (int j = startColumn-1; j <= endColumn-1; j++) {
 				tmp = calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
-				if(result < tmp) {
+				if(result > tmp) {
 					result = tmp;
 				}
 			}
@@ -91,7 +93,7 @@ public class MaxHandler extends FuncHandler {
 			if(i == 0) {
 				result = tmp;
 				i++;
-			} else if(result < tmp) {
+			} else if(result > tmp) {
 				result = tmp;
 			}
 		}

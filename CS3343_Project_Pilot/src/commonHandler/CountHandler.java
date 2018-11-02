@@ -1,8 +1,10 @@
-package fxcelHandler;
+package commonHandler;
 
 import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.InvalidExpressionException;
+import fxcelHandler.CellNamingHandler;
+import fxcelHandler.FuncHandler;
 
 public class CountHandler extends FuncHandler{
 
