@@ -8,7 +8,7 @@ import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 import fxcelHandler.FuncHandler;
 
-public class MaxHandler extends FuncHandler {
+public class MaxHandler extends CommonHandler {
 
 	private String input;
 

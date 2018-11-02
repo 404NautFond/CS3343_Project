@@ -6,7 +6,7 @@ import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 import fxcelHandler.FuncHandler;
 
-public class CountHandler extends FuncHandler{
+public class CountHandler extends CommonHandler{
 
 	private String input;
 	
