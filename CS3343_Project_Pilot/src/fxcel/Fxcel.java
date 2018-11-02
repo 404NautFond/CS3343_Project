@@ -106,14 +106,15 @@ public class Fxcel implements Serializable {
 	 * @param expression The input expression
 	 */
 	public void writeCell(int row, int col, String expression) {
-		getCell(row, col).setPos((char)('A'+row)+""+(col+1));
+		Cell target = getCell(row, col);
+		target.setPos((char)('A'+row)+""+(col+1));
 		try {
 			getCell(row, col).assign(expression);		
 		} catch (InfiniteReferenceException e) {
 			// TODO Auto-generated catch block
 //			System.out.println("An invalid thing happens");
 			try {
-				getCell(row, col).assign(":???");
+			target.assign(":???");
 			} catch (InfiniteReferenceException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -121,27 +122,6 @@ public class Fxcel implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
-
-	public static void main(String[] args) {
-		Fxcel istance = Fxcel.getInstance();
-		//TODO =-1+5
-		istance.writeCell(0, 0, "=2*((2+2+69/33)*(2/4+2-100))");
-//		istance.writeCell(0, 1, "=A1*2");
-		try {
-			System.out.println(instance.getCell(0, 0).getValue());
-//			System.out.println(instance.getCell(0, 1).getValue());
-		} catch (InvalidCellException e) {
-			e.printStackTrace();
-		}
-//		istance.writeCell(0, 0, "=1");
-//		try {
-//			System.out.println(instance.getCell(0, 1).getValue());
-//		} catch (InvalidCellException e) {
-//			e.printStackTrace();
-//		}
-	}
-
 	
 	@Override
 	public String toString() {

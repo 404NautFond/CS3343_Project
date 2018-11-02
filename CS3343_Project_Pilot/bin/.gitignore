@@ -1,4 +1,6 @@
-/fxcelTest/
-/fxcelHandler/
+/.classpath
+/.project
 /fxcel/
 /fxcelException/
+/fxcelHandler/
+/fxcelTest/
