@@ -24,7 +24,7 @@ public class CountHandler extends CommonHandler{
 		int strRow = CellNamingHandler.getRowEnhanced(temp[0]);
 		int endRow = CellNamingHandler.getRowEnhanced(temp[1]);
 		//TODO: to eliminate the invalid ones
-		return (endCol-strCol)*(endRow-strRow);
+		return (endCol-strCol+1)*(endRow-strRow+1);
 	}
 	
 	public int countForType2() {

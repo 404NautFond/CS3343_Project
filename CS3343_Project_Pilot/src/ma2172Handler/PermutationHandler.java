@@ -1,16 +1,21 @@
 package ma2172Handler;
 
 import fxcelException.InvalidExpressionException;
+import fxcelHandler.GeneralHandler;
 
 public class PermutationHandler extends MathHandler {
 	@Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
 		String[] temp = expression.split(",");
+		GeneralHandler gen = new GeneralHandler();
 		try {
-			int x1 = Integer.parseInt(temp[0]);
-			int x2 = Integer.parseInt(temp[1]);
+			temp[0] = ""+gen.handleForDoubleReturn("="+temp[0]);
+			temp[1] = ""+gen.handleForDoubleReturn("="+temp[1]);
+			int x1 = (int)Double.parseDouble(temp[0]);
+			int x2 = (int)Double.parseDouble(temp[1]);
 			return factorial[x1]/(factorial[x1-x2]);
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw new InvalidExpressionException();
 		}
 	}

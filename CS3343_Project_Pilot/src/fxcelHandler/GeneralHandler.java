@@ -11,6 +11,7 @@ import commonHandler.*;
 //import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.*;
+import ma2172Handler.*;
 
 public class GeneralHandler extends ExpHandler{
 	public Stack<String> buffer = new Stack<String>();
@@ -23,6 +24,12 @@ public class GeneralHandler extends ExpHandler{
 		call.put("MIN", new MinHandler());
 		call.put("MAX", new MaxHandler());
 		call.put("COUNT", new CountHandler());
+		
+		call.put("COMB", new CombinitionHandler());
+		call.put("PERM", new PermutationHandler());
+		call.put("MEAN", new MeanHandler());
+		call.put("SD", new StandDeviHandler());
+		call.put("VAR", new VarianceHandler());
 	}
 	
 	public static boolean isFunc(String str) {
@@ -103,7 +110,10 @@ public class GeneralHandler extends ExpHandler{
 		}
 
 		lowestPriority();
-		return Double.parseDouble(buffer.lastElement());
+		double result = Double.parseDouble(buffer.lastElement());
+		buffer.clear();
+		tokens.clear();
+		return result;
 	}
 
 	/**
@@ -135,9 +145,8 @@ public class GeneralHandler extends ExpHandler{
 			return num1*num2;
 		case "/":
 			return (double)num1/num2;
-			//		case "^":
-			//			return Math.pow(num1, num2);
 		default:
+			System.out.println("General - "+sym+": The symbol is not recognized.");
 			return -1;
 		}
 	}
