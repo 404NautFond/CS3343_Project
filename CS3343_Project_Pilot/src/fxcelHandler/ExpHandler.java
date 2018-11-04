@@ -4,13 +4,21 @@ import fxcel.Cell;
 import fxcelException.InvalidExpressionException;
 
 import java.math.BigDecimal;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import commonHandler.AverageHandler;
+import commonHandler.CountHandler;
+import commonHandler.MaxHandler;
+import commonHandler.MinHandler;
+import commonHandler.SumHandler;
+
 public abstract class ExpHandler {
 	Stack<String> buffer;
-	
+
 	/**
 	 * Compute the value for the expression
 	 * @param expression The String type expression
@@ -57,16 +65,7 @@ public abstract class ExpHandler {
 	 * @return If the token is a function name
 	 */
 	public static boolean isFunc(String str) {
-		switch(str) {
-		//TODO: Add all the function name or add a static ArrayList
-		case "SUM":
-		case "MAX":
-		case "AVG":
-		case "MIN":
-			return true;
-		default:
-			return false;
-		}
+		return (GeneralHandler.isFunc(str));
 	}
 
 }

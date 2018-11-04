@@ -1,25 +1,55 @@
 package fxcelHandler;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.EmptyStackException;
+import java.util.Hashtable;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-import commonHandler.SumHandler;
-import fxcel.Cell;
+import commonHandler.*;
+//import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.*;
 
 public class GeneralHandler extends ExpHandler{
 	public Stack<String> buffer = new Stack<String>();
 	private ArrayList<String> tokens = new ArrayList<String>();
+	protected static final Dictionary<String, FuncHandler> call = new Hashtable<String, FuncHandler>();
+	
+	public GeneralHandler() {
+		call.put("SUM", new SumHandler());
+		call.put("AVE", new AverageHandler());
+		call.put("MIN", new MinHandler());
+		call.put("MAX", new MaxHandler());
+		call.put("COUNT", new CountHandler());
+	}
+	
+	public static boolean isFunc(String str) {
+		return call.get(str) != null ;
+	}
 
 	/**
 	 * Tester
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		GeneralHandler my = new GeneralHandler();
+		Fxcel instance = Fxcel.getInstance();
+		instance.writeCell(0, 0, "=1.2");
+		instance.writeCell(0, 1, "=1.3");
+		instance.writeCell(0, 2, "=SUM(A1,B1)");
+		instance.writeCell(0, 2, "=COUNT(A1,B1)");
+		instance.writeCell(0, 2, "=MIN(A1,B1)");
+		instance.writeCell(0, 2, "=MAX(A1,B1)");
+		instance.writeCell(0, 2, "=AVE(A1,B1,D1)");
+		try {
+			System.out.println(instance.getCellValue("A1"));
+			System.out.println(instance.getCellValue("B1"));
+			System.out.println(instance.getCellValue("C1"));
+		} catch (InvalidCellException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -28,7 +58,7 @@ public class GeneralHandler extends ExpHandler{
 		String tempToken, sym, number1, number2;
 		try {
 			while(tokens.size() != 0) {
-//				System.out.println(tokens);
+				//				System.out.println(tokens);
 				try {
 					tempToken = tokens.remove(0);
 					switch(tempToken) {
@@ -36,29 +66,29 @@ public class GeneralHandler extends ExpHandler{
 					case "=":
 					case " ":
 						continue;
-					/* level 2 operators */
+						/* level 2 operators */
 					case "*":
 					case "/":
-//					case "^":
+						//					case "^":
 						number2 = tokens.remove(0);
 						number2 = expand(number2);
 						sym = tempToken;
 						number1 = buffer.pop();
 						buffer.push(calcu(number1, sym, number2)+"");
 						break;
-					/* level 1 operators */
+						/* level 1 operators */
 					case "+":
 					case "-":
 						buffer.push(tempToken);
 						break;
-					/* recursion, to be included in the expand */
-//					case "(":
-//						buffer.push(recursion());
-//						break;
-					/* syntax error */
+						/* recursion, to be included in the expand */
+						//					case "(":
+						//						buffer.push(recursion());
+						//						break;
+						/* syntax error */
 					case ")":
 						throw new InvalidExpressionException();
-					/* operands other than above */
+						/* operands other than above */
 					default:
 						buffer.push(expand(tempToken));
 					}
@@ -75,7 +105,7 @@ public class GeneralHandler extends ExpHandler{
 		lowestPriority();
 		return Double.parseDouble(buffer.lastElement());
 	}
-	
+
 	/**
 	 * Initialize the handler by the expression
 	 */
@@ -85,7 +115,7 @@ public class GeneralHandler extends ExpHandler{
 			tokens.add(tokenizer.nextToken());
 		}
 	}
-	
+
 	/**
 	 * Process the basic operations
 	 * @param number1 The number before the sym
@@ -105,8 +135,8 @@ public class GeneralHandler extends ExpHandler{
 			return num1*num2;
 		case "/":
 			return (double)num1/num2;
-//		case "^":
-//			return Math.pow(num1, num2);
+			//		case "^":
+			//			return Math.pow(num1, num2);
 		default:
 			return -1;
 		}
@@ -122,9 +152,9 @@ public class GeneralHandler extends ExpHandler{
 
 		/* Syntax error detected */
 		if(tokens.size() == 0) throw new InvalidExpressionException();
-		
+
 		int parenthesis = 1;
-		
+
 		// add parameters back to string
 		// TODO: Refactor
 		while(parenthesis != 0) {
@@ -137,7 +167,7 @@ public class GeneralHandler extends ExpHandler{
 			temp = temp + tokens.remove(0);
 		}
 		tokens.remove(0);			// remove the ")"
-		
+
 		// define the output to 0
 		double res = 0;
 		try {
@@ -176,6 +206,8 @@ public class GeneralHandler extends ExpHandler{
 		}
 	}
 
+
+
 	/**
 	 * Process the function content
 	 * @param formula The formula keyword
@@ -196,13 +228,14 @@ public class GeneralHandler extends ExpHandler{
 		} catch(IndexOutOfBoundsException e) {
 			throw new InvalidExpressionException();
 		}
-		// Choosing formula type
-		switch(formula) {
-		case "SUM":
-			return ""+new SumHandler().handleForDoubleReturn(tempExpr);
+		try {
+			String result = call.get(formula).handleForDoubleReturn(tempExpr)+"";
+			return result;
+		}catch(Exception e) {
+			System.out.println("What is happening: ");
+			e.printStackTrace();
+			throw new InvalidExpressionException();
 		}
-		// If not match anything
-		throw new InvalidExpressionException();
 	}
 
 	/**
@@ -226,16 +259,4 @@ public class GeneralHandler extends ExpHandler{
 		}
 	}
 
-//	@Override
-//	double handleForDoubleReturn(String expression, Cell resultCell) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	int handleForIntegerReturn(String expression, Cell resultCell) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-	
 }
