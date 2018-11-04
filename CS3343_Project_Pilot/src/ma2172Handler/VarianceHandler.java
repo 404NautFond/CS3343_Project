@@ -1,30 +1,13 @@
-package commonHandler;
+package ma2172Handler;
 
 import fxcel.Cell;
 import fxcel.Fxcel;
-import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
-import fxcelHandler.FuncHandler;
 
-public class SumHandler extends CommonHandler {
-
-	private String input;
-	
-	public static void main() {
-		SumHandler test = new SumHandler();
-		Fxcel ins = Fxcel.getInstance();
-		ins.writeCell(0, 0, "=1");
-		ins.writeCell(1, 0, "=2");
-		try {
-			System.out.println(test.handleForDoubleReturn("A1:A2"));
-		} catch (InvalidExpressionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+public class VarianceHandler extends MathHandler {
+	String input;
     @Override
     public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
     		this.input = expression;
@@ -36,7 +19,8 @@ public class SumHandler extends CommonHandler {
     }
 
     private double calculateForInputType1() { // 'cell : cell' input type
-        double result = 0;
+        double ex = 0;
+        double ex2 = 0;
         int startRow;
         int startColumn;
         int endRow;
@@ -52,19 +36,24 @@ public class SumHandler extends CommonHandler {
         
         for (int i = startRow-1; i<=endRow-1; i++) {
             for (int j = startColumn-1; j <= endColumn-1; j++) {
-                result += calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
+            		double tempVal = calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
+                ex += tempVal;
+                ex2 += tempVal*tempVal;
             }
         }
-        return result;
+        return ex2-ex*ex;
     }
 
     private double calculateForInputType2() { // 'cell,cell' input type
-        double result = 0;
+        double ex = 0;
+        double ex2 = 0;
         String[] cellName = input.split(",");
         for (String singleCell: cellName) {
-            result += calculateValueForSingleCell(Fxcel.getInstance().getCell(singleCell.trim()));
+        		double tempVal = calculateValueForSingleCell(Fxcel.getInstance().getCell(singleCell.trim()));
+            ex += tempVal;
+            ex2 += tempVal*tempVal;
         }
-        return result;
+        return ex2-ex*ex;
     }
 
     protected double calculateValueForSingleCell(Cell thisCell) {
