@@ -9,7 +9,7 @@ public abstract class FuncHandler extends ExpHandler {
 	protected Cell resultCell;
 
 	@Override
-	public Object handle(String expression) throws InvalidExpressionException {
+	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
 		// TODO Auto-generated method stub
 		return 0;
 	}

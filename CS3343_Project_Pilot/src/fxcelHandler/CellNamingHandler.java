@@ -1,7 +1,6 @@
 package fxcelHandler;
 
 import fxcel.Cell;
-import fxcelException.InvalidExpressionException;
 
 public class CellNamingHandler extends ExpHandler {
 
@@ -46,11 +45,10 @@ public class CellNamingHandler extends ExpHandler {
     		
         return res;
     }
-
+    
 	@Override
-	Object handle(String expression) throws InvalidExpressionException {
-		// TODO Auto-generated method stub
-		return null;
+	public double handleForDoubleReturn(String expression) {
+		return 0;
 	}
 
 //	@Override

@@ -1,5 +1,8 @@
+/.classpath
+/.project
+/fxcel/
+/fxcelException/
+/fxcelHandler/
+/fxcelTest/
 /commonHandler/
 /cs2115Handler/
-/fxcelHandler/
-/fxcel/
-/fxcelTest/

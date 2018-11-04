@@ -23,7 +23,7 @@ public class GeneralHandler extends ExpHandler{
 	}
 
 	@Override
-	public Object handle(String expression){
+	public double handleForDoubleReturn(String expression){
 		feed(expression);
 		String tempToken, sym, number1, number2;
 		try {
@@ -143,7 +143,7 @@ public class GeneralHandler extends ExpHandler{
 		try {
 			// recursively call the handler
 			GeneralHandler tempHandler = new GeneralHandler();
-			res = (double)(tempHandler.handle(temp));
+			res = tempHandler.handleForDoubleReturn(temp);
 		} catch (EmptyStackException e) {
 			throw new InvalidExpressionException();
 		}
