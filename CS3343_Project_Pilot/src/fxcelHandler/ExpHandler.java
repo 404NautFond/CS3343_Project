@@ -17,7 +17,7 @@ public abstract class ExpHandler {
 	 * @return The double value
 	 * @throws InvalidExpressionException 
 	 */
-	abstract double handleForDoubleReturn(String expression) throws InvalidExpressionException;
+	abstract Object handle(String expression) throws InvalidExpressionException;
 	
 //	abstract double handleForDoubleReturn(String expression, Cell resultCell);
 //	abstract int handleForIntegerReturn(String expression, Cell resultCell);

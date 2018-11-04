@@ -24,7 +24,7 @@ public class GeneralHandlerTest {
 	//Test Case "=1"
 	@Test
 	public void testHandleForDoubleReturn_01() {
-		double results = generalHandler.handleForDoubleReturn("=1");
+		double results = (double) (generalHandler.handle("=1"));
 		assertEquals(1,results,0.0001);
 	}
 	 
