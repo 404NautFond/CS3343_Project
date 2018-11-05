@@ -7,6 +7,7 @@ import java.util.List;
 //import fxcelException.FxcelException;
 import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
+import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 
 public class Fxcel implements Serializable {
@@ -93,6 +94,7 @@ public class Fxcel implements Serializable {
 		for (List<Cell> l: table) {
 			for (Cell c: l) {
 				c.clear();
+				c.detachAll();
 			}
 		}
 		this.row_max = 30;
@@ -107,19 +109,18 @@ public class Fxcel implements Serializable {
 	 */
 	public void writeCell(int row, int col, String expression) {
 		Cell target = getCell(row, col);
-		target.setPos((char)('A'+row)+""+(col+1));
+		target.setPos((char)('A'+col)+""+(row+1));
 		try {
 			getCell(row, col).assign(expression);		
 		} catch (InfiniteReferenceException e) {
 			// TODO Auto-generated catch block
-//			System.out.println("An invalid thing happens");
-			try {
+			System.out.println(e.getMessage());
 			target.assign(":???");
-			} catch (InfiniteReferenceException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
+//			e.printStackTrace();
+		} catch(InvalidExpressionException e) {
+			target.assign(":???");
+			System.out.println("Well caught, Fxcel");
+//			e.printStackTrace();
 		}
 	}
 	

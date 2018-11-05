@@ -20,6 +20,7 @@ public class Cell extends Subject implements Observer {
 	
 	private String mypos = null;
 	public void setPos(String str){this.mypos = str;}
+	public String getPos(){return this.mypos;}
 	
 	/**
 	 * Default constructor for cell, will be called by Fxcel
@@ -60,7 +61,6 @@ public class Cell extends Subject implements Observer {
 		// keep the original content anyway
 		this.clear();
 		this.expression = expression;
-
 		// define expression by the first char
 		char identifier = expression.charAt(0);
 		
@@ -74,15 +74,11 @@ public class Cell extends Subject implements Observer {
 			for(String num: numberlikelist) {
 				if(ExpHandler.isCell(num)) {
 					Cell tempCell = Fxcel.getInstance().getCell(num);
-					if(!dependent.contains(tempCell)) {
-						this.addDependent(tempCell);
-						tempCell.attach(this);
-					}
+					this.addDependent(tempCell);
+					tempCell.attach(this);
 				}
 			}
-			
 			addDependent(numberlikelist);
-			
 			// recursively check dependent list
 			for(Cell dep: dependent) {
 				if(dep.equals(this) || dep.checkDep(this)) {
@@ -152,27 +148,23 @@ public class Cell extends Subject implements Observer {
 		this.expression = null;
 		this.value = 0;
 		this.isValueNotDefine = true;
-		for (Cell cell: dependent) {
-//			cell.update();
-			detach(cell);
-		}
 		this.dependent.clear();
 	}
 
 	/* From class Subject */
 	@Override
 	public void attach(Cell c) {
-		for (Cell cell:list) {
-			if (cell == c) {
-				return;
-			}
-		}
-		list.add(c);
+		if(!list.contains(c)) 
+			list.add(c);
 	}
 
 	@Override
 	public void detach(Cell c) {
 		list.remove(c);
+	}
+	
+	public void detachAll() {
+		list.clear();
 	}
 
 	@Override
@@ -184,7 +176,12 @@ public class Cell extends Subject implements Observer {
 	
 	@Override
 	public void update() {
-		this.value = new GeneralHandler().handleForDoubleReturn(this.expression);
+		try {
+			this.assign(this.expression);
+		} catch (InfiniteReferenceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	/* End of override function from Subject */
 

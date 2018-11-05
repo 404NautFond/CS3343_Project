@@ -18,6 +18,12 @@ public class InfiniteReferenceException extends FxcelException {
         this.cellA = cellA;
         this.cellB = cellB;
     }
+    
+    @Override
+    public String getMessage() {
+    		return "Cell "+this.cellA.getPos()+"(expression:\""+this.cellA.getExpression()+
+    				"\") uses the value of "+this.cellA.getPos() + ", please check.";
+    }
 
     @Override
     public String toString() {

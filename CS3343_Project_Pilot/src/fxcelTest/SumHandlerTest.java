@@ -1,6 +1,7 @@
 package fxcelTest;
 
 import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
@@ -41,19 +42,27 @@ public class SumHandlerTest {
 		fxcel.writeCell(2, 0, "=1");
 		fxcel.writeCell(3, 0, "=SUM(A1,A2,A3)");
 		fxcel.writeCell(2, 0, "=2");
-//		System.out.println("Q1");
 		try {
+			assertEquals(1,fxcel.getCellValue("A1"),0.001);
+			assertEquals(1,fxcel.getCellValue("A2"),0.001);
+			assertEquals(2,fxcel.getCellValue("A3"),0.001);
 			assertEquals(4,fxcel.getCellValue("A4"),0.001);
 		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			//
 		}
-//		fxcel.writeCell(1, 0, "1");
-//		try {
-//			assertEquals(1,fxcel.getCellValue("A1"),0.0001);
-//		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+	}
+	
+	@Test
+	public void testHandler_03() {
+		fxcel.writeCell(0, 0, "=1");
+		fxcel.writeCell(1, 0, ":1");
+		fxcel.writeCell(2, 0, "=1");
+		fxcel.writeCell(3, 0, "=SUM(A1,A2,A3)");
+		fxcel.writeCell(2, 0, "=2");
+		try {
+			assertEquals(1,fxcel.getCellValue("A4"),0.001);
+		} catch (InvalidCellException e) {
+			//correct
+		}
 	}
 }

@@ -34,26 +34,6 @@ public class MinHandler extends CommonHandler {
 			return calculateForInputType2();
 		throw new InvalidExpressionException();
 	}
-	//    @Override
-	//    public double handleForDoubleReturn(String expression) {
-	//    		this.input = expression;
-	//        double result = 0;
-	//        char[] inputExpression;
-	//        inputExpression = expression.toCharArray();
-	////        this.resultCell = resultCell;
-	//        for (char character : inputExpression) {
-	//            if (character == ':') {
-	//                result = calculateForInputType1();
-	//                break;
-	//            }
-	//            if (character == ',') {
-	//                result = calculateForInputType2();
-	//                break;
-	//            }
-	//            System.out.println("Anything");
-	//        }
-	//        return result;
-	//    }
 
 	private double calculateForInputType1() { // 'cell : cell' input type
 		double result = 0;
@@ -68,19 +48,23 @@ public class MinHandler extends CommonHandler {
 		startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);
 		endRow = CellNamingHandler.getRowEnhanced(temp[1]);
 		endColumn = CellNamingHandler.getColumnEnhanced(temp[1]);
-		result = calculateValueForSingleCell(Fxcel.getInstance().getCell(startRow-1,startColumn-1));
 
-		//        System.out.println(startRow+" "+startColumn+" "+endRow+" "+endColumn);
+		try {
+			result = calculateValueForSingleCell(Fxcel.getInstance().getCell(startRow-1,startColumn-1));
 
-		for (int i = startRow-1; i<=endRow-1; i++) {
-			for (int j = startColumn-1; j <= endColumn-1; j++) {
-				tmp = calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
-				if(result > tmp) {
-					result = tmp;
+			for (int i = startRow-1; i<=endRow-1; i++) {
+				for (int j = startColumn-1; j <= endColumn-1; j++) {
+					tmp = calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
+					if(result > tmp) {
+						result = tmp;
+					}
 				}
 			}
+			return result;
+		}catch(InvalidExpressionException e) {
+			e.printStackTrace();
+			return 0;
 		}
-		return result;
 	}
 
 	private double calculateForInputType2() { // 'cell,cell' input type
@@ -88,24 +72,21 @@ public class MinHandler extends CommonHandler {
 		double tmp;
 		int i = 0;
 		String[] cellName = input.split(",");
-		for (String singleCell: cellName) {
-			tmp = calculateValueForSingleCell(Fxcel.getInstance().getCell(singleCell.trim()));
-			if(i == 0) {
-				result = tmp;
-				i++;
-			} else if(result > tmp) {
-				result = tmp;
+		try {
+			for (String singleCell: cellName) {
+				tmp = calculateValueForSingleCell(Fxcel.getInstance().getCell(singleCell.trim()));
+				if(i == 0) {
+					result = tmp;
+					i++;
+				} else if(result > tmp) {
+					result = tmp;
+				}
 			}
+			return result;
+		}catch(InvalidExpressionException e) {
+			e.printStackTrace();
 		}
-		return result;
+		return 0;
 	}
 
-	protected double calculateValueForSingleCell(Cell thisCell) {
-		try {
-			return thisCell.getValue();
-		} catch (InvalidCellException e) {
-			//            e.printStackTrace();
-			return 0;
-		}
-	}
 }

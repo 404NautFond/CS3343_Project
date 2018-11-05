@@ -18,7 +18,7 @@ public class MathHandlerTest {
 		instance.writeCell(0, 2, "3");
 		instance.writeCell(1, 0, "1");
 		instance.writeCell(1, 1, "2");
-		instance.writeCell(1, 2, "3");
+		instance.writeCell(1, 2, ":2");
 	}
 	@After
 	public void tearDown() {
@@ -29,17 +29,27 @@ public class MathHandlerTest {
 	public void testCombinition_00() {
 		instance.writeCell(2, 0, "=COMB(C1,B1)");
 		try {
-			assertEquals(instance.getCellValue("A3"),3,0.001);
+			assertEquals(3,instance.getCellValue("A3"),0.001);
 		} catch (InvalidCellException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	@Test
+	public void testCombinition_01() {
+		instance.writeCell(2, 0, "=COMB(C2,B2)");
+		try {
+			assertEquals(0,instance.getCellValue("A3"),0.001);
+		} catch (InvalidCellException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
+	}
+	@Test
 	public void testPermutation_00() {
 		instance.writeCell(2, 0, "=PERM(C1,B1)");
 		try {
-			assertEquals(instance.getCellValue("A3"),6,0.001);
+			assertEquals(6,instance.getCellValue("A3"),0.001);
 		} catch (InvalidCellException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +59,7 @@ public class MathHandlerTest {
 	public void testMean_00() {
 		instance.writeCell(2, 0, "=MEAN(C1,B1)");
 		try {
-			assertEquals(instance.getCellValue("A3"),2.5,0.001);
+			assertEquals(2.5,instance.getCellValue("A3"),0.001);
 		} catch (InvalidCellException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,7 +70,7 @@ public class MathHandlerTest {
 	public void testMean_01() {
 		instance.writeCell(2, 0, "=MEAN(A1:C1)");
 		try {
-			assertEquals(instance.getCellValue("A3"),2,0.001);
+			assertEquals(2,instance.getCellValue("A3"),0.001);
 		} catch (InvalidCellException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,7 +81,7 @@ public class MathHandlerTest {
 	public void testStanDevi_00() {
 		instance.writeCell(2, 0, "=SD(A1:C1)");
 		try {
-			assertEquals(instance.getCellValue("A3"),0.8165,0.001);
+			assertEquals(0.8165,instance.getCellValue("A3"),0.001);
 		} catch (InvalidCellException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,7 +92,7 @@ public class MathHandlerTest {
 	public void testVariance_00() {
 		instance.writeCell(2, 0, "=VAR(A1:C1)");
 		try {
-			assertEquals(instance.getCellValue("A3"),0.6667,0.001);
+			assertEquals(0.6667,instance.getCellValue("A3"),0.001);
 		} catch (InvalidCellException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

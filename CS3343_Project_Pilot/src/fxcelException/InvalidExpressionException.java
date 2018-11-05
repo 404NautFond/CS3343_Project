@@ -1,15 +1,28 @@
 package fxcelException;
 
+import fxcel.Cell;
+
 public class InvalidExpressionException extends FxcelException {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8632828627478065351L;
 	private static final String TAG = "InvalidExpressionExcept";
-    private static final String message = "Syntax error on your input !";
+	private static final String message = "Syntax error on your input !";
 
-    public InvalidExpressionException() {
-        //default
-    }
+	private Cell thisCell;
+	
+	public InvalidExpressionException() {
+		//default
+	}
+	public InvalidExpressionException(Cell thisCell) {
+		this.thisCell = thisCell;
+	}
+	
+	@Override
+	public String getMessage() {
+		if(thisCell == null) return message;
+		else return thisCell.getPos()+"(Expression:\""+ thisCell.getExpression()+"\") is invalid, please check.";
+	}
 }

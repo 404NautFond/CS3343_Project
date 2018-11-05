@@ -14,7 +14,7 @@ import fxcelException.*;
 import ma2172Handler.*;
 
 public class GeneralHandler extends ExpHandler{
-	public Stack<String> buffer = new Stack<String>();
+	private Stack<String> buffer = new Stack<String>();
 	private ArrayList<String> tokens = new ArrayList<String>();
 	protected static final Dictionary<String, FuncHandler> call = new Hashtable<String, FuncHandler>();
 	
@@ -36,34 +36,11 @@ public class GeneralHandler extends ExpHandler{
 		return call.get(str) != null ;
 	}
 
-	/**
-	 * Tester
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Fxcel instance = Fxcel.getInstance();
-		instance.writeCell(0, 0, "=1.2");
-		instance.writeCell(0, 1, "=1.3");
-		instance.writeCell(0, 2, "=SUM(A1,B1)");
-		instance.writeCell(0, 2, "=COUNT(A1,B1)");
-		instance.writeCell(0, 2, "=MIN(A1,B1)");
-		instance.writeCell(0, 2, "=MAX(A1,B1)");
-		instance.writeCell(0, 2, "=AVE(A1,B1,D1)");
-		try {
-			System.out.println(instance.getCellValue("A1"));
-			System.out.println(instance.getCellValue("B1"));
-			System.out.println(instance.getCellValue("C1"));
-		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public double handleForDoubleReturn(String expression){
 		feed(expression);
 		String tempToken, sym, number1, number2;
-		try {
+//		try {
 			while(tokens.size() != 0) {
 				//				System.out.println(tokens);
 				try {
@@ -104,10 +81,12 @@ public class GeneralHandler extends ExpHandler{
 					buffer.push("0");
 				}
 			}
-		}catch(InvalidExpressionException e) {
-			e.printStackTrace();
-			return 0;
-		}
+//		}
+//		}catch(InvalidExpressionException e) {
+////			e.printStackTrace();
+//			System.out.println("General - Expression Error!");
+//			return 0;
+//		}
 
 		lowestPriority();
 		double result = Double.parseDouble(buffer.lastElement());
@@ -120,6 +99,7 @@ public class GeneralHandler extends ExpHandler{
 	 * Initialize the handler by the expression
 	 */
 	private void feed(String expression) {
+//		System.out.println(expression);
 		StringTokenizer tokenizer = new StringTokenizer(expression,"=+-*/()^",true);
 		while(tokenizer.hasMoreTokens()) {
 			tokens.add(tokenizer.nextToken());
@@ -241,8 +221,8 @@ public class GeneralHandler extends ExpHandler{
 			String result = call.get(formula).handleForDoubleReturn(tempExpr)+"";
 			return result;
 		}catch(Exception e) {
-			System.out.println("What is happening: ");
-			e.printStackTrace();
+//			System.out.println("Expression Error!");
+//			e.printStackTrace();
 			throw new InvalidExpressionException();
 		}
 	}
