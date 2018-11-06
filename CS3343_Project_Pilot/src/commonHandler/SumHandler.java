@@ -12,18 +12,18 @@ public class SumHandler extends CommonHandler {
 
 	private String input;
 
-	public static void main() {
-		SumHandler test = new SumHandler();
-		Fxcel ins = Fxcel.getInstance();
-		ins.writeCell(0, 0, "=1");
-		ins.writeCell(1, 0, "=2");
-		try {
-			System.out.println(test.handleForDoubleReturn("A1:A2"));
-		} catch (InvalidExpressionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	public static void main() {
+//		SumHandler test = new SumHandler();
+//		Fxcel ins = Fxcel.getInstance();
+//		ins.writeCell(0, 0, "=1");
+//		ins.writeCell(1, 0, "=2");
+//		try {
+//			System.out.println(test.handleForDoubleReturn("A1:A2"));
+//		} catch (InvalidExpressionException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 	@Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
