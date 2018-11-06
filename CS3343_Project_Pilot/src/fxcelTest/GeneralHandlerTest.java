@@ -6,8 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+//import fxcelHandler.ExpHandler;
 import fxcelHandler.GeneralHandler;
-//import fxcelException.InvalidExpressionException;
+import fxcelException.InvalidExpressionException;
 
 public class GeneralHandlerTest {
 	
@@ -85,30 +86,85 @@ public class GeneralHandlerTest {
 	}
 
 	//Test Case "=3)"
-	@Test
+	@Test(expected = InvalidExpressionException.class)
 	public void testHandleForDoubleReturn_10() {
 		double results = generalHandler.handleForDoubleReturn("=3)");
 		assertEquals(0,results,0.0001);
 	}
 	
 	//Test Case "=2*(3+2))"
-	@Test
+	@Test(expected = InvalidExpressionException.class)
 	public void testHandleForDoubleReturn_11() {
 		double results = generalHandler.handleForDoubleReturn("=2*(3+2))");
 		assertEquals(0,results,0.0001);
 	}
 	 
 	//Test Case "=2*(3+2)(" 
-	@Test
+	@Test(expected = InvalidExpressionException.class)
 	public void testHandleForDoubleReturn_12() {
 		double results = generalHandler.handleForDoubleReturn("=2*(3+2)(");//Test for Line 123
 		assertEquals(0,results,0.0001);
 	}
 	
 	//Test Case "=2&3"
-	@Test
+	@Test(expected = InvalidExpressionException.class)
 	public void testHandleForDoubleReturn_13() {
 		double results = generalHandler.handleForDoubleReturn("=2&3");
 		assertEquals(0,results,0.0001);
+	}
+	
+	@Test
+	public void TestIsFunc_01() {
+		assertEquals(GeneralHandler.isFunc("SUM"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_02() {
+		assertEquals(GeneralHandler.isFunc("AVE"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_03() {
+		assertEquals(GeneralHandler.isFunc("MIN"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_04() {
+		assertEquals(GeneralHandler.isFunc("MAX"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_05() {
+		assertEquals(GeneralHandler.isFunc("COUNT"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_06() {
+		assertEquals(GeneralHandler.isFunc("COMB"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_07() {
+		assertEquals(GeneralHandler.isFunc("PERM"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_08() {
+		assertEquals(GeneralHandler.isFunc("MEAN"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_09() {
+		assertEquals(GeneralHandler.isFunc("SD"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_10() {
+		assertEquals(GeneralHandler.isFunc("VAR"),true);
+	}
+	
+	@Test
+	public void TestIsFunc_11() {
+		assertEquals(GeneralHandler.isFunc("VAR."),false);
 	}
 }
