@@ -18,9 +18,19 @@ public class Cell extends Subject implements Observer {
 	private List<Cell> dependent = new ArrayList<Cell>();
 	private boolean isValueNotDefine;
 	
+	//TODO: for non-numerical I/O
+	/* Start */
+	private String textual;
+	public String getTextual() {return textual;}
+	/* End */
+	
 	private String mypos = null;
-	public void setPos(String str){this.mypos = str;}
-	public String getPos(){return this.mypos;}
+	public void setPos(String str){
+		this.mypos = str;
+	}
+	public String getPos(){
+		return this.mypos;
+	}
 	
 	/**
 	 * Default constructor for cell, will be called by Fxcel
@@ -65,6 +75,8 @@ public class Cell extends Subject implements Observer {
 		char identifier = expression.charAt(0);
 		
 		if (identifier == ':') {					// pure text
+			//TODO: new feature
+			this.textual = expression.substring(1);
 			return;
 		} else if (identifier == '=') {			// expression
 			// use regular expression to split the expression
@@ -89,14 +101,21 @@ public class Cell extends Subject implements Observer {
 			
 			// change the value otherwise
 			this.value = new GeneralHandler().handleForDoubleReturn(expression);
+			
+			//TODO: Check the first token
+			if(numberlike[0].equals("TOBIN")) {}
+			else this.textual = this.value+"";
+			
 			this.isValueNotDefine = false;
 			this.notifyObservers();
 		} else {
 			try {
 				this.value = Double.parseDouble(expression);
+				//TODO: new feature
+				this.textual = expression;
 				this.isValueNotDefine = false;
 			}catch(Exception e) {
-				//Not a good thing
+				this.isValueNotDefine = true;
 			}
 		}
 	}

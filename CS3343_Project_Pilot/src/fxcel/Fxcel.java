@@ -113,20 +113,23 @@ public class Fxcel implements Serializable {
 		try {
 			getCell(row, col).assign(expression);		
 		} catch (InfiniteReferenceException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			target.assign(":???");
-//			e.printStackTrace();
 		} catch(InvalidExpressionException e) {
 			target.assign(":???");
 			System.out.println("Well caught, Fxcel");
-//			e.printStackTrace();
 		}
 	}
 	
 	@Override
 	public String toString() {
-		return null;
+		String res = "";
+		for(int i = 0; i < row_max; i++) {
+			for(int j = 0; j < col_max; j++) {
+				res += getCell(i,j).toString();
+			}
+		}
+		return res;
 	}
 
 	/**

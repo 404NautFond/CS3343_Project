@@ -1,5 +1,19 @@
 package cs2115Handler;
 
-public class GreyCodeHandler {
+import fxcelException.InvalidExpressionException;
+
+public class GreyCodeHandler extends ConvertHandler{
+
+	@Override
+	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double handleForStringReturn(String expression) throws InvalidExpressionException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

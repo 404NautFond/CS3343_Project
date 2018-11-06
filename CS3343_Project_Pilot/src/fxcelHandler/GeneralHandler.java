@@ -8,7 +8,7 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 
 import commonHandler.*;
-//import fxcel.Cell;
+import cs2115Handler.*;
 import fxcel.Fxcel;
 import fxcelException.*;
 import ma2172Handler.*;
@@ -30,6 +30,8 @@ public class GeneralHandler extends ExpHandler{
 		call.put("MEAN", new MeanHandler());
 		call.put("SD", new StandDeviHandler());
 		call.put("VAR", new VarianceHandler());
+		
+		call.put("TOBIN", new BinaryHandler());
 	}
 	
 	public static boolean isFunc(String str) {
@@ -81,12 +83,6 @@ public class GeneralHandler extends ExpHandler{
 					buffer.push("0");
 				}
 			}
-//		}
-//		}catch(InvalidExpressionException e) {
-////			e.printStackTrace();
-//			System.out.println("General - Expression Error!");
-//			return 0;
-//		}
 
 		lowestPriority();
 		double result = Double.parseDouble(buffer.lastElement());
