@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import commonHandler.AverageHandler;
-import fxcel.Fxcel;
+import fxcel.*;
 import fxcelException.InvalidExpressionException;
 
 public class AverageHandlerTest {
