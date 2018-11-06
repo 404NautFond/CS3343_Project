@@ -11,9 +11,9 @@ public class GreyCodeHandler extends ConvertHandler{
 	}
 
 	@Override
-	public double handleForStringReturn(String expression) throws InvalidExpressionException {
+	public String handleForStringReturn(String expression) throws InvalidExpressionException {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 }

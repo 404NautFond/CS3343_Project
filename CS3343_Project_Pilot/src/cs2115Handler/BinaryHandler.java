@@ -11,9 +11,9 @@ public class BinaryHandler extends ConvertHandler {
 	}
 
 	@Override
-	public double handleForStringReturn(String expression) throws InvalidExpressionException {
+	public String handleForStringReturn(String expression) throws InvalidExpressionException {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
-	//TODO: All the radix values, textual value = value after conversion, expression value = decimal
+	//TODO: All the radix values, textual value = value after conversion, e.g. 0b0100, expression value = decimal
 }

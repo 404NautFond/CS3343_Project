@@ -117,7 +117,7 @@ public class Fxcel implements Serializable {
 			target.assign(":???");
 		} catch(InvalidExpressionException e) {
 			target.assign(":???");
-			System.out.println("Well caught, Fxcel");
+			System.out.println(target.getPos()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
 		}
 	}
 	

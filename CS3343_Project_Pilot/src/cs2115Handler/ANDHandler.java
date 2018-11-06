@@ -1,19 +1,22 @@
 package cs2115Handler;
 
+import fxcel.Fxcel;
 import fxcelException.InvalidExpressionException;
 
 public class ANDHandler extends LogicHandler{
 
 	@Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-		// TODO Auto-generated method stub
-		return 0;
+		String[] input = expression.split(",");
+		for(String cell: input) {
+			if(Fxcel.getInstance().getCellValue(cell) == 0) return 0;
+		}
+		return 1;
 	}
 
 	@Override
-	public double handleForStringReturn(String expression) throws InvalidExpressionException {
-		// TODO Auto-generated method stub
-		return 0;
+	public String handleForStringReturn(String expression) throws InvalidExpressionException {
+		return (handleForDoubleReturn(expression)==1)?"TRUE":"FALSE";
 	}
 
 }
