@@ -29,6 +29,7 @@ public class CellTest {
 	@After
 	public void tearDown() {}
 	
+
 	//Test Case: ":text"
 	@Test(expected = InvalidCellException.class)
 	public void testAssign_01() throws InvalidCellException{
@@ -175,8 +176,101 @@ public class CellTest {
 		fxcel.clear();
 	}
 	
+	@Test
+	public void testAddDependent_01(){
+		Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0, 0, "=1");
+			fxcel.writeCell(0, 1, "=2");
+			method.invoke(cell, "=SUM(A1:B1)");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals(3,cell.getValue(),0.0001);
+		fxcel.clear();
+	}
+	
   /*
    * TODO Figure out why Test08 & 10 will throw exception when testing  with other test cases 
    * 	but will rum normally when separately testing
    */
+	
+	
+	//Test Case: ":This is the text test"
+	@Test
+	public void testToString_01() {
+		try {
+			method.invoke(cell, ":This is the text test");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals("null: The expression is \":This is the text test\"",cell.toString());
+	}
+	
+	//Test Case: ":This is the text test"
+	@Test
+	public void testToString_02() {
+		try {
+			method.invoke(cell, "=2+5");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals("null: The expression is \"=2+5\", The value is \"7.0\"",cell.toString());
+	}
+	
+	//Test Case: "A1:"		
+	@Test
+	public void testToString_03(){
+	Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0,0,"=1");
+			cell = fxcel.getCell(0,0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals("A1: The expression is \"=1\", The value is \"1.0\"",cell.toString());
+		fxcel.clear();
+	}
+	
+	//Test Case: "AA1:"		
+	@Test
+	public void testToString_04(){
+	Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0,27,"=1");
+			cell = fxcel.getCell(0,27);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals("AA1: The expression is \"=1\", The value is \"1.0\"",cell.toString());
+		fxcel.clear();
+	}
+	
+	//Test Case: "A1:"		
+	@Test
+	public void testGetPos_01(){
+		Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0,0,"=1");
+			cell = fxcel.getCell(0,0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals("A1",cell.getPos());
+		fxcel.clear();
+	}
+
+	//Test Case: "AA1:"		
+	@Test
+	public void testGetPos_02(){
+		Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0,27,":text");
+			cell = fxcel.getCell(0,27);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertEquals("AA1",cell.getPos());
+		fxcel.clear();
+	}
 }
