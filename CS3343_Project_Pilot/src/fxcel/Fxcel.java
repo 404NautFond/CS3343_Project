@@ -114,9 +114,9 @@ public class Fxcel implements Serializable {
 			getCell(row, col).assign(expression);		
 		} catch (InfiniteReferenceException e) {
 			System.out.println(e.getMessage());
-			target.assign(":???");
+			target.setTextual(":???");
 		} catch(InvalidExpressionException e) {
-			target.assign(":???");
+			target.setTextual("???");
 			System.out.println(target.getPos()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
 		}
 	}

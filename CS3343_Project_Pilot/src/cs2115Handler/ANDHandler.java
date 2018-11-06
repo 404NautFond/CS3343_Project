@@ -9,9 +9,7 @@ public class ANDHandler extends LogicHandler{
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
 		String[] input = expression.split(",");
 		for(String cell: input) {
-			if(Fxcel.getInstance().getCellValue(cell) == 0 ||
-					cell.equals("FALSE") ||
-					!cell.equals("1"))
+			if(!cell.equals("TRUE") && !cell.equals("1") && Fxcel.getInstance().getCellValue(cell) == 0)
 				return 0;
 		}
 		return 1;

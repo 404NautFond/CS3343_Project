@@ -32,6 +32,8 @@ public class GeneralHandler extends ExpHandler{
 		call.put("VAR", new VarianceHandler());
 		
 		call.put("TOBIN", new BinaryHandler());
+		
+		call.put("AND", new ANDHandler());
 	}
 	
 	public static boolean isFunc(String str) {
@@ -42,6 +44,7 @@ public class GeneralHandler extends ExpHandler{
 	public String handlerForStringReturn(String expression) {
 		feed(expression);
 		FuncHandler hand = call.get(tokens.get(0));
+		tokens.clear();
 		if(hand instanceof ConvertHandler) {
 			double val = handleForDoubleReturn(expression);
 			return ((ConvertHandler)hand).handleForStringReturn(val);

@@ -22,6 +22,7 @@ public class Cell extends Subject implements Observer {
 	/* Start */
 	private String textual;
 	public String getTextual() {return textual;}
+	public void setTextual(String text) {this.textual = text;};
 	/* End */
 	
 	private String mypos = null;
