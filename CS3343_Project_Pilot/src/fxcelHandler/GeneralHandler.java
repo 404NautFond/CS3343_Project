@@ -38,6 +38,20 @@ public class GeneralHandler extends ExpHandler{
 		return call.get(str) != null ;
 	}
 
+	//TODO: for new ones
+	public String handlerForStringReturn(String expression) {
+		feed(expression);
+		FuncHandler hand = call.get(tokens.get(0));
+		if(hand instanceof ConvertHandler) {
+			double val = handleForDoubleReturn(expression);
+			return ((ConvertHandler)hand).handleForStringReturn(val);
+		} else if(hand instanceof LogicHandler) {
+			return (handleForDoubleReturn(expression)==0)?"TRUE":"FALSE";
+		} else{
+			return handleForDoubleReturn(expression)+"";
+		}
+	}
+	
 	@Override
 	public double handleForDoubleReturn(String expression){
 		feed(expression);

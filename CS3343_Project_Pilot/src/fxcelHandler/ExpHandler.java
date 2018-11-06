@@ -27,8 +27,7 @@ public abstract class ExpHandler {
 	 */
 	abstract double handleForDoubleReturn(String expression) throws InvalidExpressionException;
 	
-//	abstract double handleForDoubleReturn(String expression, Cell resultCell);
-//	abstract int handleForIntegerReturn(String expression, Cell resultCell);
+
 
 	/**
 	 * To detect if a token is a numerical value (integer or float)

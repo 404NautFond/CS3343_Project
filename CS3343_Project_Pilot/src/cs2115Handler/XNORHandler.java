@@ -10,10 +10,4 @@ public class XNORHandler extends LogicHandler {
 		return 0;
 	}
 
-	@Override
-	public String handleForStringReturn(String expression) throws InvalidExpressionException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

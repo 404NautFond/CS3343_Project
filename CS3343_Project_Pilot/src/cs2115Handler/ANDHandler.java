@@ -9,14 +9,12 @@ public class ANDHandler extends LogicHandler{
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
 		String[] input = expression.split(",");
 		for(String cell: input) {
-			if(Fxcel.getInstance().getCellValue(cell) == 0) return 0;
+			if(Fxcel.getInstance().getCellValue(cell) == 0 ||
+					cell.equals("FALSE") ||
+					!cell.equals("1"))
+				return 0;
 		}
 		return 1;
-	}
-
-	@Override
-	public String handleForStringReturn(String expression) throws InvalidExpressionException {
-		return (handleForDoubleReturn(expression)==1)?"TRUE":"FALSE";
 	}
 
 }

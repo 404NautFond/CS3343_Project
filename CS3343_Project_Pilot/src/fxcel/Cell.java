@@ -101,10 +101,8 @@ public class Cell extends Subject implements Observer {
 			
 			// change the value otherwise
 			this.value = new GeneralHandler().handleForDoubleReturn(expression);
-			
-			//TODO: Check the first token
-			if(numberlike[0].equals("TOBIN")) {}
-			else this.textual = this.value+"";
+			// TODO: new method
+			this.textual = new GeneralHandler().handlerForStringReturn(expression);
 			
 			this.isValueNotDefine = false;
 			this.notifyObservers();

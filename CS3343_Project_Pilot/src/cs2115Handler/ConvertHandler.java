@@ -2,12 +2,13 @@ package cs2115Handler;
 
 import fxcelException.InvalidExpressionException;
 import fxcelHandler.FuncHandler;
+import fxcelHandler.GeneralHandler;
 
 public class ConvertHandler extends FuncHandler {
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException{
-		return 0;
+		return new GeneralHandler().handleForDoubleReturn(expression);
 	};
-	public String handleForStringReturn(String expression) throws InvalidExpressionException{
+	public String handleForStringReturn(double val) throws InvalidExpressionException{
 		return null;
 	};
 	
