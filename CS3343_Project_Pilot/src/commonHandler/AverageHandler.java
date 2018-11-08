@@ -1,8 +1,6 @@
 package commonHandler;
 
-import fxcel.Cell;
 import fxcelException.InvalidExpressionException;
-import fxcelHandler.FuncHandler;
 
 public class AverageHandler extends CommonHandler {
 

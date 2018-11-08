@@ -1,22 +1,24 @@
 package commonHandlerTest;
 
 import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import commonHandler.SumHandler;
 import fxcel.Fxcel;
-import fxcelException.InvalidCellException;
+import fxcelException.InvalidExpressionException;
 
 public class SumHandlerTest {
 	private Fxcel fxcel;
+	private SumHandler sum;
 	@Before
 	public void setup() {
 		fxcel = Fxcel.getInstance();
+		sum = new SumHandler();
 	}
-	
+
 	@After
 	public void tearDown() {
 		fxcel.clear();
@@ -25,44 +27,31 @@ public class SumHandlerTest {
 	public void testHandler_01() {
 		fxcel.writeCell(0, 0, "=1");
 		fxcel.writeCell(0, 1, "=2");
-		fxcel.writeCell(0, 2, "=SUM(A1:B1)");
-		
-		try {
-			assertEquals(3,fxcel.getCellValue(0,2), 0.0001);
-		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		assertEquals(3,sum.handleForDoubleReturn("A1:B1"), 0.0001);
 	}
-	
+
 	@Test
 	public void testHandler_02() {
 		fxcel.writeCell(0, 0, "=1");
 		fxcel.writeCell(1, 0, "=1");
 		fxcel.writeCell(2, 0, "=1");
-		fxcel.writeCell(3, 0, "=SUM(A1,A2,A3)");
+		assertEquals(3,sum.handleForDoubleReturn("A1,A2,A3"),0.001);
 		fxcel.writeCell(2, 0, "=2");
-		try {
-			assertEquals(1,fxcel.getCellValue("A1"),0.001);
-			assertEquals(1,fxcel.getCellValue("A2"),0.001);
-			assertEquals(2,fxcel.getCellValue("A3"),0.001);
-			assertEquals(4,fxcel.getCellValue("A4"),0.001);
-		} catch (InvalidCellException e) {
-			//
-		}
+		assertEquals(4,sum.handleForDoubleReturn("A1,A2,A3"),0.001);
 	}
-	
-	@Test
+
+	@Test(expected = InvalidExpressionException.class)
 	public void testHandler_03() {
 		fxcel.writeCell(0, 0, "=1");
 		fxcel.writeCell(1, 0, ":1");
-		fxcel.writeCell(2, 0, "=1");
-		fxcel.writeCell(3, 0, "=SUM(A1,A2,A3)");
 		fxcel.writeCell(2, 0, "=2");
-		try {
-			assertEquals(1,fxcel.getCellValue("A4"),0.001);
-		} catch (InvalidCellException e) {
-			//correct
-		}
+		assertEquals(1,sum.handleForDoubleReturn("A1,A2,A3"),0.001);
+	}
+	
+	@Test
+	public void testHandler_04() {
+		fxcel.writeCell(0, 0, "=1");
+		fxcel.writeCell(2, 0, "=2");
+		assertEquals(5,sum.handleForDoubleReturn("A1,2,A3"),0.001);
 	}
 }

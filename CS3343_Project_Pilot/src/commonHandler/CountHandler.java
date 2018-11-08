@@ -1,10 +1,7 @@
 package commonHandler;
 
-import fxcel.Cell;
-import fxcel.Fxcel;
 import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
-import fxcelHandler.FuncHandler;
 
 public class CountHandler extends CommonHandler{
 
@@ -23,7 +20,6 @@ public class CountHandler extends CommonHandler{
 		int endCol = CellNamingHandler.getColumnEnhanced(temp[1]);
 		int strRow = CellNamingHandler.getRowEnhanced(temp[0]);
 		int endRow = CellNamingHandler.getRowEnhanced(temp[1]);
-		//TODO: to eliminate the invalid ones
 		return (endCol-strCol+1)*(endRow-strRow+1);
 	}
 	

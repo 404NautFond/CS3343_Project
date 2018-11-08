@@ -72,18 +72,18 @@ public class MaxHandlerTest {
 		maxHandler.handleForDoubleReturn("A1%A2%A3");
 	}
 	
-	@Test//(expected = InvalidExpressionException.class)
+	@Test(expected = InvalidExpressionException.class)
 	public void testHandleForDoubleReturn_07() {
 		fxcel.writeCell(1, 0, ":2.01");
 		fxcel.writeCell(2, 0, "=2.0003");
 		maxHandler.handleForDoubleReturn("A2:A3");
 	}
 	
-	@Test//(expected = InvalidExpressionException.class)
+	@Test(expected = InvalidExpressionException.class)
 	public void testHandleForDoubleReturn_08() {
 		fxcel.writeCell(1, 0, ":2.01");
 		fxcel.writeCell(2, 0, "=2.0003");
-		maxHandler.handleForDoubleReturn("A1,A2,A3");
+		System.out.println(maxHandler.handleForDoubleReturn("A1,A2,A3"));
 	}
 	
 //	@Test

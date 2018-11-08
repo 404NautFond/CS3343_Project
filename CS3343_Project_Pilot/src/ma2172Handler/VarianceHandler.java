@@ -6,6 +6,7 @@ import fxcel.Fxcel;
 import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
+import fxcelHandler.GeneralHandler;
 
 public class VarianceHandler extends MathHandler {
 	String input;
@@ -50,20 +51,14 @@ public class VarianceHandler extends MathHandler {
         double ex2 = 0;
         double mean = new MeanHandler().handleForDoubleReturn(input);
         double count = new CountHandler().handleForDoubleReturn(input);
+        
         String[] cellName = input.split(",");
         for (String singleCell: cellName) {
-        		double tempVal = calculateValueForSingleCell(Fxcel.getInstance().getCell(singleCell.trim()));
+        		double tempVal = calculateValueForSingleCell(singleCell.trim());
             ex2 += tempVal*tempVal;
         }
         return ex2/count-mean*mean;
     }
 
-    protected double calculateValueForSingleCell(Cell thisCell) {
-        try {
-            return thisCell.getValue();
-        } catch (InvalidCellException e) {
-//            e.printStackTrace();
-            return 0;
-        }
-    }
+    
 }

@@ -62,7 +62,7 @@ public class GeneralHandler extends ExpHandler{
 //		try {
 			while(tokens.size() != 0) {
 				//				System.out.println(tokens);
-				try {
+				//try {
 					tempToken = tokens.remove(0);
 					switch(tempToken) {
 					/* ignore first "=" sign */
@@ -95,10 +95,11 @@ public class GeneralHandler extends ExpHandler{
 					default:
 						buffer.push(expand(tempToken));
 					}
-				}catch(InvalidCellException e) {
+				//}catch(InvalidCellException e) {
 					// Default for uninitialized Cell
-					buffer.push("0");
-				}
+					// buffer.push("0");
+					
+				//}
 			}
 
 		lowestPriority();
