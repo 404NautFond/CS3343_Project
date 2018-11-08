@@ -1,4 +1,4 @@
-package fxcelTest;
+package ma2127HandlerTest;
 
 import static org.junit.Assert.assertEquals;
 
