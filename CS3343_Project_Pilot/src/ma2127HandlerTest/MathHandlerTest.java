@@ -8,9 +8,13 @@ import org.junit.Test;
 
 import fxcel.Fxcel;
 import fxcelException.InvalidCellException;
+import fxcelException.InvalidExpressionException;
+import ma2172Handler.CombinitionHandler;
 
 public class MathHandlerTest {
 	Fxcel instance = Fxcel.getInstance();
+	CombinitionHandler comb;
+	
 	@Before
 	public void setup() {
 		instance.writeCell(0, 0, "1");
@@ -19,6 +23,7 @@ public class MathHandlerTest {
 		instance.writeCell(1, 0, "1");
 		instance.writeCell(1, 1, "2");
 		instance.writeCell(1, 2, ":2");
+		comb = new CombinitionHandler();
 	}
 	@After
 	public void tearDown() {
@@ -27,23 +32,12 @@ public class MathHandlerTest {
 	
 	@Test
 	public void testCombinition_00() {
-		instance.writeCell(2, 0, "=COMB(C1,B1)");
-		try {
-			assertEquals(3,instance.getCellValue("A3"),0.001);
-		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		assertEquals(3,comb.handleForDoubleReturn("C1,B1"),0.001);
 	}
-	@Test
+	
+	@Test(expected = InvalidExpressionException.class)
 	public void testCombinition_01() {
-		instance.writeCell(2, 0, "=COMB(C2,B2)");
-		try {
-			assertEquals(0,instance.getCellValue("A3"),0.001);
-		} catch (InvalidCellException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-		}
+		assertEquals(3,comb.handleForDoubleReturn("C2,B2"),0.001);
 	}
 	@Test
 	public void testPermutation_00() {

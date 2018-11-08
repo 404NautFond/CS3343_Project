@@ -1,7 +1,9 @@
 package fxcelHandler;
 
 import fxcel.Cell;
+import fxcel.Fxcel;
 import fxcelException.InfiniteReferenceException;
+import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
 
 public abstract class FuncHandler extends ExpHandler {
@@ -9,10 +11,7 @@ public abstract class FuncHandler extends ExpHandler {
 	protected Cell resultCell;
 
 	@Override
-	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public abstract double handleForDoubleReturn(String expression) throws InvalidExpressionException;
 	
 	public String[] columnHandler(String expression) {
 		if(!expression.contains(":")) return null;
@@ -22,22 +21,25 @@ public abstract class FuncHandler extends ExpHandler {
 		else return null;
 	}
 
-//	@Override
-//	double handleForDoubleReturn(String expression, Cell resultCell) {
-//		return 0;
-//	}
-//
-//	@Override
-//	int handleForIntegerReturn(String expression, Cell resultCell) {
-//		return 0;
-//	}
-//
-//	protected void checkDependentForSingleCell(Cell thisCell) throws InfiniteReferenceException {
-//		if (thisCell.checkDep(resultCell)) {
-//			thisCell.addDependent(resultCell);
-//			resultCell.addDependent(thisCell);
-//		} else {
-//			throw new InfiniteReferenceException(thisCell, resultCell);
-//		}
-//	}
+	protected double calculateValueForSingleCell(Cell thisCell) throws InvalidExpressionException {
+		try {
+			return thisCell.getValue();
+		} catch (InvalidCellException e) {
+			if(thisCell.getTextual() == null)
+				return 0;
+			else throw new InvalidExpressionException();
+		}
+	}
+
+	protected double calculateValueForSingleCell(String name) {
+		GeneralHandler gen = new GeneralHandler();
+		try {
+			double res = gen.handleForDoubleReturn(name);
+			return res;
+		} catch (InvalidCellException e) {
+			if (Fxcel.getInstance().getCell(name).getTextual() == null)
+				return 0;
+			else throw new InvalidExpressionException();
+		}
+	}
 }

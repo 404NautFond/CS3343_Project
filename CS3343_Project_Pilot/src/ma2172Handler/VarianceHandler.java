@@ -1,12 +1,9 @@
 package ma2172Handler;
 
 import commonHandler.CountHandler;
-import fxcel.Cell;
 import fxcel.Fxcel;
-import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
-import fxcelHandler.GeneralHandler;
 
 public class VarianceHandler extends MathHandler {
 	String input;
@@ -35,8 +32,6 @@ public class VarianceHandler extends MathHandler {
         startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);
         endRow = CellNamingHandler.getRowEnhanced(temp[1]);
         endColumn = CellNamingHandler.getColumnEnhanced(temp[1]);
-
-//        System.out.println(startRow+" "+startColumn+" "+endRow+" "+endColumn);
         
         for (int i = startRow-1; i<=endRow-1; i++) {
             for (int j = startColumn-1; j <= endColumn-1; j++) {

@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import ma2172Handler.CombinitionHandler;
 import fxcel.Fxcel;
-import fxcelException.InvalidExpressionException;
 
 public class CombinitionHandlerTest {
 	
@@ -33,11 +32,11 @@ public class CombinitionHandlerTest {
 		assertEquals(10,combinitionHandler.handleForDoubleReturn("A1,B1"), 0.0001);
 	}
 	
-	@Test(expected = InvalidExpressionException.class)
+	@Test
 	public void testHandleForDoubleReturn_02() {
 		fxcel.writeCell(0, 0, "=2");
 		fxcel.writeCell(0, 1, "=1");
-		combinitionHandler.handleForDoubleReturn("A1,C1");
+		assertEquals(1,combinitionHandler.handleForDoubleReturn("A1,C1"), 0.0001);
 	}
 
 }
