@@ -1,20 +1,11 @@
 package fxcelHandler;
 
-import fxcel.Cell;
 import fxcelException.InvalidExpressionException;
 
 import java.math.BigDecimal;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import commonHandler.AverageHandler;
-import commonHandler.CountHandler;
-import commonHandler.MaxHandler;
-import commonHandler.MinHandler;
-import commonHandler.SumHandler;
 
 public abstract class ExpHandler {
 	Stack<String> buffer;

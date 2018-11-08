@@ -200,6 +200,10 @@ public class Fxcel implements Serializable {
 	public double getCellValue(int row, int col) throws InvalidCellException {
 		return getCell(row,col).getValue();
 	}
+
+	public String getTextualValue(int row, int col) {
+		return getCell(row,col).getTextual();
+	}
 	
 
 }

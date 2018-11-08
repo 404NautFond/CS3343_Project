@@ -1,6 +1,5 @@
 package commonHandler;
 
-import fxcel.Fxcel;
 import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 
@@ -12,19 +11,17 @@ public class MinHandler extends CommonHandler {
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
 		this.input = expression;
 		if(expression.contains(":"))
-			return calculateForInputType1();
+			return calculateForColumnInput();
 		else if(expression.contains(","))
-			return calculateForInputType2();
+			return calculateForCommaInput();
 		throw new InvalidExpressionException();
 	}
 
-	private double calculateForInputType1() { // 'cell : cell' input type
-		double result = 0;
+	@Override
+	protected double calculateForColumnInput() { // 'cell : cell' input type
+		double result;
 		double tmp;
-		int startRow;
-		int startColumn;
-		int endRow;
-		int endColumn;
+		int startRow, startColumn, endRow, endColumn;
 		String[] temp = columnHandler(input);
 
 		startRow = CellNamingHandler.getRowEnhanced(temp[0]);
@@ -32,11 +29,11 @@ public class MinHandler extends CommonHandler {
 		endRow = CellNamingHandler.getRowEnhanced(temp[1]);
 		endColumn = CellNamingHandler.getColumnEnhanced(temp[1]);
 
-		result = calculateValueForSingleCell(Fxcel.getInstance().getCell(startRow-1,startColumn-1));
+		result = getValueByPosition(startRow-1,startColumn-1);
 
 		for (int i = startRow-1; i<=endRow-1; i++) {
 			for (int j = startColumn-1; j <= endColumn-1; j++) {
-				tmp = calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
+				tmp = getValueByPosition(i, j);
 				if(result > tmp) {
 					result = tmp;
 				}
@@ -45,17 +42,15 @@ public class MinHandler extends CommonHandler {
 		return result;
 	}
 
-	private double calculateForInputType2() { // 'cell,cell' input type
-		double result = 0;
+	@Override
+	protected double calculateForCommaInput() { // 'cell,cell' input type
+		double result;
 		double tmp;
-		int i = 0;
 		String[] cellName = input.split(",");
+		result = getValueFromStringLike(cellName[0].trim());
 		for (String singleCell: cellName) {
-			tmp = calculateValueForSingleCell(singleCell.trim());
-			if(i == 0) {
-				result = tmp;
-				i++;
-			} else if(result > tmp) {
+			tmp = getValueFromStringLike(singleCell.trim());
+			if(result > tmp) {
 				result = tmp;
 			}
 		}

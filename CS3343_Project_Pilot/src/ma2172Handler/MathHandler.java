@@ -4,12 +4,18 @@ import fxcelHandler.FuncHandler;
 
 public abstract class MathHandler extends FuncHandler{
 	protected static int[] factorial;
-
+	
+	/**
+	 * Constructor of MathHandler, which will call a computation of factorial
+	 */
 	public MathHandler() {
 		init();
 	}
 
-	public void init() {
+	/**
+	 * Compute the first 20 factorial (from 0 to 19)
+	 */
+	private void init() {
 		factorial = new int[20];
 		factorial[0] = 1;
 		for(int i = 1; i < 20; i++) {

@@ -2,7 +2,6 @@ package fxcelHandler;
 
 import fxcel.Cell;
 import fxcel.Fxcel;
-import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
 
@@ -15,23 +14,29 @@ public abstract class FuncHandler extends ExpHandler {
 	
 	public String[] columnHandler(String expression) {
 		if(!expression.contains(":")) return null;
-		
 		String[] temp = expression.split(":");
 		if(temp.length == 2) return temp;
 		else return null;
 	}
 
-	protected double calculateValueForSingleCell(Cell thisCell) throws InvalidExpressionException {
+	/**
+	 * Get the value of Cell by the coordinate
+	 * @param row The row number
+	 * @param col The column number
+	 * @return The value of the Cell
+	 * @throws InvalidExpressionException only when the cell is not able to be computed, default is 0
+	 */
+	protected double getValueByPosition(int row, int col) throws InvalidExpressionException {
 		try {
-			return thisCell.getValue();
+			return Fxcel.getInstance().getCellValue(row, col);
 		} catch (InvalidCellException e) {
-			if(thisCell.getTextual() == null)
+			if(Fxcel.getInstance().getTextualValue(row, col) == null)
 				return 0;
 			else throw new InvalidExpressionException();
 		}
 	}
 
-	protected double calculateValueForSingleCell(String name) {
+	protected double getValueFromStringLike(String name) throws InvalidExpressionException {
 		GeneralHandler gen = new GeneralHandler();
 		try {
 			double res = gen.handleForDoubleReturn(name);
@@ -42,4 +47,16 @@ public abstract class FuncHandler extends ExpHandler {
 			else throw new InvalidExpressionException();
 		}
 	}
+	
+	/**
+	 * For expression with ";"
+	 * @return The value of such expression
+	 */
+	protected double calculateForColumnInput() {return 0;};
+	
+	/**
+	 * For expression with ","
+	 * @return The value of such expression
+	 */
+	protected double calculateForCommaInput(){return 0;};
 }

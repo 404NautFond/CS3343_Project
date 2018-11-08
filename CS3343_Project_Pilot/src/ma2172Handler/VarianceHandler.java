@@ -1,7 +1,6 @@
 package ma2172Handler;
 
 import commonHandler.CountHandler;
-import fxcel.Fxcel;
 import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 
@@ -11,13 +10,14 @@ public class VarianceHandler extends MathHandler {
     public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
     		this.input = expression;
         if(expression.contains(":"))
-        		return calculateForInputType1();
+        		return calculateForColumnInput();
         else if(expression.contains(","))
-        		return calculateForInputType2();
+        		return calculateForCommaInput();
         throw new InvalidExpressionException();
     }
 
-    private double calculateForInputType1() throws InvalidExpressionException { // 'cell : cell' input type
+    @Override
+	protected double calculateForColumnInput() throws InvalidExpressionException { // 'cell : cell' input type
         double ex2 = 0;
         int startRow;
         int startColumn;
@@ -35,21 +35,22 @@ public class VarianceHandler extends MathHandler {
         
         for (int i = startRow-1; i<=endRow-1; i++) {
             for (int j = startColumn-1; j <= endColumn-1; j++) {
-            		double tempVal = calculateValueForSingleCell(Fxcel.getInstance().getCell(i, j));
+            		double tempVal = getValueByPosition(i, j);
                 ex2 += tempVal*tempVal;
             }
         }
         return ex2/count-mean*mean;
     }
 
-    private double calculateForInputType2() throws InvalidExpressionException { // 'cell,cell' input type
+    @Override
+	protected double calculateForCommaInput() throws InvalidExpressionException { // 'cell,cell' input type
         double ex2 = 0;
         double mean = new MeanHandler().handleForDoubleReturn(input);
         double count = new CountHandler().handleForDoubleReturn(input);
         
         String[] cellName = input.split(",");
         for (String singleCell: cellName) {
-        		double tempVal = calculateValueForSingleCell(singleCell.trim());
+        		double tempVal = getValueFromStringLike(singleCell.trim());
             ex2 += tempVal*tempVal;
         }
         return ex2/count-mean*mean;
