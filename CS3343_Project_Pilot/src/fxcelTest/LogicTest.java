@@ -40,7 +40,7 @@ public class LogicTest {
 	
 	@Test
 	public void ANDTest_02() {
-		instance.writeCell(0, 0, "=0");
+		instance.writeCell(0, 0, "0");
 //		instance.writeCell(0, 1, "=1");
 		instance.writeCell(0, 2, "=AND(A1,1)");
 		assertEquals(0,instance.getCellValue("A1"),0.01);
