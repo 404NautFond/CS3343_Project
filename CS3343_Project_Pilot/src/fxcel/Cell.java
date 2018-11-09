@@ -1,4 +1,4 @@
-package CS3343_Project_Pilot.src.fxcel;
+package fxcel;
 
 import java.util.ArrayList;
 import java.util.Arrays;

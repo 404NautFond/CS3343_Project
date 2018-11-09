@@ -1,4 +1,4 @@
-package CS3343_Project_Pilot.src.cs2115Handler;
+package cs2115Handler;
 
 import fxcel.Fxcel;
 import fxcelException.InvalidExpressionException;
