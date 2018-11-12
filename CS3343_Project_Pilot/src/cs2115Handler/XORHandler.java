@@ -1,6 +1,7 @@
 package cs2115Handler;
 
 import fxcel.Fxcel;
+import fxcelException.FxcelException;
 import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
 
@@ -12,10 +13,11 @@ public class XORHandler extends LogicHandler{
 		int count = 0;
 		for(String celltext: input) {
 			try {
-				if(celltext.equals("TRUE") || !celltext.equals("0") || Fxcel.getInstance().getCellValue(celltext) != 0)
+				if(celltext.equals("TRUE") || celltext.equals("1") || Fxcel.getInstance().getCellValue(celltext) == 1)
 					count++;
-			} catch (InvalidCellException e) {
-				e.printStackTrace();
+			} catch (FxcelException e) {
+				if(!isCell(celltext))
+					throw new InvalidExpressionException();
 			}
 		}
 		if(count % 2 == 0) {
