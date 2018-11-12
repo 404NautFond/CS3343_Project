@@ -14,8 +14,9 @@ public class XNORHandler extends LogicHandler{
 			try {
 				if(celltext.equals("TRUE") || !celltext.equals("0") || Fxcel.getInstance().getCellValue(celltext) != 0)
 					count++;
-			} catch (InvalidCellException e) {
-				e.printStackTrace();
+			} catch (InvalidCellException | NumberFormatException e) {
+				if(!isCell(celltext) && !celltext.equals("1") && !celltext.equals("FALSE"))
+					throw new InvalidExpressionException();
 			}
 		}
 		if(count % 2 == 0) {

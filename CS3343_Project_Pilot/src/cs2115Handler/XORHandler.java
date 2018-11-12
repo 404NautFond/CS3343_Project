@@ -1,3 +1,5 @@
+package cs2115Handler;
+
 import fxcel.Fxcel;
 import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;

@@ -9,6 +9,7 @@ import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
+import fxcelHandler.ExpHandler;
 
 public class Fxcel implements Serializable {
 	// Singleton
@@ -146,6 +147,9 @@ public class Fxcel implements Serializable {
 	 * @return The Cell reference
 	 */
 	public Cell getCell(String name) {
+		if(!ExpHandler.isCell(name)) {
+			throw new InvalidExpressionException();
+		}
 		int row = CellNamingHandler.getRowEnhanced(name) - 1;
 		int col = CellNamingHandler.getColumnEnhanced(name) - 1;
 		return getCell(row,col);
