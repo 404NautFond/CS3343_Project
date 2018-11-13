@@ -2,7 +2,7 @@ package cs2115Handler;
 
 import fxcelException.InvalidExpressionException;
 
-public class BinaryHandler extends ConvertHandler {
+public class OctalHandler extends ConvertHandler {
     @Override
     public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
         double result;
@@ -12,13 +12,11 @@ public class BinaryHandler extends ConvertHandler {
         }
         for (int i = 0; i < length; i++) {
             char temp = expression.charAt(i);
-            if (temp != '0' || temp != '1') {
+            if (temp < '0' || temp > '7') {
                 throw new InvalidExpressionException();
             }
         }
-        result = Integer.parseInt(expression, 2);
+        result = Integer.parseInt(expression, 8);
         return  result;
     }
-
-    //TODO: All the radix values, textual value = value after conversion, e.g. 0b0100, expression value = decimal
 }

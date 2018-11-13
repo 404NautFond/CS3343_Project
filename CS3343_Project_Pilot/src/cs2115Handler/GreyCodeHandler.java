@@ -4,11 +4,13 @@ import fxcelException.InvalidExpressionException;
 
 public class GreyCodeHandler extends ConvertHandler{
 
-
 	@Override
-	public String handleForStringReturn(double val) throws InvalidExpressionException {
-		// TODO Auto-generated method stub
-		return null;
+	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
+		if (isNumeric(expression)) {
+			int temp = Integer.parseInt(expression);
+			return temp ^ (temp >> 1);
+		} else {
+			throw new InvalidExpressionException();
+		}
 	}
-
 }
