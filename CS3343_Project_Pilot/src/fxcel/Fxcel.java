@@ -110,7 +110,16 @@ public class Fxcel implements Serializable {
 	 */
 	public void writeCell(int row, int col, String expression) {
 		Cell target = getCell(row, col);
-		target.setPosition((char)('A'+col)+""+(row+1));
+		
+		String tempCol = "";
+		col++;
+		while(col != 0) {
+			tempCol = (char)('A'+(col)%26-1) + tempCol;
+			col /= 26;
+		}
+		
+		
+		target.setPosition(tempCol+(row+1));
 		try {
 			getCell(row, col).assign(expression);		
 		} catch (InfiniteReferenceException e) {

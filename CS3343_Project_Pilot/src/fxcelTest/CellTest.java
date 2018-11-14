@@ -8,7 +8,6 @@ import java.lang.reflect.*;
 import fxcel.Cell;
 import fxcel.Fxcel;
 import fxcelException.InvalidCellException;
-import fxcelException.InfiniteReferenceException;
 
 public class CellTest {
 	
@@ -192,7 +191,7 @@ public class CellTest {
 	
   /*
    * TODO Figure out why Test08 & 10 will throw exception when testing  with other test cases 
-   * 	but will rum normally when separately testing
+   * 	but will run normally when separately testing
    */
 	
 	
@@ -222,27 +221,19 @@ public class CellTest {
 	@Test
 	public void testToString_03(){
 	Fxcel fxcel = Fxcel.getInstance();
-		try {
-			fxcel.writeCell(0,0,"=1");
-			cell = fxcel.getCell(0,0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		fxcel.writeCell(0,0,"=1");
+		cell = fxcel.getCell(0,0);
 		assertEquals("A1: The expression is \"=1\", The value is \"1.0\"",cell.toString());
 		fxcel.clear();
 	}
 	
-	//Test Case: "AA1:"		
+	//Test Case: "AB1:"		
 	@Test
 	public void testToString_04(){
-	Fxcel fxcel = Fxcel.getInstance();
-		try {
-			fxcel.writeCell(0,27,"=1");
-			cell = fxcel.getCell(0,27);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		assertEquals("AA1: The expression is \"=1\", The value is \"1.0\"",cell.toString());
+		Fxcel fxcel = Fxcel.getInstance();
+		fxcel.writeCell(0,27,"=1");
+		cell = fxcel.getCell(0,27);
+		assertEquals("AB1: The expression is \"=1\", The value is \"1.0\"",cell.toString());
 		fxcel.clear();
 	}
 	
@@ -260,7 +251,7 @@ public class CellTest {
 		fxcel.clear();
 	}
 
-	//Test Case: "AA1:"		
+	//Test Case: "AB1:"		
 	@Test
 	public void testGetPos_02(){
 		Fxcel fxcel = Fxcel.getInstance();
@@ -270,7 +261,7 @@ public class CellTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		assertEquals("AA1",cell.getPosition());
+		assertEquals("AB1",cell.getPosition());
 		fxcel.clear();
 	}
 }

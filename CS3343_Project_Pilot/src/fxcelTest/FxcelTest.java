@@ -1,11 +1,9 @@
 package fxcelTest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.*;
 import fxcel.Fxcel;
-import fxcelException.InvalidCellException;
 
 public class FxcelTest {
 
