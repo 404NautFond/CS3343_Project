@@ -4,7 +4,7 @@ import fxcel.Cell;
 
 public class InvalidCellException extends FxcelException {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6473126906512358115L;

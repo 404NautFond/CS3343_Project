@@ -8,22 +8,18 @@ import fxcelException.*;
 import fxcelHandler.*;
 
 public class Cell extends Subject implements Observer {
-	/**
-	 * For serialization
-	 */
-	private static final long serialVersionUID = 1088607801192340601L;
-	
 	private String expression;
+	
 	private double value;	//default is 0 when computing, but not display
-	private List<Cell> dependent = new ArrayList<Cell>();
 	private boolean isValueNotDefine;
 	
-	//TODO: for non-numerical I/O
-	/* Start */
 	private String textual;
+	
+	private List<Cell> dependent = new ArrayList<Cell>();
+	
+	
 	public String getTextual() {return textual;}
 	public void setTextual(String text) {this.textual = text;};
-	/* End */
 	
 	private String mypos = null;
 	public void setPos(String str){

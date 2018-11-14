@@ -5,6 +5,6 @@ public abstract class FxcelException extends RuntimeException{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6776263968727279559L;
+	private static final long serialVersionUID = 7292606047255785661L;
 
 }
