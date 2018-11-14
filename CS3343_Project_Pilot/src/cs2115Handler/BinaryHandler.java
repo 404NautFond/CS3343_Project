@@ -5,6 +5,7 @@ import fxcelException.InvalidExpressionException;
 public class BinaryHandler extends ConvertHandler {
     @Override
     public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
+    	/*
         double result;
         int length = expression.length();
         if (length == 0) {
@@ -18,6 +19,13 @@ public class BinaryHandler extends ConvertHandler {
         }
         result = Integer.parseInt(expression, 2);
         return  result;
+    */
+		return super.handleForDoubleReturn(expression);
+    }
+    
+    @Override
+    public String handleForStringReturn(String expression) {
+    		return "0b"+convertTo(2, super.handleForDoubleReturn(expression));
     }
 
     //TODO: All the radix values, textual value = value after conversion, e.g. 0b0100, expression value = decimal

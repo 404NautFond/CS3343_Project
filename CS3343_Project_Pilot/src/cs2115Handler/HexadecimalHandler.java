@@ -6,6 +6,7 @@ public class HexadecimalHandler extends ConvertHandler{
 
 	@Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
+		/*
 		double result;
 		int length = expression.length();
 		if (length == 0) {
@@ -19,6 +20,12 @@ public class HexadecimalHandler extends ConvertHandler{
 		}
 		result = Integer.parseInt(expression, 16);
 		return  result;
+		*/
+		return super.handleForDoubleReturn(expression);
+	}
+	
+	public String handleForStringReturn(double val) {
+		return "0x"+convertTo(16, super.handleForDoubleReturn(val+""));
 	}
 
 }

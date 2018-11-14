@@ -37,7 +37,7 @@ public class ANDHandlerTest {
 	
 	@Test(expected = InvalidExpressionException.class)
 	public void testAND_03() {
-		and.handleForDoubleReturn("TRUE,2");
+		and.handleForDoubleReturn("TURE,2");
 	}
 	
 	@Test
@@ -46,8 +46,8 @@ public class ANDHandlerTest {
 		assertEquals(0, res, 0.01);
 	}
 	
-	@Test(expected = InvalidExpressionException.class)
-	public void testAND_05() {
-		and.handleForDoubleReturn("TURE,1");
-	}
+//	@Test
+//	public void testAND_05() {
+//		and.handleForDoubleReturn("AND(1,1),1");
+//	}
 }

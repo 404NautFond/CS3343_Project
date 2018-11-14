@@ -2,7 +2,6 @@ package cs2115Handler;
 
 import fxcel.Fxcel;
 import fxcelException.FxcelException;
-import fxcelException.InvalidCellException;
 import fxcelException.InvalidExpressionException;
 
 public class NOTHandler extends LogicHandler{

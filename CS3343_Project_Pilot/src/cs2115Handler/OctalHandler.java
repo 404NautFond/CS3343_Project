@@ -5,6 +5,7 @@ import fxcelException.InvalidExpressionException;
 public class OctalHandler extends ConvertHandler {
     @Override
     public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
+    	/*
         double result;
         int length = expression.length();
         if (length == 0) {
@@ -18,5 +19,12 @@ public class OctalHandler extends ConvertHandler {
         }
         result = Integer.parseInt(expression, 8);
         return  result;
+    */
+    		return super.handleForDoubleReturn(expression);
+    }
+    
+    @Override
+    public String handleForStringReturn(String expression) {
+    		return "0o"+convertTo(8, super.handleForDoubleReturn(expression));
     }
 }

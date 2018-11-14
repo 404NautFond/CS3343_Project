@@ -31,9 +31,20 @@ public class GeneralHandler extends ExpHandler{
 		call.put("SD", new StandDeviHandler());
 		call.put("VAR", new VarianceHandler());
 		
-		call.put("TOBIN", new BinaryHandler());
+		call.put("BIN", new BinaryHandler());
+		call.put("OCT", new OctalHandler());
+		call.put("DEC", new DecimalHandler());
+		call.put("HEX", new HexadecimalHandler());
+		
+		call.put("ASCII", new ASCIIHandler());
+		call.put("GREY", new GreyCodeHandler());
 		
 		call.put("AND", new ANDHandler());
+		call.put("OR", new ANDHandler());
+		call.put("NAND", new ANDHandler());
+		call.put("NOR", new ANDHandler());
+		call.put("XOR", new ANDHandler());
+		call.put("XNOR", new ANDHandler());
 	}
 	
 	public static boolean isFunc(String str) {
@@ -46,8 +57,8 @@ public class GeneralHandler extends ExpHandler{
 		FuncHandler hand = call.get(tokens.get(0));
 		tokens.clear();
 		if(hand instanceof ConvertHandler) {
-			double val = handleForDoubleReturn(expression);
-			return ((ConvertHandler)hand).handleForStringReturn(val);
+//			double val = handleForDoubleReturn(expression);
+			return ((ConvertHandler)hand).handleForStringReturn(expression);
 		} else if(hand instanceof LogicHandler) {
 			return (handleForDoubleReturn(expression)==0)?"TRUE":"FALSE";
 		} else{
