@@ -9,8 +9,13 @@ public abstract class FuncHandler extends ExpHandler {
 
 	protected Cell resultCell;
 
-	@Override
-	public abstract double handleForDoubleReturn(String expression) throws InvalidExpressionException;
+	/**
+	 * Compute the value for the expression
+	 * @param expression The String type expression
+	 * @return The double value
+	 * @throws InvalidExpressionException 
+	 */
+	public abstract double handleForDoubleReturn(String expression);
 	
 	public String[] columnHandler(String expression) {
 		if(!expression.contains(":")) return null;
@@ -48,15 +53,5 @@ public abstract class FuncHandler extends ExpHandler {
 		}
 	}
 	
-	/**
-	 * For expression with ";"
-	 * @return The value of such expression
-	 */
-	protected double calculateForColumnInput() {return 0;};
 	
-	/**
-	 * For expression with ","
-	 * @return The value of such expression
-	 */
-	protected double calculateForCommaInput(){return 0;};
 }

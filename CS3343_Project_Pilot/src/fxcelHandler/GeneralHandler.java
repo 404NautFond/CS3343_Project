@@ -13,7 +13,7 @@ import fxcel.Fxcel;
 import fxcelException.*;
 import ma2172Handler.*;
 
-public class GeneralHandler extends ExpHandler{
+public class GeneralHandler extends FuncHandler{
 	private Stack<String> buffer = new Stack<String>();
 	private ArrayList<String> tokens = new ArrayList<String>();
 	protected static final Dictionary<String, FuncHandler> call = new Hashtable<String, FuncHandler>();

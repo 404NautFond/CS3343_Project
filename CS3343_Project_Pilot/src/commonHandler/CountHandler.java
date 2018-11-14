@@ -7,14 +7,16 @@ public class CountHandler extends CommonHandler{
 
 	private String input;
 	
+	@Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
 		this.input = expression;
-		if(input.contains(":")) return countForType1();
-		else if(input.contains(",")) return countForType2();
+		if(input.contains(":")) return calculateForColumnInput();
+		else if(input.contains(",")) return calculateForCommaInput();
 		throw new InvalidExpressionException();
 	}
-	
-	public int countForType1() {
+
+	@Override
+	protected double calculateForColumnInput() {
 		String[] temp = columnHandler(input);
 		int strCol = CellNamingHandler.getColumnEnhanced(temp[0]);
 		int endCol = CellNamingHandler.getColumnEnhanced(temp[1]);
@@ -22,8 +24,9 @@ public class CountHandler extends CommonHandler{
 		int endRow = CellNamingHandler.getRowEnhanced(temp[1]);
 		return (endCol-strCol+1)*(endRow-strRow+1);
 	}
-	
-	public int countForType2() {
+
+	@Override
+	protected double calculateForCommaInput() {
 		String[] temp = input.split(",");
 		return temp.length;
 	}

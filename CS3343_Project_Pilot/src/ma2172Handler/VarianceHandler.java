@@ -16,7 +16,6 @@ public class VarianceHandler extends MathHandler {
         throw new InvalidExpressionException();
     }
 
-    @Override
 	protected double calculateForColumnInput() throws InvalidExpressionException { // 'cell : cell' input type
         double ex2 = 0;
         int startRow;
@@ -42,7 +41,6 @@ public class VarianceHandler extends MathHandler {
         return ex2/count-mean*mean;
     }
 
-    @Override
 	protected double calculateForCommaInput() throws InvalidExpressionException { // 'cell,cell' input type
         double ex2 = 0;
         double mean = new MeanHandler().handleForDoubleReturn(input);

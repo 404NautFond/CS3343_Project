@@ -1,10 +1,12 @@
 package fxcelHandler;
 
-import fxcel.Cell;
-
 public class CellNamingHandler extends ExpHandler {
 
-    // Get row number
+    /**
+     * Extract the row number from the String
+     * @param str The string to be parsed
+     * @return
+     */
     public static int getRowEnhanced(String str) {
     		int pos = 0;
     		for(int i = 0; i < str.length(); i++) {
@@ -15,24 +17,32 @@ public class CellNamingHandler extends ExpHandler {
     			}
     		}
         int input = Integer.parseInt(str.substring(pos));
-        if (input <= 0) {
+        if (input <= 0) {				// Invalid Cell Reference
             return -1;
         } else {
             return input;
         }
     }
 
-    // Get enhanced column number
+    /**
+     * Extract the column number from the String
+     * @param str The string to be parsed
+     * @return
+     */
     public static int getColumnEnhanced(String str) {
        int column = getNumberOfLetter(str);
        if (column >= 0) {
            return column+1;
        } else {
-           return -1;
+           return -1;					// Invalid Cell Reference
        }
     }
 
-    // Transfer string to a 26-radix number
+    /**
+     * Transfer string to a 26-radix number
+     * @param input The String to be changed
+     * @return The position of the column
+     */
     private static int getNumberOfLetter(String input) {
     		char temp;
     		int res = 0;
@@ -42,25 +52,7 @@ public class CellNamingHandler extends ExpHandler {
     			res *= 26;
     			res += temp - 'A';
     		}
-    		
         return res;
     }
-    
-	@Override
-	public double handleForDoubleReturn(String expression) {
-		return 0;
-	}
-
-//	@Override
-//	double handleForDoubleReturn(String expression, Cell resultCell) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//
-//	@Override
-//	int handleForIntegerReturn(String expression, Cell resultCell) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 
 }

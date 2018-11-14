@@ -2,15 +2,16 @@ package fxcelHandler;
 
 import fxcel.Cell;
 import fxcel.Fxcel;
-import fxcelException.InvalidExpressionException;
 
-public class DeleteHandler extends FuncHandler {
+public class DeleteHandler extends ExpHandler {
 
-	@Override
-	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-		Cell tempCell = Fxcel.getInstance().getCell(expression);
+	/**
+	 * Delete the cell by the name
+	 * @param cellName The name of the cell
+	 */
+	public void handle(String cellName) {
+		Cell tempCell = Fxcel.getInstance().getCell(cellName);
 		tempCell.clear();
-		return 0;
 	}
 
 }

@@ -1,7 +1,5 @@
 package fxcelHandler;
 
-import fxcelException.InvalidExpressionException;
-
 import java.math.BigDecimal;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -9,16 +7,6 @@ import java.util.regex.Pattern;
 
 public abstract class ExpHandler {
 	Stack<String> buffer;
-
-	/**
-	 * Compute the value for the expression
-	 * @param expression The String type expression
-	 * @return The double value
-	 * @throws InvalidExpressionException 
-	 */
-	abstract double handleForDoubleReturn(String expression) throws InvalidExpressionException;
-	
-
 
 	/**
 	 * To detect if a token is a numerical value (integer or float)
