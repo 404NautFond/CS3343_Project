@@ -9,36 +9,45 @@ import fxcelHandler.*;
 
 public class Cell extends Subject implements Observer {
 	private String expression;
-	
 	private double value;	//default is 0 when computing, but not display
 	private boolean isValueNotDefine;
-	
 	private String textual;
+	private String position;
 	
 	private List<Cell> dependent = new ArrayList<Cell>();
 	
-	
-	public String getTextual() {return textual;}
-	public void setTextual(String text) {this.textual = text;};
-	
-	private String mypos = null;
-	public void setPos(String str){
-		this.mypos = str;
-	}
-	public String getPos(){
-		return this.mypos;
+	/**
+	 * Get the String to display
+	 * @return
+	 */
+	public String getTextual() {
+		return textual;
 	}
 	
 	/**
-	 * Default constructor for cell, will be called by Fxcel
+	 * Set the String to display
+	 * @param text The text to display
 	 */
-	public Cell() {
-		super();
-		this.expression = null;
-		this.value = 0;
-		this.isValueNotDefine = true;
+	public void setTextual(String text) {
+		this.textual = text;
 	}
-
+	
+	/**
+	 * Set the position String in the format "A8"
+	 * @param str The formatted String
+	 */
+	protected void setPosition(String str){
+		this.position = str;
+	}
+	
+	/**
+	 * Get the position String for troubleshooting
+	 * @return The position String
+	 */
+	public String getPosition(){
+		return this.position;
+	}
+	
 	/**
 	 * Getter of String field expression
 	 * @return expression
@@ -49,8 +58,8 @@ public class Cell extends Subject implements Observer {
 	
 	/**
 	 * Getter of double field value
-	 * @return value
-	 * @throws InvalidCellException
+	 * @return value The value in the double form
+	 * @throws InvalidCellException Throws when the value is not defined for computation
 	 */
 	public double getValue() throws InvalidCellException{
 		if(isValueNotDefine) {
@@ -60,11 +69,23 @@ public class Cell extends Subject implements Observer {
 	}
 	
 	/**
+	 * Default constructor for cell, will be called by Fxcel
+	 */
+	public Cell() {
+		super();
+		this.expression = null;
+		this.value = 0;
+		this.isValueNotDefine = true;
+		this.position = null;
+	}
+	
+	/**
 	 * Assign an expression to the Cell. Classifications and computations will be done.
 	 * @param expression The String fed into the cell
 	 * @throws InfiniteReferenceException 
 	 */
-	protected void assign(String expression) throws InfiniteReferenceException {
+	protected void assign(String expression)
+			throws InfiniteReferenceException, InvalidExpressionException {
 		// keep the original content anyway
 		this.clear();
 		this.expression = expression;
@@ -72,7 +93,6 @@ public class Cell extends Subject implements Observer {
 		char identifier = expression.charAt(0);
 		
 		if (identifier == ':') {					// pure text
-			//TODO: new feature
 			this.textual = expression.substring(1);
 			return;
 		} else if (identifier == '=') {			// expression
@@ -99,7 +119,6 @@ public class Cell extends Subject implements Observer {
 			// change the value otherwise
 			this.value = new GeneralHandler().handleForDoubleReturn(expression);
 			this.textual = new GeneralHandler().handlerForStringReturn(expression);
-			
 			this.isValueNotDefine = false;
 			this.notifyObservers();
 		} else {
@@ -115,7 +134,11 @@ public class Cell extends Subject implements Observer {
 		}
 	}
 
-	public void addDependent(ArrayList<String> left) {
+	/**
+	 * Auxiliary function for analyzing the related cells
+	 * @param left The list of suspicious String
+	 */
+	private void addDependent(ArrayList<String> left) {
 		for(String range:left) {
 			String[] cells = range.split(" |:");
 			//Pre-conditions: The cells are sorted
@@ -134,7 +157,7 @@ public class Cell extends Subject implements Observer {
 	 * Auxiliary function for adding dependent list
 	 * @param cell The target cell to be added into the list of the current cell 
 	 */
-	public void addDependent(Cell cell) {
+	private void addDependent(Cell cell) {
 		if(!dependent.contains(cell))
 			dependent.add(cell);
 	}
@@ -144,7 +167,7 @@ public class Cell extends Subject implements Observer {
 	 * @param cell The target cell
 	 * @return If the cell exists in the dependent list
 	 */
-	public boolean checkDep(Cell cell) {
+	private boolean checkDep(Cell cell) {
 		if(dependent.contains(cell)) 
 			return true;
 		for(Cell dep: dependent) {
@@ -202,7 +225,7 @@ public class Cell extends Subject implements Observer {
 	/* From class Object */
 	@Override
 	public String toString() {
-		String temp = mypos+": The expression is \""+ this.expression + "\"";
+		String temp = position+": The expression is \""+ this.expression + "\"";
 		if(!this.isValueNotDefine) temp += ", The value is \""+ this.value + "\"";
 		return temp;
 	}

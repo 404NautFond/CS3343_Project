@@ -256,7 +256,7 @@ public class CellTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		assertEquals("A1",cell.getPos());
+		assertEquals("A1",cell.getPosition());
 		fxcel.clear();
 	}
 
@@ -270,7 +270,7 @@ public class CellTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		assertEquals("AA1",cell.getPos());
+		assertEquals("AA1",cell.getPosition());
 		fxcel.clear();
 	}
 }

@@ -7,8 +7,8 @@ public class InvalidExpressionException extends FxcelException {
 	 * 
 	 */
 	private static final long serialVersionUID = -9165372884229446012L;
-	private static final String TAG = "InvalidExpressionExcept";
-	private static final String message = "Syntax error on your input !";
+//	private static final String TAG = "InvalidExpressionException";
+	private static final String message = "Syntax error on your input!";
 
 	private Cell thisCell;
 	
@@ -22,6 +22,6 @@ public class InvalidExpressionException extends FxcelException {
 	@Override
 	public String getMessage() {
 		if(thisCell == null) return message;
-		else return thisCell.getPos()+"(Expression:\""+ thisCell.getExpression()+"\") is invalid, please check.";
+		else return thisCell.getPosition()+"(Expression:\""+ thisCell.getExpression()+"\") is invalid, please check.";
 	}
 }

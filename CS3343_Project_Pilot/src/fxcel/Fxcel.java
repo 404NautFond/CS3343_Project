@@ -110,7 +110,7 @@ public class Fxcel implements Serializable {
 	 */
 	public void writeCell(int row, int col, String expression) {
 		Cell target = getCell(row, col);
-		target.setPos((char)('A'+col)+""+(row+1));
+		target.setPosition((char)('A'+col)+""+(row+1));
 		try {
 			getCell(row, col).assign(expression);		
 		} catch (InfiniteReferenceException e) {
@@ -118,7 +118,7 @@ public class Fxcel implements Serializable {
 			target.setTextual("#INF#");
 		} catch(InvalidExpressionException e) {
 			target.setTextual("#INVALID#");
-			System.out.println(target.getPos()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
+			System.out.println(target.getPosition()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
 		}
 	}
 	
