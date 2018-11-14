@@ -38,6 +38,16 @@ public class Fxcel implements Serializable {
 			}
 			table.add(li);
 		}
+		
+		reassignPosition();
+	}
+	
+	private void reassignPosition() {
+		for(int i = 0; i < row_max; i++) {
+			for(int j = 0; j < col_max; j++) {
+				setCellPosition(i,j);
+			}
+		}
 	}
 
 	/**
@@ -69,12 +79,17 @@ public class Fxcel implements Serializable {
 		}
 	}
 
+	/**
+	 * Add new column before a given row number
+	 * @param col The column number
+	 */
 	public void addCol(int col) {
-		List<Cell> li = new ArrayList<Cell>();
-		for (int i = 0; i < row_max; i++) {
-			li.add(new Cell());
+		for(int i = 0; i < row_max; i++) {
+			List<Cell> li = table.get(i);
+			li.add(col, new Cell());
 		}
-		table.add(col-1, li);
+		reassignPosition();
+		col_max++;
 	}
 
 	/**
@@ -82,10 +97,13 @@ public class Fxcel implements Serializable {
 	 * @param row The row position
 	 */
 	public void addRow(int row) {
-		for(int i = 0; i < col_max; i++) {
-			List<Cell> li = table.get(i);
-			li.add(row-1, new Cell());
+		List<Cell> li = new ArrayList<Cell>();
+		for (int i = 0; i < col_max; i++) {
+			li.add(new Cell());
 		}
+		table.add(row, li);
+		reassignPosition();
+		row_max++;
 	}
 
 	/**
@@ -102,6 +120,17 @@ public class Fxcel implements Serializable {
 		this.col_max = 30;
 	}
 	
+	private void setCellPosition(int row, int col) {
+		int cellCol = col;
+		String tempCol = "";
+		col++;
+		while(col != 0) {
+			tempCol = (char)('A'+(col)%26-1) + tempCol;
+			col /= 26;
+		}
+		getCell(row,cellCol).setPosition(tempCol+(row+1));
+	}
+	
 	/**
 	 * Assign an expression to a cell
 	 * @param row The row position
@@ -110,18 +139,9 @@ public class Fxcel implements Serializable {
 	 */
 	public void writeCell(int row, int col, String expression) {
 		Cell target = getCell(row, col);
-		
-		String tempCol = "";
-		col++;
-		while(col != 0) {
-			tempCol = (char)('A'+(col)%26-1) + tempCol;
-			col /= 26;
-		}
-		
-		
-		target.setPosition(tempCol+(row+1));
 		try {
-			getCell(row, col).assign(expression);		
+			getCell(row, col).assign(expression);	
+			setCellPosition(row, col);
 		} catch (InfiniteReferenceException e) {
 			System.out.println(e.getMessage());
 			target.setTextual("#INF#");
@@ -133,10 +153,11 @@ public class Fxcel implements Serializable {
 	
 	@Override
 	public String toString() {
-		String res = "";
+		String res = "Fxcel Instance with "+ row_max + " rows & " + col_max + " cols; ";
 		for(int i = 0; i < row_max; i++) {
 			for(int j = 0; j < col_max; j++) {
-				res += getCell(i,j).toString();
+				if(getTextualValue(i,j) != null)
+					res += "-"+getCell(i,j).toString() + "\n";
 			}
 		}
 		return res;
@@ -200,7 +221,7 @@ public class Fxcel implements Serializable {
 	 * @throws InvalidCellException
 	 */
 	public double getCellValue(String name) throws InvalidCellException {
-		return getCell(name).getValue();
+		return getCell(name.trim()).getValue();
 	}
 	
 	/**

@@ -256,7 +256,13 @@ public class GeneralHandler extends FuncHandler{
 		}else if(isNumeric(operand)) {
 			return operand;
 		}else if(isCell(operand)) {
-			return (Fxcel.getInstance().getCellValue(operand)+"");
+			try {
+				return (Fxcel.getInstance().getCellValue(operand)+"");
+			}catch(InvalidCellException e) {
+				if(Fxcel.getInstance().getCellExpression(operand) == null)
+					return "0";
+				else throw new InvalidExpressionException();
+			}
 		}else {
 			return compute(operand, tokens);
 		}

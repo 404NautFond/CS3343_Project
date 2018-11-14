@@ -82,6 +82,8 @@ public class MinHandlerTest {
 	@Test(expected = InvalidExpressionException.class)
 	public void testHandleForDoubleReturn_08() {
 		fxcel.writeCell(1, 0, ":2.01");
+//		System.out.println(fxcel.getTextualValue("A2"));
+//		System.out.println(fxcel.getCellValue("A2"));
 		fxcel.writeCell(2, 0, "=2.0003");
 		minHandler.handleForDoubleReturn("A1,A2,A3");
 	}

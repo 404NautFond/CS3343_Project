@@ -7,7 +7,7 @@ import java.lang.reflect.*;
 
 import fxcel.Cell;
 import fxcel.Fxcel;
-import fxcelException.InvalidCellException;
+import fxcelException.*;
 
 public class CellTest {
 	
@@ -26,7 +26,9 @@ public class CellTest {
 	}
 	
 	@After
-	public void tearDown() {}
+	public void tearDown() {
+		Fxcel.getInstance().clear();
+	}
 	
 
 	//Test Case: ":text"
@@ -57,11 +59,11 @@ public class CellTest {
 	public void testAssign_03() throws InvalidCellException{
 		try {
 			method.invoke(cell, "=3(");
+			assertEquals(0,cell.getValue(),0.0001);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertEquals(0,cell.getValue(),0.0001);
 	}
 
 	//Assign Method Test Case: "=A1+B1"

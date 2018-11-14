@@ -36,8 +36,8 @@ public class Cell extends Subject implements Observer {
 	 * Set the position String in the format "A8"
 	 * @param str The formatted String
 	 */
-	protected void setPosition(String str){
-		this.position = str;
+	protected void setPosition(String position){
+		this.position = position;
 	}
 	
 	/**
@@ -76,7 +76,7 @@ public class Cell extends Subject implements Observer {
 		this.expression = null;
 		this.value = 0;
 		this.isValueNotDefine = true;
-		this.position = null;
+//		this.position = null;
 	}
 	
 	/**
@@ -185,7 +185,9 @@ public class Cell extends Subject implements Observer {
 		this.expression = null;
 		this.value = 0;
 		this.isValueNotDefine = true;
+		this.textual = null;
 		this.dependent.clear();
+//		this.position = null;
 	}
 
 	/* From class Subject */
@@ -206,7 +208,7 @@ public class Cell extends Subject implements Observer {
 
 	@Override
 	public void notifyObservers() {
-		for (Cell c :list) {
+		for (Cell c: list) {
 			c.update();
 		}
 	}

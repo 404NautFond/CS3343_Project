@@ -76,10 +76,14 @@ public class FxcelTest {
 
 	@Test
 	public void testAddCol_01() {
-		fxcel.writeCell(4, 0, "=1");
+		for(int i = 0; i < 10; i++) {
+			fxcel.writeCell(0, i, "="+i);
+		}
+		System.out.println(fxcel);
+		assertEquals("=5",fxcel.getCell(0,5).getExpression());
 		fxcel.addCol(5);
-		assertEquals(null,fxcel.getCell(4,0).getExpression());
-		assertEquals("=1",fxcel.getCell(5,0).getExpression());
+		assertEquals(null,fxcel.getCell(0,5).getExpression());
+		assertEquals("=5",fxcel.getCell(0,6).getExpression());
 	}
 	
 	@Test//(expected = IndexOutOfBoundsException.class)
@@ -93,14 +97,14 @@ public class FxcelTest {
 		fxcel.getCell(30,0);
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test//(expected = AssertionError.class)
 	public void testAddCol_04() {
 		fxcel.writeCell(30, 0, "=1");
 		fxcel.addCol(30);
 		assertEquals("=1",fxcel.getCell(30,0).getExpression());
 	}
 	
-	@Test(expected = AssertionError.class)
+	@Test//(expected = AssertionError.class)
 	public void testAddCol_05() {
 		fxcel.writeCell(30, 0, "=1");
 		fxcel.addCol(31);
@@ -110,17 +114,17 @@ public class FxcelTest {
 	@Test
 	public void testAddRow_01() {
 		fxcel.writeCell(0, 4, "=1");
-		fxcel.addRow(5);
+		fxcel.addRow(0);
 		assertEquals(null,fxcel.getCell(0,4).getExpression());
-		assertEquals("=1",fxcel.getCell(0,5).getExpression());
+		assertEquals("=1",fxcel.getCell(1,4).getExpression());
 	}
 	
-	@Test//(expected = IndexOutOfBoundsException.class)
+	@Test (expected = IndexOutOfBoundsException.class)
 	public void testAddRow_02() {
 		fxcel.getCell(0,30);
 	}
 	
-	@Test//(expected = IndexOutOfBoundsException.class)
+	@Test (expected = IndexOutOfBoundsException.class)
 	public void testAddRow_03() {
 		fxcel.addRow(2);
 		fxcel.getCell(0,30);
@@ -135,7 +139,7 @@ public class FxcelTest {
 	@Test
 	public void testAddRow_05() {
 		fxcel.writeCell(0, 20, "=1");
-		fxcel.addRow(2);
+		fxcel.addCol(2);
 		assertEquals(null,fxcel.getCell(0,30).getExpression());
 	}
 	

@@ -35,9 +35,10 @@ public abstract class FuncHandler extends ExpHandler {
 		try {
 			return Fxcel.getInstance().getCellValue(row, col);
 		} catch (InvalidCellException e) {
-			if(Fxcel.getInstance().getTextualValue(row, col) == null)
+			if(Fxcel.getInstance().getCellExpression(row,col) == null) 
 				return 0;
-			else throw new InvalidExpressionException();
+			else 
+				throw new InvalidExpressionException();
 		}
 	}
 
@@ -47,9 +48,10 @@ public abstract class FuncHandler extends ExpHandler {
 			double res = gen.handleForDoubleReturn(name);
 			return res;
 		} catch (InvalidCellException e) {
-			if (Fxcel.getInstance().getCell(name).getTextual() == null)
+			if (Fxcel.getInstance().getCell(name).getExpression() == null) 
 				return 0;
-			else throw new InvalidExpressionException();
+			else
+				throw new InvalidExpressionException();
 		}
 	}
 	
