@@ -23,38 +23,39 @@ public class FxcelTest {
 	@Test
 	public void testWriteCell_01() {
 		fxcel.writeCell(0, 0, "=)1+3");
-		assertEquals(":???",fxcel.getCell("A1").getExpression());
+		assertEquals("#INVALID#",fxcel.getTextualValue("A1"));
 	}
 	
 	@Test
 	public void testWriteCell_02() {
 		fxcel.writeCell(0, 0, "=1&3");
-		assertEquals(":???",fxcel.getCell("A1").getExpression());
+		assertEquals("#INVALID#",fxcel.getTextualValue("A1"));
 	}
 	
 	@Test
 	public void testWriteCell_03() {
 		fxcel.writeCell(0, 0, "=1");
 		fxcel.writeCell(0, 1, "=B1+A1");
-		assertEquals(":???",fxcel.getCell("B1").getExpression());
+		assertEquals("#INF#",fxcel.getTextualValue("B1"));
 	}
 	
 	@Test
 	public void testGetterByName_01() {
 		fxcel.writeCell(0, 0, ":1");
-		assertEquals(":1",fxcel.getCell("A1").getExpression());
+		assertEquals(":1",fxcel.getCellExpression("A1"));
 	}
 	
 	@Test
 	public void testGetterByName_02() {
 		fxcel.writeCell(0, 1, "= B1+1");
-		assertEquals(":???",fxcel.getCellExpression("B1"));
+		assertEquals("= B1+1",fxcel.getCellExpression("B1"));
+		assertEquals("#INF#",fxcel.getTextualValue("B1"));
 	}
 	
 	@Test
 	public void testGetterByLocate_01() {
 		fxcel.writeCell(0, 0, ":1");
-		assertEquals(":1",fxcel.getCell(0,0).getExpression());
+		assertEquals(":1",fxcel.getCellExpression(0,0));
 	}
 	
 	@Test
@@ -140,9 +141,11 @@ public class FxcelTest {
 		assertEquals(null,fxcel.getCell(0,30).getExpression());
 	}
 	
+	/*
 	@Test
 	public void testToString() {
 		assertEquals(null,fxcel.toString());
 	}
+	*/
 
 }

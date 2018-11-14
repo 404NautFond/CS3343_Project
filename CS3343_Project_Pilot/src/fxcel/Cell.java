@@ -102,18 +102,18 @@ public class Cell extends Subject implements Observer {
 			
 			// change the value otherwise
 			this.value = new GeneralHandler().handleForDoubleReturn(expression);
-			// TODO: new method
 			this.textual = new GeneralHandler().handlerForStringReturn(expression);
 			
 			this.isValueNotDefine = false;
 			this.notifyObservers();
 		} else {
 			try {
+				// without "="
 				this.value = Double.parseDouble(expression);
-				//TODO: new feature
 				this.textual = expression;
 				this.isValueNotDefine = false;
 			}catch(Exception e) {
+				// not able to parse into number
 				this.isValueNotDefine = true;
 			}
 		}
@@ -162,7 +162,7 @@ public class Cell extends Subject implements Observer {
 	/**
 	 * Clear the current cell
 	 */
-	protected void clear() {
+	public void clear() {
 		this.expression = null;
 		this.value = 0;
 		this.isValueNotDefine = true;

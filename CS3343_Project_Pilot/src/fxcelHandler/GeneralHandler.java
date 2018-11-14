@@ -17,28 +17,28 @@ public class GeneralHandler extends ExpHandler{
 	private Stack<String> buffer = new Stack<String>();
 	private ArrayList<String> tokens = new ArrayList<String>();
 	protected static final Dictionary<String, FuncHandler> call = new Hashtable<String, FuncHandler>();
-	
+
 	public GeneralHandler() {
 		call.put("SUM", new SumHandler());
 		call.put("AVE", new AverageHandler());
 		call.put("MIN", new MinHandler());
 		call.put("MAX", new MaxHandler());
 		call.put("COUNT", new CountHandler());
-		
+
 		call.put("COMB", new CombinitionHandler());
 		call.put("PERM", new PermutationHandler());
 		call.put("MEAN", new MeanHandler());
 		call.put("SD", new StandDeviHandler());
 		call.put("VAR", new VarianceHandler());
-		
+
 		call.put("BIN", new BinaryHandler());
 		call.put("OCT", new OctalHandler());
 		call.put("DEC", new DecimalHandler());
 		call.put("HEX", new HexadecimalHandler());
-		
+
 		call.put("ASCII", new ASCIIHandler());
 		call.put("GREY", new GreyCodeHandler());
-		
+
 		call.put("AND", new ANDHandler());
 		call.put("OR", new ANDHandler());
 		call.put("NAND", new ANDHandler());
@@ -46,7 +46,7 @@ public class GeneralHandler extends ExpHandler{
 		call.put("XOR", new ANDHandler());
 		call.put("XNOR", new ANDHandler());
 	}
-	
+
 	public static boolean isFunc(String str) {
 		return call.get(str) != null ;
 	}
@@ -57,7 +57,6 @@ public class GeneralHandler extends ExpHandler{
 		FuncHandler hand = call.get(tokens.get(0));
 		tokens.clear();
 		if(hand instanceof ConvertHandler) {
-//			double val = handleForDoubleReturn(expression);
 			return ((ConvertHandler)hand).handleForStringReturn(expression);
 		} else if(hand instanceof LogicHandler) {
 			return (handleForDoubleReturn(expression)==0)?"TRUE":"FALSE";
@@ -65,53 +64,45 @@ public class GeneralHandler extends ExpHandler{
 			return handleForDoubleReturn(expression)+"";
 		}
 	}
-	
+
 	@Override
 	public double handleForDoubleReturn(String expression){
 		feed(expression);
 		String tempToken, sym, number1, number2;
-//		try {
-			while(tokens.size() != 0) {
-				//				System.out.println(tokens);
-				//try {
-					tempToken = tokens.remove(0);
-					switch(tempToken) {
-					/* ignore first "=" sign */
-					case "=":
-					case " ":
-						continue;
-						/* level 2 operators */
-					case "*":
-					case "/":
-						//					case "^":
-						number2 = tokens.remove(0);
-						number2 = expand(number2);
-						sym = tempToken;
-						number1 = buffer.pop();
-						buffer.push(calcu(number1, sym, number2)+"");
-						break;
-						/* level 1 operators */
-					case "+":
-					case "-":
-						buffer.push(tempToken);
-						break;
-						/* recursion, to be included in the expand */
-						//					case "(":
-						//						buffer.push(recursion());
-						//						break;
-						/* syntax error */
-					case ")":
-						throw new InvalidExpressionException();
-						/* operands other than above */
-					default:
-						buffer.push(expand(tempToken));
-					}
-				//}catch(InvalidCellException e) {
-					// Default for uninitialized Cell
-					// buffer.push("0");
-					
-				//}
+		while(tokens.size() != 0) {
+			tempToken = tokens.remove(0);
+			switch(tempToken) {
+			/* ignore first "=" sign */
+			case "=":
+			case " ":
+				continue;
+			/* level 2 operators */
+			case "*":
+			case "/":
+				//					case "^":
+				number2 = tokens.remove(0);
+				number2 = expand(number2);
+				sym = tempToken;
+				number1 = buffer.pop();
+				buffer.push(calcu(number1, sym, number2)+"");
+				break;
+			/* level 1 operators */
+			case "+":
+			case "-":
+				buffer.push(tempToken);
+				break;
+			/* recursion, to be included in the expand */
+			//					case "(":
+			//						buffer.push(recursion());
+			//						break;
+			/* syntax error */
+			case ")":
+				throw new InvalidExpressionException();
+				/* operands other than above */
+			default:
+				buffer.push(expand(tempToken));
 			}
+		}
 
 		lowestPriority();
 		double result = Double.parseDouble(buffer.lastElement());
@@ -124,7 +115,6 @@ public class GeneralHandler extends ExpHandler{
 	 * Initialize the handler by the expression
 	 */
 	private void feed(String expression) {
-//		System.out.println(expression);
 		StringTokenizer tokenizer = new StringTokenizer(expression,"=+-*/()^",true);
 		while(tokenizer.hasMoreTokens()) {
 			tokens.add(tokenizer.nextToken());
@@ -170,7 +160,6 @@ public class GeneralHandler extends ExpHandler{
 		int parenthesis = 1;
 
 		// add parameters back to string
-		// TODO: Refactor
 		while(parenthesis != 0) {
 			if(tokens.get(0).equals(")")) {
 				parenthesis--;
@@ -246,8 +235,8 @@ public class GeneralHandler extends ExpHandler{
 			String result = call.get(formula).handleForDoubleReturn(tempExpr)+"";
 			return result;
 		}catch(Exception e) {
-//			System.out.println("Expression Error!");
-//			e.printStackTrace();
+			//			System.out.println("Expression Error!");
+			//			e.printStackTrace();
 			throw new InvalidExpressionException();
 		}
 	}

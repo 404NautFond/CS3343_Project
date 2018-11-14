@@ -115,9 +115,9 @@ public class Fxcel implements Serializable {
 			getCell(row, col).assign(expression);		
 		} catch (InfiniteReferenceException e) {
 			System.out.println(e.getMessage());
-			target.setTextual(":???");
+			target.setTextual("#INF#");
 		} catch(InvalidExpressionException e) {
-			target.setTextual("???");
+			target.setTextual("#INVALID#");
 			System.out.println(target.getPos()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
 		}
 	}
@@ -205,9 +205,23 @@ public class Fxcel implements Serializable {
 		return getCell(row,col).getValue();
 	}
 
+	/**
+	 * Get the String to be displayed
+	 * @param row The row location
+	 * @param col The column location
+	 * @return The text
+	 */
 	public String getTextualValue(int row, int col) {
 		return getCell(row,col).getTextual();
 	}
 	
+	/**
+	 * Get the String to be displayed
+	 * @param name The Cell name
+	 * @return The text
+	 */
+	public String getTextualValue(String name){
+		return getCell(name).getTextual();
+	}
 
 }
