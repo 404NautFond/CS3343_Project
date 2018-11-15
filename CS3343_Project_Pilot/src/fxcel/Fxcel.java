@@ -27,10 +27,12 @@ public class Fxcel implements Serializable {
 	 * Default Constructor, will be called by the singleton
 	 */
 	private Fxcel() {
+                //initialize max row and col to be 30
 		this.row_max = 30;
 		this.col_max = 30;
 		this.table = new ArrayList<List<Cell>>();
-
+                
+                //initialize each cell and the table
 		for (int i = 0; i < 30; i++) {
 			List<Cell> li = new ArrayList<Cell>();
 			for (int j = 0; j < 30; j++) {
@@ -42,6 +44,9 @@ public class Fxcel implements Serializable {
 		reassignPosition();
 	}
 	
+        /**
+         * Assign position to each cell
+         */
 	private void reassignPosition() {
 		for(int i = 0; i < row_max; i++) {
 			for(int j = 0; j < col_max; j++) {
@@ -56,7 +61,7 @@ public class Fxcel implements Serializable {
 	 * @param row The new row number
 	 */
 	public void resize(int col, int row) {
-		//TODO: Check overflow
+		//Check overflow. If overflow, resize the col or row.
 		if (col > col_max) {
 			for (int i = col_max; i < col_max * 2; i++) {
 				List<Cell> li = new ArrayList<Cell>();
@@ -80,7 +85,7 @@ public class Fxcel implements Serializable {
 	}
 
 	/**
-	 * Add new column before a given row number
+	 * Add new column before a given col number
 	 * @param col The column number
 	 */
 	public void addCol(int col) {
@@ -120,10 +125,16 @@ public class Fxcel implements Serializable {
 		this.col_max = 30;
 	}
 	
+        /**
+         * Convert col from int to String with letter representation and assign the position String to the cell
+         * @param row The row number
+         * @param col The col number
+         */
 	private void setCellPosition(int row, int col) {
 		int cellCol = col;
 		String tempCol = "";
 		col++;
+                //convert col from int to String with letter representation
 		while(col != 0) {
 			tempCol = (char)('A'+(col)%26-1) + tempCol;
 			col /= 26;
@@ -132,11 +143,11 @@ public class Fxcel implements Serializable {
 	}
 	
 	/**
-	 * Assign an expression to a cell
+         * Assign an expression to a cell
 	 * @param row The row position
 	 * @param col The column position
 	 * @param expression The input expression
-	 */
+         */
 	public void writeCell(int row, int col, String expression) {
 		Cell target = getCell(row, col);
 		try {
@@ -177,9 +188,11 @@ public class Fxcel implements Serializable {
 	 * @return The Cell reference
 	 */
 	public Cell getCell(String name) {
+                //throw exception if the expression of the cell is invalid
 		if(!ExpHandler.isCell(name)) {
 			throw new InvalidExpressionException();
 		}
+                //convert cell name to row and col numbers
 		int row = CellNamingHandler.getRowEnhanced(name) - 1;
 		int col = CellNamingHandler.getColumnEnhanced(name) - 1;
 		return getCell(row,col);
