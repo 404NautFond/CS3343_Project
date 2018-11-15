@@ -6,14 +6,27 @@ import fxcelHandler.GeneralHandler;
 
 public class ConvertHandler extends FuncHandler {
 	
+        @Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException{
 		return new GeneralHandler().handleForDoubleReturn(expression);
 	};
 	
+        /**
+         * Convert expression string to decimal number string
+         * @param expression the expression to be converted
+         * @return the converted number string
+         * @throws InvalidExpressionException 
+         */
 	public String handleForStringReturn(String expression) throws InvalidExpressionException{
 		return "0d"+convertTo(10, Double.parseDouble(expression));
 	};
 	
+        /**
+         * Convert the number to the needed radix
+         * @param radix the radix that the target is converted to
+         * @param target the number which is to be converted
+         * @return String of the converted number
+         */
 	public String convertTo(int radix, double target) {
 		String temp = "";
 		if(target < 0) {
