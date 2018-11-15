@@ -17,6 +17,11 @@ public abstract class FuncHandler extends ExpHandler {
 	 */
 	public abstract double handleForDoubleReturn(String expression);
 	
+        /**
+         * Split the cell names by ":" in the expression
+         * @param expression the input expression
+         * @return String array of the cell names
+         */
 	public String[] columnHandler(String expression) {
 		if(!expression.contains(":")) return null;
 		String[] temp = expression.split(":");
@@ -42,6 +47,12 @@ public abstract class FuncHandler extends ExpHandler {
 		}
 	}
 
+        /**
+         * Compute the result of the input String as double
+         * @param name the input expression
+         * @return the double result of the expression
+         * @throws InvalidExpressionException 
+         */
 	protected double getValueFromStringLike(String name) throws InvalidExpressionException {
 		GeneralHandler gen = new GeneralHandler();
 		try {
