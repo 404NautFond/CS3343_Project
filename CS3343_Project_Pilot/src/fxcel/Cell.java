@@ -11,14 +11,14 @@ public class Cell extends Subject implements Observer {
 	private String expression;
 	private double value;	//default is 0 when computing, but not display
 	private boolean isValueNotDefine;
-	private String textual;
+	private String textual;     //contain the expression error information
 	private String position;
 	
 	private List<Cell> dependent = new ArrayList<Cell>();
 	
 	/**
 	 * Get the String to display
-	 * @return
+	 * @return String textual showing error
 	 */
 	public String getTextual() {
 		return textual;
@@ -34,7 +34,7 @@ public class Cell extends Subject implements Observer {
 	
 	/**
 	 * Set the position String in the format "A8"
-	 * @param str The formatted String
+	 * @param position The formatted String
 	 */
 	protected void setPosition(String position){
 		this.position = position;
@@ -83,6 +83,7 @@ public class Cell extends Subject implements Observer {
 	 * Assign an expression to the Cell. Classifications and computations will be done.
 	 * @param expression The String fed into the cell
 	 * @throws InfiniteReferenceException 
+         * @throws InvalidExpressionException
 	 */
 	protected void assign(String expression)
 			throws InfiniteReferenceException, InvalidExpressionException {
