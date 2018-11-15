@@ -5,7 +5,7 @@ public class CellNamingHandler extends ExpHandler {
     /**
      * Extract the row number from the String
      * @param str The string to be parsed
-     * @return
+     * @return row number or -1 if invalid reference
      */
     public static int getRowEnhanced(String str) {
     		int pos = 0;
@@ -27,7 +27,7 @@ public class CellNamingHandler extends ExpHandler {
     /**
      * Extract the column number from the String
      * @param str The string to be parsed
-     * @return
+     * @return column number or -1 if invalid reference
      */
     public static int getColumnEnhanced(String str) {
        int column = getNumberOfLetter(str);
