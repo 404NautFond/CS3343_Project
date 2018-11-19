@@ -167,4 +167,14 @@ public class GeneralHandlerTest {
 	public void TestIsFunc_11() {
 		assertEquals(GeneralHandler.isFunc("VAR."),false);
 	}
+	
+	@Test
+	public void TestFunc_00() {
+		assertEquals(3, new GeneralHandler().handleForDoubleReturn("SUM(1,1)+1"),0.0001);
+	}
+	
+	@Test
+	public void TestFunc_01() {
+		assertEquals(1, new GeneralHandler().handleForDoubleReturn("AND(AND(1,1),1)"),0.0001);
+	}
 }

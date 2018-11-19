@@ -1,21 +1,8 @@
 package commonHandler;
 
-import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 
 public class SumHandler extends CommonHandler {
-
-	private String input;
-
-	@Override
-	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-		this.input = expression;
-		if(expression.contains(":"))
-			return calculateForColumnInput();
-		else if(expression.contains(","))
-			return calculateForCommaInput();
-		throw new InvalidExpressionException();
-	}
 
 	@Override
 	protected double calculateForColumnInput() { // 'cell : cell' input type
@@ -24,7 +11,7 @@ public class SumHandler extends CommonHandler {
 		int startColumn;
 		int endRow;
 		int endColumn;
-		String[] temp = columnHandler(input);
+		String[] temp = columnHandler(getInput());
 
 		startRow = CellNamingHandler.getRowEnhanced(temp[0]);
 		startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);
@@ -42,7 +29,7 @@ public class SumHandler extends CommonHandler {
 	@Override
 	protected double calculateForCommaInput() { // 'cell,cell' input type
 		double result = 0;
-		String[] cellName = input.split(",");
+		String[] cellName = getInput().split(",");
 		for (String singleCell: cellName) {
 			result += getValueFromStringLike(singleCell.trim());
 		}

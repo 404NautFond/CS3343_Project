@@ -45,4 +45,10 @@ public class ORHandlerTest {
 		double res = or.handleForDoubleReturn("FALSE,TRUE");
 		assertEquals(1,res,0.01);
 	}
+	
+	@Test
+	public void testOR_05() {
+		double res = or.handleForDoubleReturn("0,OR(1,1)");
+		assertEquals(1,res,0.01);
+	}
 }

@@ -46,8 +46,8 @@ public class ANDHandlerTest {
 		assertEquals(0, res, 0.01);
 	}
 	
-//	@Test
-//	public void testAND_05() {
-//		and.handleForDoubleReturn("AND(1,1),1");
-//	}
+	@Test
+	public void testAND_05() {
+		assertEquals(1,and.handleForDoubleReturn("AND(1,1),AND(1,1)"),0.0001);
+	}
 }

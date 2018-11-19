@@ -1,21 +1,8 @@
 package commonHandler;
 
-import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 
 public class MaxHandler extends CommonHandler {
-
-	private String input;
-
-	@Override
-	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-		this.input = expression;
-		if(expression.contains(":"))
-			return calculateForColumnInput();
-		else if(expression.contains(","))
-			return calculateForCommaInput();
-		throw new InvalidExpressionException();
-	}
 
 	@Override
 	protected double calculateForColumnInput() { // 'cell : cell' input type
@@ -25,7 +12,7 @@ public class MaxHandler extends CommonHandler {
 		int startColumn;
 		int endRow;
 		int endColumn;
-		String[] temp = input.split(":");
+		String[] temp = getInput().split(":");
 
 		startRow = CellNamingHandler.getRowEnhanced(temp[0]);
 		startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);
@@ -49,7 +36,7 @@ public class MaxHandler extends CommonHandler {
 	protected double calculateForCommaInput() { // 'cell,cell' input type
 		double result = 0;
 		double tmp;
-		String[] parameters = input.split(",");
+		String[] parameters = getInput().split(",");
 		
 		result = getValueFromStringLike("="+parameters[0].trim());
 		

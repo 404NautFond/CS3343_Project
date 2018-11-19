@@ -1,23 +1,12 @@
 package commonHandler;
 
-import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 
 public class CountHandler extends CommonHandler{
 
-	private String input;
-	
-	@Override
-	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-		this.input = expression;
-		if(input.contains(":")) return calculateForColumnInput();
-		else if(input.contains(",")) return calculateForCommaInput();
-		throw new InvalidExpressionException();
-	}
-
 	@Override
 	protected double calculateForColumnInput() {
-		String[] temp = columnHandler(input);
+		String[] temp = columnHandler(getInput());
 		int strCol = CellNamingHandler.getColumnEnhanced(temp[0]);
 		int endCol = CellNamingHandler.getColumnEnhanced(temp[1]);
 		int strRow = CellNamingHandler.getRowEnhanced(temp[0]);
@@ -27,7 +16,7 @@ public class CountHandler extends CommonHandler{
 
 	@Override
 	protected double calculateForCommaInput() {
-		String[] temp = input.split(",");
+		String[] temp = getInput().split(",");
 		return temp.length;
 	}
 }

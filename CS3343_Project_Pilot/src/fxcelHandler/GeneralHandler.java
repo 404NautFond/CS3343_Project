@@ -59,7 +59,7 @@ public class GeneralHandler extends FuncHandler{
 		if(hand instanceof ConvertHandler) {
 			return ((ConvertHandler)hand).handleForStringReturn(expression);
 		} else if(hand instanceof LogicHandler) {
-			return (handleForDoubleReturn(expression)==0)?"TRUE":"FALSE";
+			return (handleForDoubleReturn(expression)==1)?"TRUE":"FALSE";
 		} else{
 			return handleForDoubleReturn(expression)+"";
 		}
@@ -141,7 +141,7 @@ public class GeneralHandler extends FuncHandler{
 		case "/":
 			return (double)num1/num2;
 		default:
-			System.out.println("General - "+sym+": The symbol is not recognized.");
+//			System.out.println("General - "+sym+": The symbol is not recognized.");
 			return -1;
 		}
 	}
@@ -235,8 +235,7 @@ public class GeneralHandler extends FuncHandler{
 			String result = call.get(formula).handleForDoubleReturn(tempExpr)+"";
 			return result;
 		}catch(Exception e) {
-			//			System.out.println("Expression Error!");
-			//			e.printStackTrace();
+			e.printStackTrace();
 			throw new InvalidExpressionException();
 		}
 	}

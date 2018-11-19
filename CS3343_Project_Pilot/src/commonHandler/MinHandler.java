@@ -1,28 +1,15 @@
 package commonHandler;
 
-import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
 
 public class MinHandler extends CommonHandler {
-
-	private String input;
-
-	@Override
-	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-		this.input = expression;
-		if(expression.contains(":"))
-			return calculateForColumnInput();
-		else if(expression.contains(","))
-			return calculateForCommaInput();
-		throw new InvalidExpressionException();
-	}
 
 	@Override
 	protected double calculateForColumnInput() { // 'cell : cell' input type
 		double result;
 		double tmp;
 		int startRow, startColumn, endRow, endColumn;
-		String[] temp = columnHandler(input);
+		String[] temp = columnHandler(getInput());
 
 		startRow = CellNamingHandler.getRowEnhanced(temp[0]);
 		startColumn = CellNamingHandler.getColumnEnhanced(temp[0]);
@@ -46,7 +33,7 @@ public class MinHandler extends CommonHandler {
 	protected double calculateForCommaInput() { // 'cell,cell' input type
 		double result;
 		double tmp;
-		String[] cellName = input.split(",");
+		String[] cellName = getInput().split(",");
 		result = getValueFromStringLike(cellName[0].trim());
 		for (String singleCell: cellName) {
 			tmp = getValueFromStringLike(singleCell.trim());

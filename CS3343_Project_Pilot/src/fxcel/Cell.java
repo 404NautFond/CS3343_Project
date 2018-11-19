@@ -8,9 +8,22 @@ import fxcelException.*;
 import fxcelHandler.*;
 
 public class Cell extends Subject implements Observer {
+	
+	public enum Type{
+		NULL,
+		TEXT,
+		NUMERIC,
+		FUNC_NUMERIC,
+//		FUNC_TEXT,
+		FUNC_RADIX,
+		FUNC_LOGIC,
+		ERROR
+	}
+	
 	private String expression;
 	private double value;	//default is 0 when computing, but not display
-	private boolean isValueNotDefine;
+//	private boolean isValueNotDefine;
+	private Type type = Type.NULL;
 	private String textual;     //contain the expression error information
 	private String position;
 	
@@ -23,6 +36,14 @@ public class Cell extends Subject implements Observer {
 	public String getTextual() {
 		return textual;
 	}
+	
+//	/**
+//	 * Get the type of the Cell
+//	 * @return The enum Type
+//	 */
+//	public Type getType() {
+//		return this.type;
+//	}
 	
 	/**
 	 * Set the String to display
@@ -62,10 +83,15 @@ public class Cell extends Subject implements Observer {
 	 * @throws InvalidCellException Throws when the value is not defined for computation
 	 */
 	public double getValue() throws InvalidCellException{
-		if(isValueNotDefine) {
+		switch(type) {
+		case NULL:
+			return 0;
+		case TEXT:
+		case ERROR:
 			throw new InvalidCellException(this);
+		default:
+			return this.value;
 		}
-		return this.value;
 	}
 	
 	/**
@@ -75,7 +101,7 @@ public class Cell extends Subject implements Observer {
 		super();
 		this.expression = null;
 		this.value = 0;
-		this.isValueNotDefine = true;
+		this.type = Type.NULL;
 //		this.position = null;
 	}
 	
@@ -95,6 +121,7 @@ public class Cell extends Subject implements Observer {
 		
 		if (identifier == ':') {					// pure text
 			this.textual = expression.substring(1);
+			this.type = Type.TEXT;
 			return;
 		} else if (identifier == '=') {			// expression
 			// use regular expression to split the expression
@@ -120,17 +147,26 @@ public class Cell extends Subject implements Observer {
 			// change the value otherwise
 			this.value = new GeneralHandler().handleForDoubleReturn(expression);
 			this.textual = new GeneralHandler().handlerForStringReturn(expression);
-			this.isValueNotDefine = false;
+			
+			if(ExpHandler.isNumeric(this.textual)) {
+				if(this.textual.equals(""+this.value)) {
+					this.type = Type.FUNC_NUMERIC;
+				}else this.type = Type.FUNC_NUMERIC;
+			}else {
+				this.type = Type.FUNC_LOGIC;
+			}
+			
+//			this.isValueNotDefine = false;
 			this.notifyObservers();
 		} else {
 			try {
 				// without "="
 				this.value = Double.parseDouble(expression);
 				this.textual = expression;
-				this.isValueNotDefine = false;
+				this.type = Type.NUMERIC;
 			}catch(Exception e) {
 				// not able to parse into number
-				this.isValueNotDefine = true;
+				this.type = Type.TEXT;
 			}
 		}
 	}
@@ -185,7 +221,8 @@ public class Cell extends Subject implements Observer {
 	public void clear() {
 		this.expression = null;
 		this.value = 0;
-		this.isValueNotDefine = true;
+		this.type = Type.NULL;
+//		this.isValueNotDefine = true;
 		this.textual = null;
 		this.dependent.clear();
 //		this.position = null;
@@ -229,7 +266,8 @@ public class Cell extends Subject implements Observer {
 	@Override
 	public String toString() {
 		String temp = position+": The expression is \""+ this.expression + "\"";
-		if(!this.isValueNotDefine) temp += ", The value is \""+ this.value + "\"";
+		if(this.type != Type.NULL) 
+			temp += ", The value is \""+ this.value + "\"";
 		return temp;
 	}
 	/* End of override function from Object*/

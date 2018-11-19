@@ -61,4 +61,9 @@ public class SumHandlerTest {
 		fxcel.writeCell(2, 0, "=2");
 		assertEquals(5,sum.handleForDoubleReturn("A1,1+1,A3"),0.001);
 	}
+	
+	@Test
+	public void testHandler_06() {
+		assertEquals(5,sum.handleForDoubleReturn("SUM(1,1),1+1,1"),0.001);
+	}
 }

@@ -6,7 +6,9 @@ public class XNORHandler extends LogicHandler{
 
 	@Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-		String[] input = expression.split(",");
+		setInput(expression);
+		feed();
+		String[] input = getInput().split(",");
 		int count = 0;
 		for(String celltext: input) {
 			if(isTrueLike(celltext)) count++;
