@@ -37,14 +37,6 @@ public class Cell extends Subject implements Observer {
 		return textual;
 	}
 	
-//	/**
-//	 * Get the type of the Cell
-//	 * @return The enum Type
-//	 */
-//	public Type getType() {
-//		return this.type;
-//	}
-	
 	/**
 	 * Set the String to display
 	 * @param text The text to display
@@ -155,9 +147,6 @@ public class Cell extends Subject implements Observer {
 			}else {
 				this.type = Type.FUNC_LOGIC;
 			}
-			
-//			this.isValueNotDefine = false;
-			this.notifyObservers();
 		} else {
 			try {
 				// without "="
@@ -167,8 +156,10 @@ public class Cell extends Subject implements Observer {
 			}catch(Exception e) {
 				// not able to parse into number
 				this.type = Type.TEXT;
+				this.notifyObservers();
 			}
 		}
+		this.notifyObservers();
 	}
 
 	/**
@@ -183,7 +174,7 @@ public class Cell extends Subject implements Observer {
 				for(int j = CellNamingHandler.getColumnEnhanced(cells[0]); j <= CellNamingHandler.getColumnEnhanced(cells[1]); j++) {
 					for(int i = CellNamingHandler.getRowEnhanced(cells[0]); i <= CellNamingHandler.getRowEnhanced(cells[1]); i++) {
 						addDependent(Fxcel.getInstance().getCell(i-1, j-1));
-						Fxcel.getInstance().getCell(i,j).addDependent(this);
+						Fxcel.getInstance().getCell(i-1,j-1).attach(this);
 					}
 				}
 			}
@@ -253,12 +244,7 @@ public class Cell extends Subject implements Observer {
 	
 	@Override
 	public void update() {
-		try {
-			this.assign(this.expression);
-		} catch (InfiniteReferenceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.assign(this.expression);
 	}
 	/* End of override function from Subject */
 

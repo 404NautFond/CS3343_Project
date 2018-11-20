@@ -151,7 +151,7 @@ public class Fxcel implements Serializable {
 	public void writeCell(int row, int col, String expression) {
 		Cell target = getCell(row, col);
 		try {
-			getCell(row, col).assign(expression);	
+			target.assign(expression);	
 			setCellPosition(row, col);
 		} catch (InfiniteReferenceException e) {
 			System.out.println(e.getMessage());
@@ -160,6 +160,17 @@ public class Fxcel implements Serializable {
 			target.setTextual("#INVALID#");
 			System.out.println(target.getPosition()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
 		}
+	}
+	
+	/**
+	 * Write a Cell by the cell name
+	 * @param name The Cell name
+	 * @param expression The writing expression
+	 */
+	public void writeCell(String name, String expression) {
+		int row = CellNamingHandler.getRowEnhanced(name) - 1;
+		int col = CellNamingHandler.getColumnEnhanced(name) - 1;
+		writeCell(row, col, expression);
 	}
 	
 	@Override
