@@ -129,11 +129,15 @@ public class Cell extends Subject implements Observer {
 			}
 			addDependent(numberlikelist);
 			// recursively check dependent list
+			boolean tempFlag = false;
+			FxcelException close = null;
 			for(Cell dep: dependent) {
 				if(dep.equals(this) || dep.checkDep(this)) {
-					//infinite reference
-					throw new InfiniteReferenceException(dep, this);
+					tempFlag = true;
+					dep.detach(this);
+					close = new InfiniteReferenceException(dep, this);
 				}
+				if(tempFlag) throw close;
 			}
 			
 			// change the value otherwise
