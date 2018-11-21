@@ -150,16 +150,16 @@ public class Fxcel implements Serializable {
 	 */
 	public void writeCell(int row, int col, String expression) {
 		Cell target = getCell(row, col);
-		try {
-			target.assign(expression);	
-			setCellPosition(row, col);
-		} catch (InfiniteReferenceException e) {
-			System.out.println(e.getMessage());
-			target.setTextual("#INF#");
-		} catch(InvalidExpressionException e) {
-			target.setTextual("#INVALID#");
-			System.out.println(target.getPosition()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
-		}
+//		try {
+		setCellPosition(row, col);
+		target.assign(expression);	
+//		} catch (InfiniteReferenceException e) {
+//			System.out.println(e.getMessage());
+//			target.setTextual("#INF#");
+//		} catch(InvalidExpressionException e) {
+//			target.setTextual("#INVALID#");
+//			System.out.println(target.getPosition()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
+//		}
 	}
 
 	/**

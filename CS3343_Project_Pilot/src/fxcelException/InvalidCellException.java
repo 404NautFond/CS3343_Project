@@ -19,7 +19,7 @@ public class InvalidCellException extends FxcelException {
 
 	@Override
 	public String getMessage() {
-		return cell.getPosition() + "(Expression:\"" + cell.getExpression() + "\")" + " is not able for this computation.";
+		return cell.getPosition() + "(Expression:\"" + cell.getExpression() + "\")" + " is not legal for this computation.";
 	}
 	
 	@Override

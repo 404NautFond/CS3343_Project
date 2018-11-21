@@ -137,12 +137,35 @@ public class Cell extends Subject implements Observer {
 					dep.detach(this);
 					close = new InfiniteReferenceException(dep, this);
 				}
-				if(tempFlag) throw close;
+				if(tempFlag) {
+					this.type = Type.ERROR;
+					this.value = 0;
+					this.textual = "#INF#";
+					System.out.println(close.getMessage());
+					this.notifyObservers();
+					return;
+				}
 			}
 			
 			// change the value otherwise
-			this.value = new GeneralHandler().handleForDoubleReturn(expression);
-			this.textual = new GeneralHandler().handlerForStringReturn(expression);
+			try {
+				this.value = new GeneralHandler().handleForDoubleReturn(expression);
+				this.textual = new GeneralHandler().handlerForStringReturn(expression);
+			}catch(InvalidCellException e1) {
+				this.type = Type.ERROR;
+				this.value = 0;
+				this.textual = "#CELL#";
+				System.out.println(this.getPosition()+": using "+e1.getMessage());
+				this.notifyObservers();
+				return;
+			}catch(InvalidExpressionException e2) {
+				this.type = Type.ERROR;
+				this.value = 0;
+				this.textual = "#INVALID#";
+				System.out.println(e2.getMessage());
+				this.notifyObservers();
+				return;
+			}
 			
 			if(ExpHandler.isNumeric(this.textual)) {
 				if(this.textual.equals(""+this.value)) {
@@ -161,7 +184,6 @@ public class Cell extends Subject implements Observer {
 				// not able to parse into number
 				this.type = Type.TEXT;
 				this.textual = expression;
-				this.notifyObservers();
 			}
 		}
 		this.notifyObservers();

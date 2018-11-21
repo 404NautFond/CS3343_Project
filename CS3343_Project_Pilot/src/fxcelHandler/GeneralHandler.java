@@ -71,7 +71,7 @@ public class GeneralHandler extends FuncHandler{
 		String tempToken, sym, number1, number2;
 		while(tokens.size() != 0) {
 			tempToken = tokens.remove(0);
-//			System.out.println(tempToken);
+			//			System.out.println(tempToken);
 			switch(tempToken) {
 			/* ignore first "=" sign */
 			case "=":
@@ -98,7 +98,6 @@ public class GeneralHandler extends FuncHandler{
 				//						break;
 				/* syntax error */
 			case ")":
-//				System.out.println("Here?");
 				throw new InvalidExpressionException();
 				/* operands other than above */
 			default:
@@ -157,7 +156,8 @@ public class GeneralHandler extends FuncHandler{
 		String temp = "";
 
 		/* Syntax error detected */
-		if(tokens.size() == 0) throw new InvalidExpressionException();
+		if(tokens.size() == 0)
+			throw new InvalidExpressionException();
 
 		int parenthesis = 1;
 
@@ -264,13 +264,7 @@ public class GeneralHandler extends FuncHandler{
 		}else if(isNumeric(operand)) {
 			return operand;
 		}else if(isCell(operand)) {
-			try {
-				return (Fxcel.getInstance().getCellValue(operand)+"");
-			}catch(InvalidCellException e) {
-				if(Fxcel.getInstance().getCellExpression(operand) == null)
-					return "0";
-				else throw new InvalidExpressionException();
-			}
+			return (Fxcel.getInstance().getCellValue(operand)+"");
 		}else {
 			return compute(operand, tokens);
 		}
