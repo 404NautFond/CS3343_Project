@@ -40,18 +40,18 @@ public class GeneralHandler extends FuncHandler{
 		call.put("GREY", new GreyCodeHandler());
 
 		call.put("AND", new ANDHandler());
-		call.put("OR", new ANDHandler());
-		call.put("NAND", new ANDHandler());
-		call.put("NOR", new ANDHandler());
-		call.put("XOR", new ANDHandler());
-		call.put("XNOR", new ANDHandler());
+		call.put("OR", new ORHandler());
+		call.put("NOT", new NOTHandler());
+		call.put("NAND", new NANDHandler());
+		call.put("NOR", new NORHandler());
+		call.put("XOR", new XORHandler());
+		call.put("XNOR", new XNORHandler());
 	}
 
 	public static boolean isFunc(String str) {
 		return call.get(str) != null ;
 	}
 
-	//TODO: for new ones
 	public String handlerForStringReturn(String expression) {
 		feed(expression);
 		FuncHandler hand = call.get(tokens.get(0));
@@ -71,12 +71,13 @@ public class GeneralHandler extends FuncHandler{
 		String tempToken, sym, number1, number2;
 		while(tokens.size() != 0) {
 			tempToken = tokens.remove(0);
+//			System.out.println(tempToken);
 			switch(tempToken) {
 			/* ignore first "=" sign */
 			case "=":
 			case " ":
 				continue;
-			/* level 2 operators */
+				/* level 2 operators */
 			case "*":
 			case "/":
 				//					case "^":
@@ -86,17 +87,18 @@ public class GeneralHandler extends FuncHandler{
 				number1 = buffer.pop();
 				buffer.push(calcu(number1, sym, number2)+"");
 				break;
-			/* level 1 operators */
+				/* level 1 operators */
 			case "+":
 			case "-":
 				buffer.push(tempToken);
 				break;
-			/* recursion, to be included in the expand */
-			//					case "(":
-			//						buffer.push(recursion());
-			//						break;
-			/* syntax error */
+				/* recursion, to be included in the expand */
+				//					case "(":
+				//						buffer.push(recursion());
+				//						break;
+				/* syntax error */
 			case ")":
+//				System.out.println("Here?");
 				throw new InvalidExpressionException();
 				/* operands other than above */
 			default:
@@ -141,7 +143,7 @@ public class GeneralHandler extends FuncHandler{
 		case "/":
 			return (double)num1/num2;
 		default:
-//			System.out.println("General - "+sym+": The symbol is not recognized.");
+			//			System.out.println("General - "+sym+": The symbol is not recognized.");
 			return -1;
 		}
 	}
@@ -222,9 +224,16 @@ public class GeneralHandler extends FuncHandler{
 			throws InvalidExpressionException {
 		// Gathering parameters
 		String tempExpr = "";
+		//		System.out.println(tokens);
 		try {
 			tokens.remove(0);
-			while(!tokens.get(0).equals(")")) {
+			int lock = 1;
+			while(lock != 0) {
+				if(tokens.get(0).equals(")")) {
+					lock--;
+					if(lock == 0) break;
+				}
+				else if(tokens.get(0).equals("(")) lock++;
 				tempExpr = tempExpr + tokens.remove(0);
 			}
 			tokens.remove(0);
