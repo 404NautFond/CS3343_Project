@@ -160,6 +160,7 @@ public class Cell extends Subject implements Observer {
 			}catch(Exception e) {
 				// not able to parse into number
 				this.type = Type.TEXT;
+				this.textual = expression;
 				this.notifyObservers();
 			}
 		}
