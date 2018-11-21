@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 //import fxcelException.FxcelException;
-import fxcelException.InfiniteReferenceException;
 import fxcelException.InvalidCellException;
-import fxcelException.InvalidExpressionException;
 import fxcelHandler.CellNamingHandler;
-import fxcelHandler.ExpHandler;
 
 public class Fxcel implements Serializable {
 	// Singleton
@@ -150,16 +147,8 @@ public class Fxcel implements Serializable {
 	 */
 	public void writeCell(int row, int col, String expression) {
 		Cell target = getCell(row, col);
-//		try {
 		setCellPosition(row, col);
 		target.assign(expression);	
-//		} catch (InfiniteReferenceException e) {
-//			System.out.println(e.getMessage());
-//			target.setTextual("#INF#");
-//		} catch(InvalidExpressionException e) {
-//			target.setTextual("#INVALID#");
-//			System.out.println(target.getPosition()+"(Expression:\""+target.getExpression()+"\") is invalid, please check.");
-//		}
 	}
 
 	/**
@@ -200,9 +189,9 @@ public class Fxcel implements Serializable {
 	 */
 	public Cell getCell(String name) {
 		//throw exception if the expression of the cell is invalid
-		if(!ExpHandler.isCell(name)) {
-			throw new InvalidExpressionException();
-		}
+//		if(!ExpHandler.isCell(name)) {
+//			throw new InvalidExpressionException();
+//		}
 		//convert cell name to row and col numbers
 		int row = CellNamingHandler.getRowEnhanced(name) - 1;
 		int col = CellNamingHandler.getColumnEnhanced(name) - 1;

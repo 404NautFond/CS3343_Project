@@ -137,8 +137,9 @@ public class Invoker {
 				//not good
 				System.out.println("Syntax Error.");
 			}
-			catch(Exception e){
-				System.out.println("Unexpected Error.");
+			catch(Exception e3){
+				System.out.println("Unexpected Error: ");
+				e3.printStackTrace();
 			}
 			finally {
 				System.out.print(">>");

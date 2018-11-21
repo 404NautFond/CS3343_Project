@@ -105,6 +105,15 @@ public class Cell extends Subject implements Observer {
 	 */
 	protected void assign(String expression)
 			throws InfiniteReferenceException, InvalidExpressionException {
+		
+		// resolve infinite reference problem
+		if(this.type == Type.ERROR && this.textual.equals("#INF#")) {
+			list.remove(this);
+			for(Cell tempCell: list) {
+				tempCell.detach(this);
+			}
+		}
+		
 		// keep the original content anyway
 		this.clear();
 		this.expression = expression;
@@ -136,15 +145,16 @@ public class Cell extends Subject implements Observer {
 					tempFlag = true;
 					dep.detach(this);
 					close = new InfiniteReferenceException(dep, this);
-				}
-				if(tempFlag) {
 					this.type = Type.ERROR;
 					this.value = 0;
 					this.textual = "#INF#";
 					System.out.println(close.getMessage());
 					this.notifyObservers();
-					return;
+					dep.attach(this);
 				}
+			}
+			if(tempFlag) {
+				return;
 			}
 			
 			// change the value otherwise
@@ -180,7 +190,7 @@ public class Cell extends Subject implements Observer {
 				this.value = Double.parseDouble(expression);
 				this.textual = expression;
 				this.type = Type.NUMERIC;
-			}catch(Exception e) {
+			}catch(NumberFormatException e) {
 				// not able to parse into number
 				this.type = Type.TEXT;
 				this.textual = expression;
