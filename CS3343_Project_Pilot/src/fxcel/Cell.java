@@ -1,5 +1,6 @@
 package fxcel;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +9,7 @@ import fxcelException.*;
 import fxcelHandler.*;
 
 public class Cell extends Subject implements Observer {
-	
+
 	public enum Type{
 		NULL,
 		TEXT,
@@ -19,16 +20,16 @@ public class Cell extends Subject implements Observer {
 		FUNC_LOGIC,
 		ERROR
 	}
-	
+
 	private String expression;
 	private double value;	//default is 0 when computing, but not display
-//	private boolean isValueNotDefine;
+	//	private boolean isValueNotDefine;
 	private Type type = Type.NULL;
 	private String textual;     //contain the expression error information
 	private String position;
-	
+
 	private List<Cell> dependent = new ArrayList<Cell>();
-	
+
 	/**
 	 * Get the String to display
 	 * @return String textual showing error
@@ -36,7 +37,7 @@ public class Cell extends Subject implements Observer {
 	public String getTextual() {
 		return textual;
 	}
-	
+
 	/**
 	 * Set the String to display
 	 * @param text The text to display
@@ -44,7 +45,7 @@ public class Cell extends Subject implements Observer {
 	public void setTextual(String text) {
 		this.textual = text;
 	}
-	
+
 	/**
 	 * Set the position String in the format "A8"
 	 * @param position The formatted String
@@ -52,7 +53,7 @@ public class Cell extends Subject implements Observer {
 	protected void setPosition(String position){
 		this.position = position;
 	}
-	
+
 	/**
 	 * Get the position String for troubleshooting
 	 * @return The position String
@@ -60,7 +61,7 @@ public class Cell extends Subject implements Observer {
 	public String getPosition(){
 		return this.position;
 	}
-	
+
 	/**
 	 * Getter of String field expression
 	 * @return expression
@@ -68,7 +69,7 @@ public class Cell extends Subject implements Observer {
 	public String getExpression() {
 		return this.expression;
 	}
-	
+
 	/**
 	 * Getter of double field value
 	 * @return value The value in the double form
@@ -85,7 +86,7 @@ public class Cell extends Subject implements Observer {
 			return this.value;
 		}
 	}
-	
+
 	/**
 	 * Default constructor for cell, will be called by Fxcel
 	 */
@@ -94,18 +95,18 @@ public class Cell extends Subject implements Observer {
 		this.expression = null;
 		this.value = 0;
 		this.type = Type.NULL;
-//		this.position = null;
+		//		this.position = null;
 	}
-	
+
 	/**
 	 * Assign an expression to the Cell. Classifications and computations will be done.
 	 * @param expression The String fed into the cell
 	 * @throws InfiniteReferenceException 
-         * @throws InvalidExpressionException
+	 * @throws InvalidExpressionException
 	 */
 	protected void assign(String expression)
 			throws InfiniteReferenceException, InvalidExpressionException {
-		
+
 		// resolve infinite reference problem
 		if(this.type == Type.ERROR && this.textual.equals("#INF#")) {
 			list.remove(this);
@@ -113,13 +114,27 @@ public class Cell extends Subject implements Observer {
 				tempCell.detach(this);
 			}
 		}
+
+		//TODO hard code
+		if(expression.equalsIgnoreCase("true")) {
+			this.value = 1;
+			this.textual = "TRUE";
+			this.type = Type.FUNC_LOGIC;
+			return;
+		}else if(expression.equalsIgnoreCase("false")) {
+			this.value = 0;
+			this.textual = "FALSE";
+			this.type = Type.FUNC_LOGIC;
+			return;
+		}
 		
 		// keep the original content anyway
 		this.clear();
 		this.expression = expression;
+		
 		// define expression by the first char
 		char identifier = expression.charAt(0);
-		
+
 		if (identifier == ':') {					// pure text
 			this.textual = expression.substring(1);
 			this.type = Type.TEXT;
@@ -156,7 +171,7 @@ public class Cell extends Subject implements Observer {
 			if(tempFlag) {
 				return;
 			}
-			
+
 			// change the value otherwise
 			try {
 				this.value = new GeneralHandler().handleForDoubleReturn(expression);
@@ -176,10 +191,11 @@ public class Cell extends Subject implements Observer {
 				this.notifyObservers();
 				return;
 			}
-			
+
 			if(ExpHandler.isNumeric(this.textual)) {
 				if(this.textual.equals(""+this.value)) {
 					this.type = Type.FUNC_NUMERIC;
+					this.textual = new DecimalFormat("#.00").format(this.value);
 				}else this.type = Type.FUNC_NUMERIC;
 			}else {
 				this.type = Type.FUNC_LOGIC;
@@ -188,7 +204,7 @@ public class Cell extends Subject implements Observer {
 			try {
 				// without "="
 				this.value = Double.parseDouble(expression);
-				this.textual = expression;
+				this.textual = new DecimalFormat("#.00").format(this.value);
 				this.type = Type.NUMERIC;
 			}catch(NumberFormatException e) {
 				// not able to parse into number
@@ -217,7 +233,7 @@ public class Cell extends Subject implements Observer {
 			}
 		}
 	}
-	
+
 	/**
 	 * Auxiliary function for adding dependent list
 	 * @param cell The target cell to be added into the list of the current cell 
@@ -226,7 +242,7 @@ public class Cell extends Subject implements Observer {
 		if(!dependent.contains(cell))
 			dependent.add(cell);
 	}
-	
+
 	/**
 	 * Recursively check if the cell exists in the dependent list
 	 * @param cell The target cell
@@ -242,7 +258,7 @@ public class Cell extends Subject implements Observer {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Clear the current cell
 	 */
@@ -250,10 +266,8 @@ public class Cell extends Subject implements Observer {
 		this.expression = null;
 		this.value = 0;
 		this.type = Type.NULL;
-//		this.isValueNotDefine = true;
 		this.textual = null;
 		this.dependent.clear();
-//		this.position = null;
 	}
 
 	/* From class Subject */
@@ -267,7 +281,7 @@ public class Cell extends Subject implements Observer {
 	public void detach(Cell c) {
 		list.remove(c);
 	}
-	
+
 	public void detachAll() {
 		list.clear();
 	}
@@ -278,7 +292,7 @@ public class Cell extends Subject implements Observer {
 			c.update();
 		}
 	}
-	
+
 	@Override
 	public void update() {
 		this.assign(this.expression);

@@ -54,7 +54,8 @@ public class GeneralHandler extends FuncHandler{
 
 	public String handlerForStringReturn(String expression) {
 		feed(expression);
-		FuncHandler hand = call.get(tokens.get(0));
+		// ignore the '=' in the beginning
+		FuncHandler hand = call.get(tokens.get(1));
 		tokens.clear();
 		if(hand instanceof ConvertHandler) {
 			return ((ConvertHandler)hand).handleForStringReturn(expression);
