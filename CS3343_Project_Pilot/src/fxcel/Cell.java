@@ -15,7 +15,7 @@ public class Cell extends Subject implements Observer {
 		TEXT,
 		NUMERIC,
 		FUNC_NUMERIC,
-//		FUNC_TEXT,
+		//		FUNC_TEXT,
 		FUNC_RADIX,
 		FUNC_LOGIC,
 		ERROR
@@ -23,12 +23,29 @@ public class Cell extends Subject implements Observer {
 
 	private String expression;
 	private double value;	//default is 0 when computing, but not display
-	//	private boolean isValueNotDefine;
-	private Type type = Type.NULL;
+	private Type type;
 	private String textual;     //contain the expression error information
 	private String position;
 
 	private List<Cell> dependent = new ArrayList<Cell>();
+
+	/**
+	 * Default constructor for cell, will be called by Fxcel
+	 */
+	public Cell() {
+		super();
+		setCell(0, null, Type.NULL);
+		this.expression = null;
+	}
+	
+	/**
+	 * Auxiliary function for setting Cells
+	 */
+	private void setCell(double value, String text, Type type) {
+		this.value = value;
+		this.textual = text;
+		this.type = type;
+	}
 
 	/**
 	 * Get the String to display
@@ -88,24 +105,10 @@ public class Cell extends Subject implements Observer {
 	}
 
 	/**
-	 * Default constructor for cell, will be called by Fxcel
-	 */
-	public Cell() {
-		super();
-		this.expression = null;
-		this.value = 0;
-		this.type = Type.NULL;
-		//		this.position = null;
-	}
-
-	/**
 	 * Assign an expression to the Cell. Classifications and computations will be done.
 	 * @param expression The String fed into the cell
-	 * @throws InfiniteReferenceException 
-	 * @throws InvalidExpressionException
 	 */
-	protected void assign(String expression)
-			throws InfiniteReferenceException, InvalidExpressionException {
+	protected void assign(String expression){
 
 		// resolve infinite reference problem
 		if(this.type == Type.ERROR && this.textual.equals("#INF#")) {
@@ -117,27 +120,22 @@ public class Cell extends Subject implements Observer {
 
 		//TODO hard code
 		if(expression.equalsIgnoreCase("true")) {
-			this.value = 1;
-			this.textual = "TRUE";
-			this.type = Type.FUNC_LOGIC;
+			setCell(1,"TRUE",Type.FUNC_LOGIC);
 			return;
 		}else if(expression.equalsIgnoreCase("false")) {
-			this.value = 0;
-			this.textual = "FALSE";
-			this.type = Type.FUNC_LOGIC;
+			setCell(0,"FALSE",Type.FUNC_LOGIC);
 			return;
 		}
-		
+
 		// keep the original content anyway
 		this.clear();
 		this.expression = expression;
-		
+
 		// define expression by the first char
 		char identifier = expression.charAt(0);
 
 		if (identifier == ':') {					// pure text
-			this.textual = expression.substring(1);
-			this.type = Type.TEXT;
+			setCell(0,expression.substring(1),Type.TEXT);
 			return;
 		} else if (identifier == '=') {			// expression
 			// use regular expression to split the expression
@@ -160,9 +158,7 @@ public class Cell extends Subject implements Observer {
 					tempFlag = true;
 					dep.detach(this);
 					close = new InfiniteReferenceException(dep, this);
-					this.type = Type.ERROR;
-					this.value = 0;
-					this.textual = "#INF#";
+					setCell(0,"#INF#",Type.ERROR);
 					System.out.println(close.getMessage());
 					this.notifyObservers();
 					dep.attach(this);
@@ -174,19 +170,15 @@ public class Cell extends Subject implements Observer {
 
 			// change the value otherwise
 			try {
-				this.value = new GeneralHandler().handleForDoubleReturn(expression);
-				this.textual = new GeneralHandler().handlerForStringReturn(expression);
+				GeneralHandler gen = new GeneralHandler();
+				setCell(gen.handleForDoubleReturn(expression),gen.handlerForStringReturn(expression),Type.NULL);
 			}catch(InvalidCellException e1) {
-				this.type = Type.ERROR;
-				this.value = 0;
-				this.textual = "#CELL#";
+				setCell(0, "#CELL#", Type.ERROR);
 				System.out.println(this.getPosition()+": using "+e1.getMessage());
 				this.notifyObservers();
 				return;
 			}catch(InvalidExpressionException e2) {
-				this.type = Type.ERROR;
-				this.value = 0;
-				this.textual = "#INVALID#";
+				setCell(0, "#INVALID#", Type.ERROR);
 				System.out.println(e2.getMessage());
 				this.notifyObservers();
 				return;
@@ -196,20 +188,18 @@ public class Cell extends Subject implements Observer {
 				if(this.textual.equals(""+this.value)) {
 					this.type = Type.FUNC_NUMERIC;
 					this.textual = new DecimalFormat("#.00").format(this.value);
-				}else this.type = Type.FUNC_NUMERIC;
-			}else {
-				this.type = Type.FUNC_LOGIC;
+				} else {
+					this.type = Type.FUNC_LOGIC;
+				}
 			}
 		} else {
 			try {
 				// without "="
-				this.value = Double.parseDouble(expression);
-				this.textual = new DecimalFormat("#.00").format(this.value);
-				this.type = Type.NUMERIC;
+				double val = Double.parseDouble(expression);
+				setCell(val, new DecimalFormat("#.00").format(val), Type.NUMERIC);
 			}catch(NumberFormatException e) {
 				// not able to parse into number
-				this.type = Type.TEXT;
-				this.textual = expression;
+				setCell(0, expression, Type.TEXT);
 			}
 		}
 		this.notifyObservers();
@@ -224,8 +214,12 @@ public class Cell extends Subject implements Observer {
 			String[] cells = range.split(" |:");
 			//Pre-conditions: The cells are sorted
 			if(cells.length == 2 && ExpHandler.isCell(cells[0]) && ExpHandler.isCell(cells[1])) {
-				for(int j = CellNamingHandler.getColumnEnhanced(cells[0]); j <= CellNamingHandler.getColumnEnhanced(cells[1]); j++) {
-					for(int i = CellNamingHandler.getRowEnhanced(cells[0]); i <= CellNamingHandler.getRowEnhanced(cells[1]); i++) {
+				for(int j = CellNamingHandler.getColumnEnhanced(cells[0]);
+						j <= CellNamingHandler.getColumnEnhanced(cells[1]);
+						j++) {
+					for(int i = CellNamingHandler.getRowEnhanced(cells[0]);
+							i <= CellNamingHandler.getRowEnhanced(cells[1]);
+							i++) {
 						addDependent(Fxcel.getInstance().getCell(i-1, j-1));
 						Fxcel.getInstance().getCell(i-1,j-1).attach(this);
 					}
@@ -264,9 +258,7 @@ public class Cell extends Subject implements Observer {
 	 */
 	public void clear() {
 		this.expression = null;
-		this.value = 0;
-		this.type = Type.NULL;
-		this.textual = null;
+		setCell(0, null, Type.NULL);
 		this.dependent.clear();
 	}
 
