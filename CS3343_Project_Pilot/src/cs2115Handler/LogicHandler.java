@@ -59,9 +59,7 @@ public abstract class LogicHandler extends FuncHandler{
 		String tempToken = "";
 		List<String> tempInput = new ArrayList<String>();
 		if(token.size() == 1) {
-			if(GeneralHandler.isCell(token.get(0))) {
-				setInput(new GeneralHandler().handlerForStringReturn(token.get(0)));
-			}
+			tempInput.add(token.get(0));
 		}
 		else for(int i = 0; i < token.size(); i++) {
 			switch(token.get(i)) {
