@@ -9,7 +9,6 @@ public class NOTHandler extends LogicHandler{
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
 		setInput(expression);
 		feed();
-		System.out.println(getInput());
 		try {
 			if(isTrueLike(getInput())) return 0;
 			else if(isFalseLike(getInput())) return 1;
