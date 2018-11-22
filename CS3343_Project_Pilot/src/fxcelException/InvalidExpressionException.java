@@ -15,6 +15,7 @@ public class InvalidExpressionException extends FxcelException {
 	public InvalidExpressionException() {
 		//default
 	}
+	
 	public InvalidExpressionException(Cell thisCell) {
 		this.thisCell = thisCell;
 	}

@@ -188,10 +188,6 @@ public class Fxcel implements Serializable {
 	 * @return The Cell reference
 	 */
 	public Cell getCell(String name) {
-		//throw exception if the expression of the cell is invalid
-//		if(!ExpHandler.isCell(name)) {
-//			throw new InvalidExpressionException();
-//		}
 		//convert cell name to row and col numbers
 		int row = CellNamingHandler.getRowEnhanced(name) - 1;
 		int col = CellNamingHandler.getColumnEnhanced(name) - 1;

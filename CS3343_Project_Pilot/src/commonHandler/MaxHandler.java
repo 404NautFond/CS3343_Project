@@ -38,10 +38,10 @@ public class MaxHandler extends CommonHandler {
 		double tmp;
 		String[] parameters = getInput().split(",");
 		
-		result = getValueFromStringLike("="+parameters[0].trim());
+		result = getValueFromStringLike(parameters[0].trim());
 		
 		for (String name: parameters) {
-			tmp = getValueFromStringLike("="+name.trim());
+			tmp = getValueFromStringLike(name.trim());
 			if(result < tmp) {
 				result = tmp;
 			}

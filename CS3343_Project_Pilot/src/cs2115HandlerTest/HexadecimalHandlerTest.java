@@ -31,7 +31,7 @@ public class HexadecimalHandlerTest {
 	
 	@Test
 	public void testHexadecimalStringReturn_01() {
-		String res = hexadecimal.handleForStringReturn(17);
+		String res = hexadecimal.handleForStringReturn("17");
 		assertEquals("0x11", res);
 	}
 	

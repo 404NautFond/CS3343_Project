@@ -59,9 +59,9 @@ public class Cell extends Subject implements Observer {
 	 * Set the String to display
 	 * @param text The text to display
 	 */
-	public void setTextual(String text) {
-		this.textual = text;
-	}
+//	public void setTextual(String text) {
+//		this.textual = text;
+//	}
 
 	/**
 	 * Set the position String in the format "A8"
@@ -171,7 +171,10 @@ public class Cell extends Subject implements Observer {
 			// change the value otherwise
 			try {
 				GeneralHandler gen = new GeneralHandler();
-				setCell(gen.handleForDoubleReturn(expression),gen.handlerForStringReturn(expression),Type.NULL);
+				double val = gen.handleForDoubleReturn(expression);
+				String str = gen.handlerForStringReturn(expression);
+				setCell(val,str,Type.NULL);
+//				System.out.println(val + str);
 			}catch(InvalidCellException e1) {
 				setCell(0, "#CELL#", Type.ERROR);
 				System.out.println(this.getPosition()+": using "+e1.getMessage());
@@ -179,7 +182,7 @@ public class Cell extends Subject implements Observer {
 				return;
 			}catch(InvalidExpressionException e2) {
 				setCell(0, "#INVALID#", Type.ERROR);
-				System.out.println(e2.getMessage());
+				System.out.println(this.getPosition()+": "+e2.getMessage());
 				this.notifyObservers();
 				return;
 			}
@@ -191,6 +194,8 @@ public class Cell extends Subject implements Observer {
 				} else {
 					this.type = Type.FUNC_LOGIC;
 				}
+			}else {
+				this.type = Type.FUNC_RADIX;
 			}
 		} else {
 			try {

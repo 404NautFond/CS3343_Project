@@ -5,21 +5,6 @@ import fxcelException.InvalidExpressionException;
 public class BinaryHandler extends ConvertHandler {
     @Override
     public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
-    	/*
-        double result;
-        int length = expression.length();
-        if (length == 0) {
-            throw new InvalidExpressionException();
-        }
-        for (int i = 0; i < length; i++) {
-            char temp = expression.charAt(i);
-            if (temp != '0' || temp != '1') {
-                throw new InvalidExpressionException();
-            }
-        }
-        result = Integer.parseInt(expression, 2);
-        return  result;
-    */
 		return super.handleForDoubleReturn(expression);
     }
     

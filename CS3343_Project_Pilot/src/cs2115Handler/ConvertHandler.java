@@ -6,10 +6,10 @@ import fxcelHandler.GeneralHandler;
 
 public class ConvertHandler extends FuncHandler {
 	
-        @Override
+    @Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException{
 		return new GeneralHandler().handleForDoubleReturn(expression);
-	};
+    };
 	
         /**
          * Convert expression string to decimal number string

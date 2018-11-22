@@ -12,7 +12,7 @@ public class DecimalHandler extends ConvertHandler {
 
 	@Override
 	public String handleForStringReturn(String expression) throws InvalidExpressionException {
-		return super.handleForStringReturn(expression);
+		return "0d"+convertTo(10, super.handleForDoubleReturn(expression));
 	}
 
 }

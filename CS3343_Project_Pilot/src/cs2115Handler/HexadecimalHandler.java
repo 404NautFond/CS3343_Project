@@ -24,8 +24,8 @@ public class HexadecimalHandler extends ConvertHandler{
 		return super.handleForDoubleReturn(expression);
 	}
 	
-	public String handleForStringReturn(double val) {
-		return "0x"+convertTo(16, super.handleForDoubleReturn(val+""));
+	public String handleForStringReturn(String expression) {
+		return "0x"+convertTo(16, super.handleForDoubleReturn(expression));
 	}
 
 }
