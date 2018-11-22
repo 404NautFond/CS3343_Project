@@ -3,7 +3,6 @@ package cs2115Handler;
 import fxcelException.InvalidExpressionException;
 
 public class ASCIIHandler extends ConvertHandler{
-	//TODO: Char to ASCII String, numerical value = null, textual value = String
 
 	@Override
 	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
@@ -19,6 +18,8 @@ public class ASCIIHandler extends ConvertHandler{
 	@Override
 	public String handleForStringReturn(String expression) {
 		String temp = "";
+		//hard code
+		expression = expression.substring(7,expression.length()-1);
 		for(int i = 0; i < expression.length(); i++) {
 			char input = expression.charAt(i);
 			temp += (int)input + " ";

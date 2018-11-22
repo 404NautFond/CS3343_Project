@@ -245,7 +245,7 @@ public class GeneralHandler extends FuncHandler{
 			String result = call.get(formula).handleForDoubleReturn(tempExpr)+"";
 			return result;
 		}catch(Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new InvalidExpressionException();
 		}
 	}
