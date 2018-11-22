@@ -48,10 +48,6 @@ public class GeneralHandler extends FuncHandler{
 		call.put("XNOR", new XNORHandler());
 	}
 
-	public static boolean isFunc(String str) {
-		return call.get(str) != null ;
-	}
-
 	public String handlerForStringReturn(String expression) {
 		feed(expression);
 		// ignore the '=' in the beginning
@@ -72,7 +68,6 @@ public class GeneralHandler extends FuncHandler{
 		String tempToken, sym, number1, number2;
 		while(tokens.size() != 0) {
 			tempToken = tokens.remove(0);
-			//			System.out.println(tempToken);
 			switch(tempToken) {
 			/* ignore first "=" sign */
 			case "=":
@@ -143,7 +138,6 @@ public class GeneralHandler extends FuncHandler{
 		case "/":
 			return (double)num1/num2;
 		default:
-			//			System.out.println("General - "+sym+": The symbol is not recognized.");
 			return -1;
 		}
 	}
@@ -160,18 +154,8 @@ public class GeneralHandler extends FuncHandler{
 		if(tokens.size() == 0)
 			throw new InvalidExpressionException();
 
-		int parenthesis = 1;
-
 		// add parameters back to string
-		while(parenthesis != 0) {
-			if(tokens.get(0).equals(")")) {
-				parenthesis--;
-				if(parenthesis == 0)break;
-			} else if(tokens.get(0).equals("(")) {
-				parenthesis++;
-			}
-			temp = temp + tokens.remove(0);
-		}
+		temp = processPair(tokens);
 		tokens.remove(0);			// remove the ")"
 
 		// define the output to 0
@@ -212,6 +196,20 @@ public class GeneralHandler extends FuncHandler{
 		}
 	}
 
+	//TODO:
+	private String processPair(ArrayList<String> tokens) {
+		String tempExpr = "";
+		int lock = 1;
+		while(lock != 0) {
+			if(tokens.get(0).equals(")")) {
+				lock--;
+				if(lock == 0) break;
+			}
+			else if(tokens.get(0).equals("(")) lock++;
+			tempExpr = tempExpr + tokens.remove(0);
+		}
+		return tempExpr;
+	}
 
 
 	/**
@@ -228,15 +226,7 @@ public class GeneralHandler extends FuncHandler{
 		//		System.out.println(tokens);
 		try {
 			tokens.remove(0);
-			int lock = 1;
-			while(lock != 0) {
-				if(tokens.get(0).equals(")")) {
-					lock--;
-					if(lock == 0) break;
-				}
-				else if(tokens.get(0).equals("(")) lock++;
-				tempExpr = tempExpr + tokens.remove(0);
-			}
+			tempExpr = processPair(tokens);
 			tokens.remove(0);
 		} catch(IndexOutOfBoundsException e) {
 			throw new InvalidExpressionException();

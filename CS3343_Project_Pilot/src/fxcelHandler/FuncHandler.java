@@ -37,14 +37,7 @@ public abstract class FuncHandler extends ExpHandler {
 	 * @throws InvalidExpressionException only when the cell is not able to be computed, default is 0
 	 */
 	protected double getValueByPosition(int row, int col) throws InvalidExpressionException {
-		try {
-			return Fxcel.getInstance().getCellValue(row, col);
-		} catch (InvalidCellException e) {
-			if(Fxcel.getInstance().getCellExpression(row,col) == null) 
-				return 0;
-			else 
-				throw new InvalidExpressionException();
-		}
+		return Fxcel.getInstance().getCellValue(row, col);
 	}
 
         /**
@@ -59,10 +52,7 @@ public abstract class FuncHandler extends ExpHandler {
 			double res = gen.handleForDoubleReturn(name);
 			return res;
 		} catch (InvalidCellException e) {
-			if (Fxcel.getInstance().getCell(name).getExpression() == null) 
-				return 0;
-			else
-				throw new InvalidExpressionException();
+			throw new InvalidExpressionException();
 		}
 	}
 	

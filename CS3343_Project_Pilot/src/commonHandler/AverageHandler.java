@@ -1,10 +1,8 @@
 package commonHandler;
 
-import fxcelException.InvalidExpressionException;
-
 public class AverageHandler extends SumHandler {
 	@Override
-	public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
+	public double handleForDoubleReturn(String expression){
 		double sum = (new SumHandler()).handleForDoubleReturn(expression);
 		double num = (new CountHandler()).handleForDoubleReturn(expression);
 		return sum/num;

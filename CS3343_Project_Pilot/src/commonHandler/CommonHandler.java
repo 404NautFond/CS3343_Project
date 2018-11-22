@@ -30,6 +30,7 @@ public abstract class CommonHandler extends FuncHandler {
 			return calculateForCommaInput();
 		}
 		else if(expression.contains(":")) return calculateForColumnInput();
+		//TODO: assume at least 2 parameters
 		throw new InvalidExpressionException();
 	}
 	

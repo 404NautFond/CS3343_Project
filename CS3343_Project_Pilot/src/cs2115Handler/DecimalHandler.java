@@ -1,7 +1,5 @@
 package cs2115Handler;
 
-import fxcelException.InvalidExpressionException;
-
 public class DecimalHandler extends ConvertHandler {
 	// Default is decimal
 	
@@ -11,8 +9,10 @@ public class DecimalHandler extends ConvertHandler {
 	}
 
 	@Override
-	public String handleForStringReturn(String expression) throws InvalidExpressionException {
-		return "0d"+convertTo(10, super.handleForDoubleReturn(expression));
+	public String handleForStringReturn(String expression){
+		double val = super.handleForDoubleReturn(expression);
+		if(val < 0) return ("-0d"+convertTo(10,-val));
+		else return ("0d"+convertTo(10,val));
 	}
 
 }

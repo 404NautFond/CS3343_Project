@@ -1,17 +1,16 @@
 package cs2115Handler;
 
-import fxcelException.InvalidExpressionException;
-
 public class BinaryHandler extends ConvertHandler {
     @Override
-    public double handleForDoubleReturn(String expression) throws InvalidExpressionException {
+    public double handleForDoubleReturn(String expression) {
 		return super.handleForDoubleReturn(expression);
     }
     
     @Override
     public String handleForStringReturn(String expression) {
-    		return "0b"+convertTo(2, super.handleForDoubleReturn(expression));
+    		double val = super.handleForDoubleReturn(expression);
+    		if(val < 0) return ("-0b"+convertTo(2,-val));
+    		else return ("0b"+convertTo(2,val));
     }
 
-    //TODO: All the radix values, textual value = value after conversion, e.g. 0b0100, expression value = decimal
 }

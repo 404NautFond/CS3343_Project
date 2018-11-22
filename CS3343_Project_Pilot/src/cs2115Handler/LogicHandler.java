@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import fxcelException.InvalidExpressionException;
 import fxcelHandler.ExpHandler;
 import fxcelHandler.FuncHandler;
 import fxcelHandler.GeneralHandler;
@@ -13,7 +12,7 @@ public abstract class LogicHandler extends FuncHandler{
 	private String input;
 	
 	@Override
-	public abstract double handleForDoubleReturn(String expression) throws InvalidExpressionException;
+	public abstract double handleForDoubleReturn(String expression);
 
 	/**
 	 * To detect if a token is Cell-name-like

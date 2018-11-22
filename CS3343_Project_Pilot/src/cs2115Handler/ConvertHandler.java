@@ -1,13 +1,12 @@
 package cs2115Handler;
 
-import fxcelException.InvalidExpressionException;
 import fxcelHandler.FuncHandler;
 import fxcelHandler.GeneralHandler;
 
-public class ConvertHandler extends FuncHandler {
+public abstract class ConvertHandler extends FuncHandler {
 	
     @Override
-	public double handleForDoubleReturn(String expression) throws InvalidExpressionException{
+	public double handleForDoubleReturn(String expression){
 		return new GeneralHandler().handleForDoubleReturn(expression);
     };
 	
@@ -17,9 +16,7 @@ public class ConvertHandler extends FuncHandler {
          * @return the converted number string
          * @throws InvalidExpressionException 
          */
-	public String handleForStringReturn(String expression) throws InvalidExpressionException{
-		return "0d"+convertTo(10, Double.parseDouble(expression));
-	};
+	public abstract String handleForStringReturn(String expression);
 	
         /**
          * Convert the number to the needed radix
@@ -27,12 +24,9 @@ public class ConvertHandler extends FuncHandler {
          * @param target the number which is to be converted
          * @return String of the converted number
          */
-	public String convertTo(int radix, double target) {
+	public static String convertTo(int radix, double target) {
 		String temp = "";
-		if(target < 0) {
-			temp = temp + '-';
-			target = -target;
-		}
+
 		double decimal = target - (int)target;
 		int integer = (int)target;
 		char[] charset = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E'};
@@ -40,7 +34,9 @@ public class ConvertHandler extends FuncHandler {
 			temp = charset[integer%radix]+temp;
 			integer /= radix;
 		}
-		if(decimal < 0.0001 && decimal > -0.0001) return temp;
+		if(decimal < 0.0001 && decimal > -0.0001) {
+			return temp;
+		}
 		else {
 			temp = temp+'.';
 			for(int i = 0; i < 5; i++) {

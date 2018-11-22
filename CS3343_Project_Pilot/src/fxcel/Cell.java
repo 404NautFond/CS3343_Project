@@ -93,6 +93,7 @@ public class Cell extends Subject implements Observer {
 	 * @throws InvalidCellException Throws when the value is not defined for computation
 	 */
 	public double getValue() throws InvalidCellException{
+//		System.out.println(type);
 		switch(type) {
 		case NULL:
 			return 0;
@@ -131,6 +132,11 @@ public class Cell extends Subject implements Observer {
 		this.clear();
 		this.expression = expression;
 
+		// handle null input
+		if(expression.equals("")) {
+			setCell(0,"",Type.TEXT);
+			return;
+		}
 		// define expression by the first char
 		char identifier = expression.charAt(0);
 

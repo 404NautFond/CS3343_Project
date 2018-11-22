@@ -19,7 +19,8 @@ public class ASCIIHandler extends ConvertHandler{
 	public String handleForStringReturn(String expression) {
 		String temp = "";
 		//hard code
-		expression = expression.substring(7,expression.length()-1);
+		if(expression.length() >7 && expression.subSequence(0, 7).equals("=ASCII("))
+			expression = expression.substring(7,expression.length()-1);
 		for(int i = 0; i < expression.length(); i++) {
 			char input = expression.charAt(i);
 			temp += (int)input + " ";
