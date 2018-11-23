@@ -1,4 +1,4 @@
-package fxcelTest;
+package test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -48,6 +48,18 @@ public class CellNamingHandlerTest {
 	public void testGetRowEnhanced_06() {
 		int result = CellNamingHandler.getRowEnhanced("1024");
 		assertEquals(1024,result, 0.0001);
+	}
+	
+	//Test Case row = ""
+	@Test (expected = NumberFormatException.class)
+	public void testGetRowEnhanced_07() {
+		CellNamingHandler.getRowEnhanced("");
+	}
+	
+	//Test Case row = ""
+	@Test (expected = NumberFormatException.class)
+	public void testGetRowEnhanced_08() {
+		CellNamingHandler.getRowEnhanced("A");
 	}
 	
 	//Test Case col = "E"
