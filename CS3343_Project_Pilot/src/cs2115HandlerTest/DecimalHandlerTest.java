@@ -34,4 +34,10 @@ public class DecimalHandlerTest {
 		String res = decimal.handleForStringReturn("35");
 		assertEquals("0d35", res);
 	}
+	
+	@Test
+	public void testDecimalStringReturn_02() {
+		String res = decimal.handleForStringReturn("-98734");
+		assertEquals("-0d98734", res);
+	}
 }

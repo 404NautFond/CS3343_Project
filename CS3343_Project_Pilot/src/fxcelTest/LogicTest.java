@@ -21,7 +21,7 @@ public class LogicTest {
 	}
 	
 	@Test
-	public void ANDTest_00() {
+	public void ANDTest_01() {
 		instance.writeCell(0, 0, "=1");
 		instance.writeCell(0, 1, "=1");
 		instance.writeCell(0, 2, "=AND(A1,B1)");
@@ -30,7 +30,7 @@ public class LogicTest {
 	}
 	
 	@Test
-	public void ANDTest_01() {
+	public void ANDTest_02() {
 		instance.writeCell(0, 0, "=1");
 //		instance.writeCell(0, 1, "=1");
 		instance.writeCell(0, 2, "=AND(A1,1)");
@@ -39,7 +39,7 @@ public class LogicTest {
 	}
 	
 	@Test
-	public void ANDTest_02() {
+	public void ANDTest_03() {
 		instance.writeCell(0, 0, "0");
 //		instance.writeCell(0, 1, "=1");
 		instance.writeCell(0, 2, "=AND(A1,1)");

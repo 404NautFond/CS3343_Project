@@ -35,9 +35,9 @@ public class NOTHandlerTest {
 		assertEquals(0, res, 0.01);
 	}
 	
-	@Test (expected = InvalidExpressionException.class)
+	@Test
 	public void testNOT_03() {
-		assertEquals(0, not.handleForDoubleReturn("=0+1"), 0.01);
+		assertEquals(1, not.handleForDoubleReturn("=1-1"), 0.01);
 	}
 	
 	@Test

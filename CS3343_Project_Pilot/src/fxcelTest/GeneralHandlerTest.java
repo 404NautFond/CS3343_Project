@@ -114,61 +114,6 @@ public class GeneralHandlerTest {
 	}
 	
 	@Test
-	public void TestIsFunc_01() {
-		assertEquals(GeneralHandler.isFunc("SUM"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_02() {
-		assertEquals(GeneralHandler.isFunc("AVE"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_03() {
-		assertEquals(GeneralHandler.isFunc("MIN"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_04() {
-		assertEquals(GeneralHandler.isFunc("MAX"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_05() {
-		assertEquals(GeneralHandler.isFunc("COUNT"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_06() {
-		assertEquals(GeneralHandler.isFunc("COMB"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_07() {
-		assertEquals(GeneralHandler.isFunc("PERM"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_08() {
-		assertEquals(GeneralHandler.isFunc("MEAN"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_09() {
-		assertEquals(GeneralHandler.isFunc("SD"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_10() {
-		assertEquals(GeneralHandler.isFunc("VAR"),true);
-	}
-	
-	@Test
-	public void TestIsFunc_11() {
-		assertEquals(GeneralHandler.isFunc("VAR."),false);
-	}
-	
-	@Test
 	public void TestFunc_00() {
 		assertEquals(3, new GeneralHandler().handleForDoubleReturn("SUM(1,1)+1"),0.0001);
 	}

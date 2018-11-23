@@ -29,9 +29,14 @@ public class GreyCodeHandlerTest {
 		assertEquals(1000, res, 0.0001);
 	}
 	
-	@Test (expected = InvalidExpressionException.class)
+	@Test
 	public void testGreyCodeDoubleReturn_02() {
-		assertEquals(1000, greyCode.handleForDoubleReturn("1000+1"), 0.0001);
+		assertEquals(1000, greyCode.handleForDoubleReturn("=GREY(1000)"), 0.0001);
+	}
+	
+	@Test
+	public void testGreyCodeDoubleReturn_03() {
+		assertEquals(1000001, greyCode.handleForDoubleReturn("1000001"), 0.0001);
 	}
 	
 	@Test
@@ -39,5 +44,18 @@ public class GreyCodeHandlerTest {
 		String res = greyCode.handleForStringReturn("10");
 		assertEquals("0b1111", res);
 	}
+	
+	@Test
+	public void testGreyCodeStringReturn_02() {
+		String res = greyCode.handleForStringReturn("1000000");
+		assertEquals("0b10001110001101100000", res);
+	}
+	
+	@Test
+	public void testGreyCodeStringReturn_03() {
+		String res = greyCode.handleForStringReturn("=GREY(99)");
+		assertEquals("0b1010010", res);
+	}
+
 	
 }

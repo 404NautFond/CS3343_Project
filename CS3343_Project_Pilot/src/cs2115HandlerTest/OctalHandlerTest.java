@@ -35,4 +35,10 @@ public class OctalHandlerTest {
 		assertEquals("0o21", res);
 	}
 	
+	@Test
+	public void testOctalStringReturn_02() {
+		String res = octal.handleForStringReturn("-19345");
+		assertEquals("-0o45621", res);
+	}
+	
 }

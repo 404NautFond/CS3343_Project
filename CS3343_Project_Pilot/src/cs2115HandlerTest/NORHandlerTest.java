@@ -26,7 +26,7 @@ public class NORHandlerTest {
 	@Test
 	public void testNOR_01() {
 		double res = nor.handleForDoubleReturn("1,1");
-		assertEquals(1, res, 0.01);
+		assertEquals(0, res, 0.01);
 	}
 
 }

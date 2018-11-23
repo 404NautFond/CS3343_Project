@@ -178,6 +178,34 @@ public class CellTest {
 	}
 	
 	@Test
+	public void testAssign_11() throws InvalidCellException{
+		Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0,1,"=30");
+			fxcel.writeCell(1,1,"=2");
+			fxcel.writeCell(0,0,"=B2+B1+A1");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			fxcel.clear();
+		}
+	}
+	
+	@Test 
+	public void testAssign_12() throws InvalidCellException{
+		Fxcel fxcel = Fxcel.getInstance();
+		try {
+			fxcel.writeCell(0,1,"=30");
+			fxcel.writeCell(1,1,"=A1");
+			fxcel.writeCell(0,0,"=B2+B1+A1");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			fxcel.clear();
+		}
+	}
+	
+	@Test
 	public void testAddDependent_01(){
 		Fxcel fxcel = Fxcel.getInstance();
 		try {
@@ -205,7 +233,7 @@ public class CellTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		assertEquals("null: The expression is \":This is the text test\"",cell.toString());
+		assertEquals("null: The expression is \":This is the text test\", The value is \"0.0\"",cell.toString());
 	}
 	
 	//Test Case: ":This is the text test"
@@ -266,4 +294,16 @@ public class CellTest {
 		assertEquals("AB1",cell.getPosition());
 		fxcel.clear();
 	}
+//	
+//	@Test
+//	public void testGetValue_01() {
+//		Fxcel fxcel = Fxcel.getInstance();
+//		fxcel.writeCell(0,27,":text");
+//		cell = fxcel.getCell(0,27);
+//		try {
+//			cell.getValue();
+//		} catch (InvalidCellException e) {
+//			assertEquals(e.getMessage(),"AB1(Expression:\":text\") is not legal for this computation.");
+//		}
+//	}
 }

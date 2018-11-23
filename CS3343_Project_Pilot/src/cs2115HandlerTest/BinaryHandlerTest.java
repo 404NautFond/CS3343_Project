@@ -20,7 +20,6 @@ public class BinaryHandlerTest {
 	
 	@After
 	public void tearDown() {
-		
 	}
 	
 	@Test
@@ -33,6 +32,12 @@ public class BinaryHandlerTest {
 	public void testBinaryStringReturn_01() {
 		String res = binary.handleForStringReturn("10");
 		assertEquals("0b1010", res);
+	}
+	
+	@Test
+	public void testBinaryStringReturn_02() {
+		String res = binary.handleForStringReturn("-6451.1");
+		assertEquals("-0b1100100110011.00011", res);
 	}
 	
 }

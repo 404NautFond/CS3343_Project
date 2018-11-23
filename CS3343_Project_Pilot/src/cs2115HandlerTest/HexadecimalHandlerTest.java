@@ -35,4 +35,10 @@ public class HexadecimalHandlerTest {
 		assertEquals("0x11", res);
 	}
 	
+	@Test
+	public void testHexadecimalStringReturn_02() {
+		String res = hexadecimal.handleForStringReturn("-8761");
+		assertEquals("-0x2239", res);
+	}
+	
 }

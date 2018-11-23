@@ -9,6 +9,7 @@ import org.junit.Test;
 import commonHandler.MaxHandler;
 import fxcel.Fxcel;
 import fxcelException.InvalidExpressionException;
+import fxcelException.InvalidCellException;
 
 public class MaxHandlerTest {
 	
@@ -72,7 +73,7 @@ public class MaxHandlerTest {
 		maxHandler.handleForDoubleReturn("A1%A2%A3");
 	}
 	
-	@Test(expected = InvalidExpressionException.class)
+	@Test(expected = InvalidCellException.class)
 	public void testHandleForDoubleReturn_07() {
 		fxcel.writeCell(1, 0, ":2.01");
 		fxcel.writeCell(2, 0, "=2.0003");
