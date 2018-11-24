@@ -10,19 +10,23 @@ public class InvalidExpressionException extends FxcelException {
 //	private static final String TAG = "InvalidExpressionException";
 	private static final String message = "Syntax error on your input!";
 
-	private Cell thisCell;
+	private Cell cell;
 	
 	public InvalidExpressionException() {
-		//default
+		this.cell = null;
 	}
 	
-	public InvalidExpressionException(Cell thisCell) {
-		this.thisCell = thisCell;
+//	public InvalidExpressionException(Cell thisCell) {
+//		this.thisCell = thisCell;
+//	}
+	
+	public void linkCell(Cell cell) {
+		this.cell = cell;
 	}
 	
 	@Override
 	public String getMessage() {
-		if(thisCell == null) return message;
-		else return thisCell.getPosition()+"(Expression:\""+ thisCell.getExpression()+"\") is invalid, please check.";
+		if(cell == null) return message;
+		else return "Cell " + cell.getPosition()+"(Expression:\""+ cell.getExpression()+"\") is invalid, please check.";
 	}
 }

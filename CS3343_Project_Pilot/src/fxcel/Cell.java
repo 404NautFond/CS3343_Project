@@ -122,9 +122,11 @@ public class Cell extends Subject implements Observer {
 		//TODO hard code
 		if(expression.equalsIgnoreCase("true")) {
 			setCell(1,"TRUE",Type.FUNC_LOGIC);
+			this.expression = expression;
 			return;
 		}else if(expression.equalsIgnoreCase("false")) {
 			setCell(0,"FALSE",Type.FUNC_LOGIC);
+			this.expression = expression;
 			return;
 		}
 
@@ -183,12 +185,13 @@ public class Cell extends Subject implements Observer {
 //				System.out.println(val + str);
 			}catch(InvalidCellException e1) {
 				setCell(0, "#CELL#", Type.ERROR);
-				System.out.println(this.getPosition()+": using "+e1.getMessage());
+				System.out.println("Cell "+this.getPosition()+" uses "+e1.getMessage());
 				this.notifyObservers();
 				return;
 			}catch(InvalidExpressionException e2) {
 				setCell(0, "#INVALID#", Type.ERROR);
-				System.out.println(this.getPosition()+": "+e2.getMessage());
+				e2.linkCell(this);
+				System.out.println(e2.getMessage());
 				this.notifyObservers();
 				return;
 			}

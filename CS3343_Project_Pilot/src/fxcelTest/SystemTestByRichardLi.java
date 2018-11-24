@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fxcel.*;
+import fxcelHandler.DeleteHandler;
 
 public class SystemTestByRichardLi {
 
@@ -99,6 +100,16 @@ public class SystemTestByRichardLi {
 		// 1-10* False
 		writeCell(0,0,"faLse");
 		validateCell(0.00,"FALSE",instance.getCellValue(0,0),instance.getTextualValue(0,0));
+	}
+	
+	@Test
+	public void writeCell_0A() {
+		// 1-11* Using name
+		// 1-12* Check expression
+		instance.writeCell("A1","faLse");
+		validateCell(0.00,"FALSE",instance.getCellValue(0,0),instance.getTextualValue(0,0));
+		assertEquals("faLse",instance.getCellExpression("A1"));
+		assertEquals("faLse",instance.getCellExpression(0,0));
 	}
 	
 	@Test
@@ -530,5 +541,63 @@ public class SystemTestByRichardLi {
 		assertEquals("#INF#",instance.getTextualValue(0, 0));
 		assertEquals("#INF#",instance.getTextualValue(1, 0));
 		assertEquals("#INF#",instance.getTextualValue(2, 0));
+	}
+	
+	@Test
+	public void fxcel_00() {
+		// 1-1 expand before writing
+		try {
+			instance.getCellExpression(30,30);
+		}catch(IndexOutOfBoundsException e) {
+			instance.resize(40, 40);
+			assertEquals(null,instance.getCellExpression(30,30));
+		}
+	}
+	
+	@Test
+	public void fxcel_01() {
+		// 1-2 Shrink
+		instance.resize(5, 5);
+		assertEquals(null,instance.getCellExpression(10,10));
+	}
+	
+	@Test
+	public void fxcel_02() {
+		// 1-3 Add column
+		writeCell(4,4,"1");
+		validateCell(1,"1.00",instance.getCellValue("E5"),instance.getTextualValue("E5"));
+		instance.addCol(5);
+		validateCell(1,"1.00",instance.getCellValue("E5"),instance.getTextualValue("E5"));
+		instance.addCol(4);
+		assertEquals(null, instance.getCellExpression("E5"));
+		validateCell(1,"1.00",instance.getCellValue("F5"),instance.getTextualValue("F5"));
+	}
+	
+	@Test
+	public void fxcel_03() {
+		// 1-3 Add row
+		writeCell(4,4,"1");
+		validateCell(1,"1.00",instance.getCellValue("E5"),instance.getTextualValue("E5"));
+		instance.addRow(5);
+		validateCell(1,"1.00",instance.getCellValue("E5"),instance.getTextualValue("E5"));
+		instance.addRow(4);
+		assertEquals(null, instance.getCellExpression("E5"));
+		validateCell(1,"1.00",instance.getCellValue("E6"),instance.getTextualValue("E6"));
+	}
+	
+	@Test
+	public void fxcel_04() {
+		// 1-4 Clear
+		writeCell(4,4,"1");
+		instance.clear();
+		assertEquals(null, instance.getCellExpression("E5"));
+	}
+	
+	@Test
+	public void fxcel_05() {
+		// 1-5 Delete
+		writeCell(4,4,"1");
+		DeleteHandler.handle("E5");
+		assertEquals(null, instance.getCellExpression("E5"));
 	}
 }
