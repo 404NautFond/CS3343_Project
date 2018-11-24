@@ -1,4 +1,4 @@
-package fxcelTest;
+package test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -113,7 +113,7 @@ public class FxcelTest {
 	
 	@Test
 	public void testAddRow_01() {
-		fxcel.writeCell(0, 4, "=1");
+		fxcel.writeCell("E1", "=1");
 		fxcel.addRow(0);
 		assertEquals(null,fxcel.getCell(0,4).getExpression());
 		assertEquals("=1",fxcel.getCell(1,4).getExpression());
@@ -143,6 +143,13 @@ public class FxcelTest {
 		assertEquals(null,fxcel.getCell(0,30).getExpression());
 	}
 	
+	@Test
+	public void testGetCellValue() {
+		fxcel.writeCell(0, 0, "=1");
+		assertEquals(1,fxcel.getCellValue(0,0),0.0001);
+		assertEquals(1,fxcel.getCellValue("A1"),0.0001);
+	}
+
 	/*
 	@Test
 	public void testToString() {

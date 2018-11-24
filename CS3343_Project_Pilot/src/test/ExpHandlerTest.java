@@ -1,4 +1,4 @@
-package fxcelTest;
+package test;
 
 import static org.junit.Assert.assertEquals;
 
