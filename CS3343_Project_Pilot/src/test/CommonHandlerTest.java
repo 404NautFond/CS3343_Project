@@ -169,11 +169,17 @@ public class CommonHandlerTest {
 		}
 	}
 	
-	@Test(expected = InvalidExpressionException.class)
+	@Test
 	public void testMaxHandler_08() {
 		fxcel.writeCell(1, 0, ":2.01");
 		fxcel.writeCell(2, 0, "=2.0003");
-		System.out.println(maxHandler.handleForDoubleReturn("A1,A2,A3"));
+		try {
+			System.out.println(maxHandler.handleForDoubleReturn("A1,A2,A3"));
+		}catch(InvalidExpressionException e) {
+			e = new InvalidExpressionException(fxcel.getCell("A1"));
+			System.out.println(e);
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	/*
@@ -218,12 +224,16 @@ public class CommonHandlerTest {
 		assertEquals(2.0003,minHandler.handleForDoubleReturn("A2:A3"),0.0001);
 	}
 	
-	@Test(expected = InvalidExpressionException.class)
+	@Test
 	public void testMinHandler_06() {
 		fxcel.writeCell(0, 0, "=2.001");
 		fxcel.writeCell(1, 0, "=2.01");
 		fxcel.writeCell(2, 0, "=2.0003");
-		minHandler.handleForDoubleReturn("A1%A2%A3");
+		try {
+			minHandler.handleForDoubleReturn("A1%A2%A3");
+		}catch(InvalidExpressionException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@Test(expected = InvalidCellException.class)
