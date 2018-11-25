@@ -65,4 +65,8 @@ public class ExpHandlerTest {
 		assertEquals(ExpHandler.isCell("+V10.1"),false);
 	}
 	
+	@Test
+	public void TestIsFunc() {
+		assertEquals(ExpHandler.isFunc("SUM"),false);
+	}
 }

@@ -22,6 +22,7 @@ public class DeleteHandlerTest {
 		fxcel.clear();
 	}
 	
+	@SuppressWarnings("static-access")
 	@Test
 	public void testDelete() {
 		fxcel.writeCell(0,0,"=879");
