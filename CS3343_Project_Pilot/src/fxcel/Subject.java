@@ -14,6 +14,9 @@ public abstract class Subject{
     public abstract void detach(Cell c);
     public abstract void notifyObservers();
     
+    /**
+     * the construction of a Subject, will be called by Cell
+     */
     public Subject(){
         list = new ArrayList<Cell>();
     }
