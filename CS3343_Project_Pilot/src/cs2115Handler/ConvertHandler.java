@@ -14,7 +14,6 @@ public abstract class ConvertHandler extends FuncHandler {
          * Convert expression string to decimal number string
          * @param expression the expression to be converted
          * @return the converted number string
-         * @throws InvalidExpressionException 
          */
 	public abstract String handleForStringReturn(String expression);
 	

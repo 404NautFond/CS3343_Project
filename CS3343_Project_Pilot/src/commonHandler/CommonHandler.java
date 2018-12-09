@@ -1,3 +1,10 @@
+/**
+ * City University of Hong Kong, Group 22
+ * CommonHandler.java
+ * Abstract handler class with overridden return <em>value</em> method
+ * and inner reference resolve
+ */
+
 package commonHandler;
 
 import java.util.ArrayList;

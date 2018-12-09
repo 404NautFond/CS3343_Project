@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * SumHandler.java
+ * Base handler class with overridden return <em>value</em> method
+ */
+
 package commonHandler;
 
 import fxcelHandler.CellNamingHandler;

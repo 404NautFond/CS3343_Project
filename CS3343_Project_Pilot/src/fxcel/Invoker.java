@@ -26,7 +26,7 @@ public class Invoker {
 					+ "[Cell Name] \t\t\t\t\t\tSame as -r [Cell Name]\n"
 					+ "[Cell Name] [expression] \t\t\t\tSame as -a [Cell Name] [expression]\n"
 					+ "\nfunctions\t\t\t\t\t\tlist all the avaiable function call\n"
-					+ "print|-t\t\t\t\t\t\tprint the 10*10 cell\n";
+					+ "print|-p\t\t\t\t\t\tprint the 10*10 cell\n";
 
 	private static String functions =
 			"Name\tValue\tComma\tColumn\n"
