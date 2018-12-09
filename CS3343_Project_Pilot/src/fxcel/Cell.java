@@ -294,6 +294,9 @@ public class Cell extends Subject implements Observer {
 		list.remove(c);
 	}
 
+	/**
+	 * Detach all the cells depending on this cell
+	 */
 	public void detachAll() {
 		list.clear();
 	}
