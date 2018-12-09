@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * ExpHandler.java
+ * For formatting detection and dummy base class for nearly all the classes.
+ */
+
 package fxcelHandler;
 
 import java.math.BigDecimal;

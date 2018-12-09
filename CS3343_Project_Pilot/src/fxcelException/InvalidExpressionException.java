@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * InfiniteReferenceException.java
+ * Will be thrown out when computing a wrong format expression.
+ */
+
 package fxcelException;
 
 import fxcel.Cell;

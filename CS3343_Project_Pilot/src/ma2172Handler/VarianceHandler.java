@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * VarianceHandler.java
+ * Base handler class with overridden return <em>value</em> method
+ */
+
 package ma2172Handler;
 
 import commonHandler.CountHandler;

@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * FxcelException.java
+ * Dummy FxcelException class. Will not be checked as extending runtime exceptions.
+ */
+
 package fxcelException;
 
 public abstract class FxcelException extends RuntimeException{

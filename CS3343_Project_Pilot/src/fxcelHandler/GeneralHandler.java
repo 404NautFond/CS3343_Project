@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * GeneralHandler.java
+ * The root algorithm processing class.
+ */
+
 package fxcelHandler;
 
 import java.util.ArrayList;
@@ -182,7 +188,6 @@ public class GeneralHandler extends FuncHandler{
 			try {
 				number1 = buffer.pop();
 				// specially handleForDoubleReturn negative values
-				// TODO =-1+5
 				if(sym.equals("-")) {
 					if(!ExpHandler.isNumeric(number1)) {
 						buffer.push(number1);
@@ -196,7 +201,11 @@ public class GeneralHandler extends FuncHandler{
 		}
 	}
 
-	//TODO:
+	/**
+	 * Extracted method for pairs
+	 * @param tokens The tokens the expression contains
+	 * @return The result String
+	 */
 	private String processPair(ArrayList<String> tokens) {
 		String tempExpr = "";
 		int lock = 1;

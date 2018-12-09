@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * Cell.java
+ * Basic unit to store the <em>value, text, expression</em> information and operate.
+ */
+
 package fxcel;
 
 import java.text.DecimalFormat;

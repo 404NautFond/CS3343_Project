@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * CellNamingHandler.java
+ * Convert string type to coordinate type.
+ */
+
 package fxcelHandler;
 
 public class CellNamingHandler extends ExpHandler {

@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * Subject.java
+ * Dummy Subject class.
+ */
+
 package fxcel;
 
 import java.util.*;

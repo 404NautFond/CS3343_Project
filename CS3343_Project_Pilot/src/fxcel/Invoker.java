@@ -3,6 +3,13 @@
  * For UI designer, this part is not finished yet and many functions are not embedded
  * Even some information is not needed as well
  */
+
+/**
+ * City University of Hong Kong, Group 22
+ * Invoker.java
+ * The texual UI to be load in the Command Line on Windows or Terminal on Mac OS or linux.
+ */
+
 package fxcel;
 
 import java.util.Scanner;
@@ -15,6 +22,8 @@ public class Invoker {
 	private static Fxcel instance = Fxcel.getInstance();
 
 	private static String welcome = "Fxcel - Group 22\n Enter \"help|-h\" for instructions";
+	
+	// hard code information
 	private static String instructions = 
 			"Following functions are provided:\n\n"
 					+ "assign|-a [row number] [column number] [expression]\tfor enter into a cell\n"
@@ -31,6 +40,7 @@ public class Invoker {
 					+ "print|-p\t\t\t\t\t\tprint the 10*10 cell\n"
 					+ "clear|-c\t\t\t\t\t\tclear the fxcel";
 
+	// hard code information
 	private static String functions =
 			"Name\tValue\tComma\tColumn\n"
 					+ "SUM\tY\tY\tY\n"

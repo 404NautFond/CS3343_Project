@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * FuncHandler.java
+ * Dummy Function Handler class for extending.
+ */
+
 package fxcelHandler;
 
 import fxcel.Cell;
@@ -13,7 +19,6 @@ public abstract class FuncHandler extends ExpHandler {
 	 * Compute the value for the expression
 	 * @param expression The String type expression
 	 * @return The double value
-	 * @throws InvalidExpressionException 
 	 */
 	public abstract double handleForDoubleReturn(String expression);
 	

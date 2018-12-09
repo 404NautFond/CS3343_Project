@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * ANDHandler.java
+ * Base handler class with overridden return <em>value</em> method
+ */
+
 package cs2115Handler;
 
 public class ANDHandler extends LogicHandler{

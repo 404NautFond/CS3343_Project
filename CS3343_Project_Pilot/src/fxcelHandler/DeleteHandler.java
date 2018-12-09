@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * DeleteHandler.java
+ * Delete operation for possible UI use.
+ */
+
 package fxcelHandler;
 
 import fxcel.Cell;

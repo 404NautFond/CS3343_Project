@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * InfiniteReferenceException.java
+ * Will be thrown out when referencing a wrong format cell or not-existing cell.
+ */
+
 package fxcelException;
 
 import fxcel.Cell;

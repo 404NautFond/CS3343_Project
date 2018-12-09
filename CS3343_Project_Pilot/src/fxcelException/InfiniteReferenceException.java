@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * InfiniteReferenceException.java
+ * Will be thrown out when self-referenced. For dynamic computing issues.
+ */
+
 package fxcelException;
 
 import fxcel.Cell;

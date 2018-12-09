@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"commonHandler","h":"","u":""},{"l":"cs2115Handler","h":"","u":""},{"l":"fxcel","h":"","u":""},{"l":"fxcelException","h":"","u":""},{"l":"fxcelHandler","h":"","u":""},{"l":"fxcelTest","h":"","u":""},{"l":"ma2172Handler","h":"","u":""},{"l":"test","h":"","u":""}]
+packageSearchIndex = [{"l":"fxcelHandler","h":"","u":""}]

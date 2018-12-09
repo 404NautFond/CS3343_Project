@@ -1,3 +1,9 @@
+/**
+ * City University of Hong Kong, Group 22
+ * Fxcel.java
+ * Table structure to maintain all the Cell units and the root of all basic operations.
+ */
+
 package fxcel;
 
 import java.io.Serializable;
@@ -227,7 +233,7 @@ public class Fxcel implements Serializable {
 	 * Get the value of the Cell by Cell name
 	 * @param name The Cell name
 	 * @return The value
-	 * @throws InvalidCellException
+	 * @throws InvalidCellException Throws when the cell is not legal for the computation
 	 */
 	public double getCellValue(String name) throws InvalidCellException {
 		return getCell(name.trim()).getValue();
@@ -238,7 +244,7 @@ public class Fxcel implements Serializable {
 	 * @param row The row location
 	 * @param col The column location
 	 * @return The expression
-	 * @throws InvalidCellException
+	 * @throws InvalidCellException Throws when the value is unavailable
 	 */
 	public double getCellValue(int row, int col) throws InvalidCellException {
 		return getCell(row,col).getValue();
