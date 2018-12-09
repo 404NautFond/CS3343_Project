@@ -81,6 +81,11 @@ public abstract class CommonHandler extends FuncHandler {
 		setInput(input);
 	}
 	
+	/**
+	 * Split the input string in terms of ,()
+	 * @param str the input string
+	 * @return the list with split strings
+	 */
 	private List<String> getTokens(String str) {
 	    List<String> tokens = new ArrayList<>();
 	    StringTokenizer tokenizer = new StringTokenizer(str,",()",true);
