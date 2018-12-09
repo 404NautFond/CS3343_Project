@@ -54,6 +54,11 @@ public class GeneralHandler extends FuncHandler{
 		call.put("XNOR", new XNORHandler());
 	}
 
+	/**
+	 * Handle the input and return the result string of the input expression
+	 * @param the input expression of a cell
+	 * @return the result string
+	 */
 	public String handlerForStringReturn(String expression) {
 		feed(expression);
 		// ignore the '=' in the beginning
