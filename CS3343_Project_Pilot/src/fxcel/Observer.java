@@ -7,5 +7,9 @@
 package fxcel;
 
 public interface Observer{
+    
+	/**
+	 * the Observer updates its information
+	 */
 	void update();
 }
