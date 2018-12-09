@@ -26,7 +26,10 @@ public class Invoker {
 					+ "[Cell Name] \t\t\t\t\t\tSame as -r [Cell Name]\n"
 					+ "[Cell Name] [expression] \t\t\t\tSame as -a [Cell Name] [expression]\n"
 					+ "\nfunctions\t\t\t\t\t\tlist all the avaiable function call\n"
-					+ "print|-p\t\t\t\t\t\tprint the 10*10 cell\n";
+					+ "addrow [row number] \t\t\t\t\tfor adding a new row in the position\n"
+					+ "addcol [column number] \t\t\t\t\tfor adding a new column in the position\n"
+					+ "print|-p\t\t\t\t\t\tprint the 10*10 cell\n"
+					+ "clear|-c\t\t\t\t\t\tclear the fxcel";
 
 	private static String functions =
 			"Name\tValue\tComma\tColumn\n"
@@ -84,6 +87,18 @@ public class Invoker {
 					else if(tokens.length == 2)
 						System.out.println(instance.getTextualValue(tokens[1]));
 					break;
+				case "addcol":
+					if(tokens.length == 2) {
+						instance.addCol(Integer.parseInt(tokens[1]));
+						System.out.println("Column is added");
+					}
+					break;
+				case "addrow":
+					if(tokens.length == 2) {
+						instance.addRow(Integer.parseInt(tokens[1]));
+						System.out.println("Row is added");
+					}
+					break;
 				case "value":
 				case "-v":
 					if(tokens.length == 3)
@@ -114,6 +129,11 @@ public class Invoker {
 						}
 						System.out.println();
 					}
+					break;
+				case "clear":
+				case "-c":
+					instance.clear();
+					System.out.println("Table cleared");
 					break;
 				default:
 					if(ExpHandler.isCell(tokens[0])) {
