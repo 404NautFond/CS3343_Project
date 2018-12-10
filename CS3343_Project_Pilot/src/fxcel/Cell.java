@@ -280,6 +280,7 @@ public class Cell extends Subject implements Observer {
 		this.expression = null;
 		setCell(0, null, Type.NULL);
 		this.dependent.clear();
+		this.notifyObservers();
 	}
 
 	/* From class Subject */
