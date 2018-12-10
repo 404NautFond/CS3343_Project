@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"fxcelHandler","h":"","u":""}]
+packageSearchIndex = [{"l":"fxcel","h":"","u":""}]

@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"FuncHandler","h":"","u":""}]
+typeSearchIndex = [{"l":"Cell","h":"","u":""},{"l":"Cell.Type","h":"","u":""}]
